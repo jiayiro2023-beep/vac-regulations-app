@@ -1,20 +1,14 @@
 import React, { useState } from 'react';
 import { Regulation } from '../data/regulations';
 import { Bookmark } from '../types';
+import { VisualFormViewer } from './VisualFormViewer';
 import { 
   Copy, 
   Check, 
   Bookmark as BookmarkIcon, 
   BookmarkCheck, 
-  FileText, 
   ListOrdered, 
-  Download, 
-  Share2, 
-  Info,
-  Type,
-  Maximize2,
-  Minimize2,
-  Layers
+  FileSpreadsheet
 } from 'lucide-react';
 
 interface RegulationViewerProps {
@@ -33,6 +27,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null);
   const [fontSize, setFontSize] = useState<'sm' | 'md' | 'lg'>('md');
   const [showRawText, setShowRawText] = useState(false);
+  const [activeTab, setActiveTab] = useState<'articles' | 'attachments'>('articles');
 
   const handleCopyCitation = (articleTitle: string, articleContent: string) => {
     const textToCopy = `依據「${regulation.title}」${articleTitle}規定：\n「${articleContent.replace(/\n+/g, ' ')}」`;
@@ -45,10 +40,8 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
     return bookmarks.some(b => b.regulationId === regulation.id && b.articleTitle === articleTitle);
   };
 
-  // Helper to highlight matching keywords
   const renderHighlightedText = (text: string) => {
     if (!keyword.trim()) return text;
-
     const parts = text.split(new RegExp(`(${keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'));
     return parts.map((part, i) => 
       part.toLowerCase() === keyword.toLowerCase() ? (
@@ -80,7 +73,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
                   {regulation.category}
                 </span>
                 <span className="text-xs text-slate-400 dark:text-slate-500">
-                  檔案來源: {regulation.filename}
+                  原檔名: {regulation.filename}
                 </span>
               </div>
               <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white leading-tight">
@@ -124,30 +117,39 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
                     : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50'
                 }`}
               >
-                {showRawText ? '切換條文檢視' : '檢視全文純文字'}
+                {showRawText ? '條文模式' : '檢視原文純文字'}
               </button>
             </div>
           </div>
 
-          {/* Article Quick Jump Chips */}
-          {!showRawText && regulation.articles.length > 1 && (
-            <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
-              <div className="text-xs font-semibold text-slate-400 mb-2 flex items-center gap-1">
-                <ListOrdered className="w-3.5 h-3.5" /> 條文導覽 (共 {regulation.articles.length} 條/節)：
-              </div>
-              <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pr-1">
-                {regulation.articles.map((art, idx) => (
-                  <a
-                    key={idx}
-                    href={`#article-${idx}`}
-                    className="px-2 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-blue-900/60 hover:text-blue-700 dark:hover:text-blue-300 text-slate-600 dark:text-slate-300 transition-colors"
-                  >
-                    {art.title.split('\n')[0].substring(0, 15)}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Navigation Tab Bar: 條文內容 vs 具象化附件與申辦表單 */}
+          <div className="flex items-center space-x-2 border-b border-slate-100 dark:border-slate-800 pt-2">
+            <button
+              onClick={() => setActiveTab('articles')}
+              className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-bold border-b-2 transition-all ${
+                activeTab === 'articles'
+                  ? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+                  : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
+              }`}
+            >
+              <ListOrdered className="w-4 h-4" />
+              <span>條文全文 ({regulation.articles.length} 條/節)</span>
+            </button>
+
+            {regulation.attachments && regulation.attachments.length > 0 && (
+              <button
+                onClick={() => setActiveTab('attachments')}
+                className={`flex items-center space-x-2 px-4 py-2.5 text-xs font-bold border-b-2 transition-all ${
+                  activeTab === 'attachments'
+                    ? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+                    : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
+              }`}
+              >
+                <FileSpreadsheet className="w-4 h-4 text-emerald-500" />
+                <span>具象化附件與申辦表單 ({regulation.attachments.length} 份)</span>
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Content Body */}
@@ -155,7 +157,11 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
           <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 font-mono text-sm leading-relaxed whitespace-pre-wrap dark:text-slate-300">
             {renderHighlightedText(regulation.rawText)}
           </div>
+        ) : activeTab === 'attachments' && regulation.attachments ? (
+          /* Render Form Visualizations for Attachments */
+          <VisualFormViewer attachments={regulation.attachments} />
         ) : (
+          /* Render Articles list */
           <div className="space-y-4">
             {regulation.articles.map((article, idx) => {
               const bookmarked = isBookmarked(article.title);
@@ -176,7 +182,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
                 >
                   <div className="flex items-start justify-between gap-4 border-b border-slate-100 dark:border-slate-800/80 pb-3 mb-3">
                     <h3 className="text-base font-bold text-blue-950 dark:text-blue-200 flex items-center space-x-2">
-                      <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 inline-block"></span>
+                      <span className="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-blue-400 inline-block"></span>
                       <span>{renderHighlightedText(article.title)}</span>
                     </h3>
 
