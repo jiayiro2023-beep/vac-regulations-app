@@ -78,12 +78,12 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
       if (eduType === 'living') {
         return {
           eligible: true,
-          monthly: 12000,
-          total: 12000 * 9, // per academic year (~9 months)
+          monthly: 8429,
+          total: 8429 * 9, // per academic year (~9 months)
           duration: '就學修業期間（按月發給）',
-          title: '就學期間生活津貼（中低收入戶）',
-          note: '具中低收入戶或低收入戶資格者，於就學期間按月發給 NT$ 12,000 元（115年7月1日最新生效標準）。',
-          regId: '___________________________115_7_1____pdf',
+          title: '就學期間生活津貼（低收／中低收入戶）',
+          note: '具低收入戶或中低收入戶資格者，於就學期間按月發給 NT$ 8,429 元（115年7月1日最新生效標準）。',
+          regId: '國軍退除役官兵就學補助生活津貼及獎勵核發金額表_115年7月1日生效__pdf',
           article: '國軍退除役官兵就學補助生活津貼及獎勵核發金額表（115.07.01生效）'
         };
       } else if (eduType === 'award80') {
@@ -92,21 +92,21 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
           monthly: 0,
           total: 10000,
           duration: '按學期核發（一次性）',
-          title: '學業成績優良獎勵金（80~89分）',
-          note: '大專校院就讀期間學期平均成績達 80 分以上，且無不及格科目者，每學期獎勵 NT$ 10,000 元。',
-          regId: '___________________________115_7_1____pdf',
+          title: '專科及大學學業成績優異獎勵金（80分以上）',
+          note: '專科及大學就讀期間學期平均成績達 80 分以上，且全部及格者，每學期獎勵 NT$ 10,000 元（公立限50名、私立限100名）。',
+          regId: '國軍退除役官兵就學補助生活津貼及獎勵辦法_pdf',
           article: '國軍退除役官兵就學補助生活津貼及獎勵辦法第 3 條第 4 款'
         };
       } else {
         return {
           eligible: true,
           monthly: 0,
-          total: 15000,
+          total: 10000,
           duration: '按學期核發（一次性）',
-          title: '學業成績極優異獎勵金（90分以上）',
-          note: '學期平均成績達 90 分以上者，每學期核發獎勵金 NT$ 15,000 元。',
-          regId: '___________________________115_7_1____pdf',
-          article: '國軍退除役官兵就學補助生活津貼及獎勵核發金額表'
+          title: '研究所學業成績優異獎勵金（90分以上）',
+          note: '研究所就讀期間學期平均成績達 90 分以上，且全部及格者，每學期獎勵 NT$ 10,000 元（公私立各限50名）。',
+          regId: '國軍退除役官兵就學補助生活津貼及獎勵核發金額表_115年7月1日生效__pdf',
+          article: '國軍退除役官兵就學補助生活津貼及獎勵辦法第 3 條第 5 款'
         };
       }
     }
@@ -268,9 +268,9 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
               <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">就學申辦類別：</label>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { id: 'living', label: '生活津貼 (12,000元/月)' },
-                  { id: 'award80', label: '80分優良金 (10,000元)' },
-                  { id: 'award90', label: '90分優異金 (15,000元)' }
+                  { id: 'living', label: '生活津貼 (8,429元/月)' },
+                  { id: 'award80', label: '專科/大學80分 (10,000元)' },
+                  { id: 'award90', label: '研究所90分 (10,000元)' }
                 ].map(opt => (
                   <button
                     key={opt.id}

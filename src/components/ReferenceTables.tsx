@@ -33,30 +33,46 @@ export const ReferenceTables: React.FC<ReferenceTablesProps> = ({ regulation }) 
             <tbody className="divide-y divide-slate-200 dark:divide-slate-700 text-slate-600 dark:text-slate-300">
               <tr>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 font-semibold text-blue-900 dark:text-blue-200">
-                  國內就學補助 (大專校院)
+                  國內大專校院學雜費補助
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700">
-                  國內公私立專科、大學、研究所學雜費補助
+                  國內公私立專科、大學（含進修部及進修學院）
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 font-bold text-emerald-600 dark:text-emerald-400">
-                  按學期補助實繳學雜費金額
+                  公立：日間 40,000 / 進修 50,000 元<br />
+                  私立：日間 80,000 / 進修 60,000 元
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 text-[11px]">
-                  依規定於期限內檢附學雜費收據申請。
+                  依規定於期限內檢附學雜費收據核實補助。
                 </td>
               </tr>
               <tr>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 font-semibold text-blue-900 dark:text-blue-200">
-                  國外研究所就學補助
+                  國內研究所學雜費補助
+                </td>
+                <td className="p-3 border border-slate-200 dark:border-slate-700">
+                  國內公私立研究所（分有職業與無職業）
+                </td>
+                <td className="p-3 border border-slate-200 dark:border-slate-700 font-bold text-emerald-600 dark:text-emerald-400">
+                  公立：有職業 30,000 / 無職業 20,000 元<br />
+                  私立：有職業 50,000 / 無職業 40,000 元
+                </td>
+                <td className="p-3 border border-slate-200 dark:border-slate-700 text-[11px]">
+                  有職業者須檢附在職相關證明。
+                </td>
+              </tr>
+              <tr>
+                <td className="p-3 border border-slate-200 dark:border-slate-700 font-semibold text-blue-900 dark:text-blue-200">
+                  國外研究所學雜費補助
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700">
                   符合教育部採認規定之國外研究所學雜費
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 font-bold text-emerald-600 dark:text-emerald-400">
-                  按學期最高補助 NT$ 40,000 元
+                  按學期最高補助 NT$ 50,000 元
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 text-[11px]">
-                  需於就讀前辦理申請備查。
+                  應於註冊就學後 2 個月內提出申請。
                 </td>
               </tr>
               <tr className="bg-amber-50/50 dark:bg-amber-950/20">
@@ -64,10 +80,10 @@ export const ReferenceTables: React.FC<ReferenceTablesProps> = ({ regulation }) 
                   就學期間生活津貼
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 font-medium">
-                  具有低收入戶或中低收入戶資格者
+                  具有低收入戶或中低收入戶資格者（國內外就學）
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 font-black text-amber-600 dark:text-amber-400 text-sm">
-                  NT$ 12,000 元 / 每月
+                  NT$ 8,429 元 / 每月
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 text-[11px]">
                   115.07.01 生效最新修訂標準，按月核發。
@@ -75,30 +91,30 @@ export const ReferenceTables: React.FC<ReferenceTablesProps> = ({ regulation }) 
               </tr>
               <tr>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 font-semibold text-blue-900 dark:text-blue-200">
-                  成績優異獎勵金 (平均80分以上)
+                  專科及大學成績優異獎勵
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700">
-                  學期平均成績 80~89 分，且全部及格
+                  學期平均成績 80 分以上，且全部及格
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 font-bold text-emerald-600 dark:text-emerald-400">
                   NT$ 10,000 元 / 每學期
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 text-[11px]">
-                  檢附成績單申請。
+                  公立限 50 名、私立限 100 名。
                 </td>
               </tr>
               <tr>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 font-semibold text-blue-900 dark:text-blue-200">
-                  成績極優異獎勵金 (平均90分以上)
+                  研究所成績優異獎勵
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700">
                   學期平均成績 90 分以上，且全部及格
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 font-bold text-emerald-600 dark:text-emerald-400">
-                  NT$ 15,000 元 / 每學期
+                  NT$ 10,000 元 / 每學期
                 </td>
                 <td className="p-3 border border-slate-200 dark:border-slate-700 text-[11px]">
-                  學業成績優勝獎勵。
+                  公立限 50 名、私立限 50 名。
                 </td>
               </tr>
             </tbody>
