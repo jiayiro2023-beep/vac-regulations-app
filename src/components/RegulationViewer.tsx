@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Regulation } from '../data/regulations';
 import { Bookmark } from '../types';
 import { VisualFormViewer } from './VisualFormViewer';
+import { FormattedArticleContent } from './FormattedArticleContent';
 import { 
   Copy, 
   Check, 
@@ -38,20 +39,6 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
 
   const isBookmarked = (articleTitle: string) => {
     return bookmarks.some(b => b.regulationId === regulation.id && b.articleTitle === articleTitle);
-  };
-
-  const renderHighlightedText = (text: string) => {
-    if (!keyword.trim()) return text;
-    const parts = text.split(new RegExp(`(${keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'));
-    return parts.map((part, i) => 
-      part.toLowerCase() === keyword.toLowerCase() ? (
-        <mark key={i} className="bg-amber-200 dark:bg-amber-800 dark:text-amber-100 text-amber-900 font-bold px-1 rounded">
-          {part}
-        </mark>
-      ) : (
-        part
-      )
-    );
   };
 
   const fontClass = {
@@ -117,12 +104,12 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
                     : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50'
                 }`}
               >
-                {showRawText ? '條文模式' : '檢視原文純文字'}
+                {showRawText ? '條文排版模式' : '檢視純文字'}
               </button>
             </div>
           </div>
 
-          {/* Navigation Tab Bar: 條文內容 vs 具象化附件與申辦表單 */}
+          {/* Navigation Tab Bar */}
           <div className="flex items-center space-x-2 border-b border-slate-100 dark:border-slate-800 pt-2">
             <button
               onClick={() => setActiveTab('articles')}
@@ -155,13 +142,12 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
         {/* Content Body */}
         {showRawText ? (
           <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 font-mono text-sm leading-relaxed whitespace-pre-wrap dark:text-slate-300">
-            {renderHighlightedText(regulation.rawText)}
+            {regulation.rawText}
           </div>
         ) : activeTab === 'attachments' && regulation.attachments ? (
-          /* Render Form Visualizations for Attachments */
           <VisualFormViewer attachments={regulation.attachments} />
         ) : (
-          /* Render Articles list */
+          /* Render Styled Articles with FormattedArticleContent */
           <div className="space-y-4">
             {regulation.articles.map((article, idx) => {
               const bookmarked = isBookmarked(article.title);
@@ -183,7 +169,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
                   <div className="flex items-start justify-between gap-4 border-b border-slate-100 dark:border-slate-800/80 pb-3 mb-3">
                     <h3 className="text-base font-bold text-blue-950 dark:text-blue-200 flex items-center space-x-2">
                       <span className="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-blue-400 inline-block"></span>
-                      <span>{renderHighlightedText(article.title)}</span>
+                      <span>{article.title}</span>
                     </h3>
 
                     {/* Article actions */}
@@ -226,10 +212,12 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
                     </div>
                   </div>
 
-                  {/* Article Content */}
-                  <div className={`whitespace-pre-wrap text-slate-700 dark:text-slate-300 ${fontClass}`}>
-                    {renderHighlightedText(article.content)}
-                  </div>
+                  {/* Formatted Article Typography Component */}
+                  <FormattedArticleContent
+                    content={article.content}
+                    keyword={keyword}
+                    fontClass={fontClass}
+                  />
                 </div>
               );
             })}
