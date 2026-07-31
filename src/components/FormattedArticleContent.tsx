@@ -48,6 +48,9 @@ function normalizeContent(raw: string): string[] {
       /^[1-9]\d*\.\s/.test(line) ||     // "1. ", "2. "
       /^[◎※附件]/.test(line) ||
       /^第[一二三四五六七八九十百千]+條/.test(line) ||
+      /^項次\s*\d+/.test(line) ||
+      /^【[^】]+】/.test(line) ||
+      /^[•\-*]/.test(line) ||
       '。；！？'.includes(prevLastChar) ||
       '）)'.includes(prevLastChar);
 
@@ -96,7 +99,7 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
   };
 
   return (
-    <div className={`space-y-1.5 ${fontClass}`}>
+    <div className={`space-y-2 ${fontClass}`}>
       {lines.map((line, idx) => {
         // Level 1: 一、二、三、… or 1. 2. 3.
         const m1 = line.match(/^([一二三四五六七八九十百千]+[、.]|[1-9]\d*[.、])\s*(.*)/s);
@@ -104,6 +107,13 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
         const m2 = line.match(/^([（(][一二三四五六七八九十百千0-9]+[）)])\s*(.*)/s);
         // Level 3: 1. 2. inside a sub-item (Arabic numerals under (一))
         const m3 = line.match(/^([1-9]\d*\.)\s+(.*)/s);
+        // Special Section Banner: 【...】
+        const mBanner = line.match(/^(【[^】]+】)\s*(.*)/s);
+        // Special Item Row: 項次 X
+        const mItem = line.match(/^(項次\s*\d+)\s*[:：｜|\s]\s*(.*)/s);
+        // Bullet point: • or -
+        const mBullet = line.match(/^[•\-*]\s*(.*)/s);
+
         // Section header line: 前項、本條 etc. short standalone statement
         const isAnnotation = /^◎/.test(line) || /^※/.test(line);
 
@@ -114,6 +124,57 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
               className="text-xs text-slate-500 dark:text-slate-400 italic border-t border-dashed border-slate-200 dark:border-slate-700 pt-2 mt-2"
             >
               {renderTextWithHighlights(line)}
+            </div>
+          );
+        }
+
+        if (mBanner) {
+          const [, title, rest] = mBanner;
+          return (
+            <div
+              key={idx}
+              className="mt-3 mb-2 p-2.5 rounded-xl bg-gradient-to-r from-blue-50 to-slate-50 dark:from-slate-800 dark:to-slate-800/60 border-l-4 border-blue-600 dark:border-blue-400 shadow-xs"
+            >
+              <div className="font-bold text-blue-900 dark:text-blue-300 text-sm flex items-center space-x-2">
+                <span>{title}</span>
+              </div>
+              {rest && (
+                <div className="mt-1 text-slate-700 dark:text-slate-300 text-xs">
+                  {renderTextWithHighlights(rest)}
+                </div>
+              )}
+            </div>
+          );
+        }
+
+        if (mItem) {
+          const [, itemTag, rest] = mItem;
+          return (
+            <div
+              key={idx}
+              className="flex flex-col sm:flex-row sm:items-center gap-2 p-2.5 my-1.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-700/60 hover:border-blue-300 dark:hover:border-blue-600 transition-all shadow-2xs"
+            >
+              <span className="flex-shrink-0 px-2.5 py-1 rounded-lg bg-blue-600 text-white dark:bg-blue-500 font-extrabold text-xs tracking-wide shadow-xs w-fit">
+                {itemTag}
+              </span>
+              <div className="flex-1 text-slate-800 dark:text-slate-200 font-medium leading-relaxed text-xs sm:text-sm">
+                {renderTextWithHighlights(rest)}
+              </div>
+            </div>
+          );
+        }
+
+        if (mBullet) {
+          const [, rest] = mBullet;
+          return (
+            <div
+              key={idx}
+              className="flex items-start gap-2 pl-4 py-1 text-slate-700 dark:text-slate-300 text-xs sm:text-sm"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400 flex-shrink-0 mt-2"></span>
+              <div className="flex-1 leading-relaxed">
+                {renderTextWithHighlights(rest)}
+              </div>
             </div>
           );
         }
@@ -171,7 +232,7 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
 
         // Normal paragraph
         return (
-          <p key={idx} className="leading-relaxed text-slate-700 dark:text-slate-300">
+          <p key={idx} className="leading-relaxed text-slate-700 dark:text-slate-300 py-0.5">
             {renderTextWithHighlights(line)}
           </p>
         );
