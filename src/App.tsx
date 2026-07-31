@@ -19,6 +19,7 @@ export const App: React.FC = () => {
   const [keyword, setKeyword] = useState<string>('');
   const [showBookmarksOnly, setShowBookmarksOnly] = useState<boolean>(false);
   const [isCalculatorOpen, setIsCalculatorOpen] = useState<boolean>(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
 
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => {
     try {
@@ -121,6 +122,8 @@ export const App: React.FC = () => {
         showBookmarksOnly={showBookmarksOnly}
         activeCategory={activeCategory}
         onSelectCategory={setActiveCategory}
+        isMobileSidebarOpen={isMobileSidebarOpen}
+        setIsMobileSidebarOpen={setIsMobileSidebarOpen}
       />
 
       {/* Main Layout Area */}
@@ -132,6 +135,8 @@ export const App: React.FC = () => {
           onSelectRegulation={setSelectedRegulationId}
           activeCategory={activeCategory}
           onSelectCategory={setActiveCategory}
+          isMobileOpen={isMobileSidebarOpen}
+          onCloseMobile={() => setIsMobileSidebarOpen(false)}
         />
 
         {/* Right Main Content Panel */}

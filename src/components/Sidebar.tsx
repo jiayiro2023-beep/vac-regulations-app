@@ -10,7 +10,8 @@ import {
   FolderCheck, 
   ChevronRight,
   Layers,
-  Sparkles
+  Sparkles,
+  X
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -19,6 +20,8 @@ interface SidebarProps {
   onSelectRegulation: (id: string) => void;
   activeCategory: CategoryType;
   onSelectCategory: (cat: CategoryType) => void;
+  isMobileOpen: boolean;
+  onCloseMobile: () => void;
 }
 
 const CATEGORY_ITEMS: { key: CategoryType; label: string; icon: any; color: string }[] = [
@@ -35,13 +38,28 @@ export const Sidebar: React.FC<SidebarProps> = ({
   selectedId,
   onSelectRegulation,
   activeCategory,
-  onSelectCategory
+  onSelectCategory,
+  isMobileOpen,
+  onCloseMobile
 }) => {
-  return (
-    <aside className="w-full lg:w-80 flex-shrink-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-[calc(100vh-4rem)] sticky top-16 no-print">
+  const content = (
+    <div className="flex flex-col h-full bg-white dark:bg-slate-900 border-r border-slate-200/80 dark:border-slate-800">
+      {/* Mobile Drawer Header */}
+      <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between lg:hidden">
+        <span className="text-sm font-bold text-slate-800 dark:text-slate-200">
+          法規分類與目錄
+        </span>
+        <button
+          onClick={onCloseMobile}
+          className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+
       {/* Category Pills Header */}
       <div className="p-4 border-b border-slate-100 dark:border-slate-800 space-y-2">
-        <h2 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+        <h2 className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
           法規類別導覽
         </h2>
         <div className="space-y-1">
@@ -55,8 +73,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
             return (
               <button
                 key={item.key}
-                onClick={() => onSelectCategory(item.key)}
-                className={`w-full flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg transition-all ${
+                onClick={() => {
+                  onSelectCategory(item.key);
+                }}
+                className={`w-full flex items-center justify-between px-3 py-2 text-xs font-medium rounded-xl transition-all ${
                   isSelected
                     ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-semibold border border-blue-200 dark:border-blue-800'
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-200'
@@ -84,13 +104,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="px-2 py-1 flex items-center justify-between text-xs font-medium text-slate-400">
           <span>法規文件列表 ({regulations.length})</span>
           <span className="text-[10px] text-blue-500 flex items-center gap-1">
-            <Sparkles className="w-3 h-3" /> 點擊檢視全文
+            <Sparkles className="w-3 h-3" /> 點擊檢視條文
           </span>
         </div>
 
         {regulations.length === 0 ? (
           <div className="p-8 text-center text-xs text-slate-400">
-            無符合搜尋條件之法規
+            無符合條件之法規
           </div>
         ) : (
           regulations.map((reg) => {
@@ -98,7 +118,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
             return (
               <button
                 key={reg.id}
-                onClick={() => onSelectRegulation(reg.id)}
+                onClick={() => {
+                  onSelectRegulation(reg.id);
+                  onCloseMobile();
+                }}
                 className={`w-full text-left p-3 rounded-xl border transition-all duration-200 group ${
                   isSelected
                     ? 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/70 dark:to-indigo-950/50 border-blue-300 dark:border-blue-700 shadow-sm'
@@ -125,13 +148,37 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <span className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-[10px]">
                     {reg.category}
                   </span>
-                  <span>{reg.articles.length} 條條文/篇章</span>
+                  <span>{reg.articles.length} 條條文/節</span>
                 </div>
               </button>
             );
           })
         )}
       </div>
-    </aside>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Desktop Sidebar (visible >= lg) */}
+      <aside className="hidden lg:flex w-80 flex-shrink-0 h-[calc(100vh-4rem)] sticky top-16 no-print">
+        {content}
+      </aside>
+
+      {/* Mobile Drawer (visible < lg when open) */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-40 lg:hidden flex">
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
+            onClick={onCloseMobile}
+          />
+          {/* Drawer content */}
+          <div className="relative w-80 max-w-[85vw] h-full shadow-2xl z-50">
+            {content}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
