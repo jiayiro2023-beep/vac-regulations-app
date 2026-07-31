@@ -35,6 +35,14 @@ function detectFormType(title: string): FormType {
 }
 
 export const VisualFormViewer: React.FC<VisualFormViewerProps> = ({ attachments }) => {
+  if (!attachments || attachments.length === 0) {
+    return (
+      <div className="bg-white dark:bg-slate-900 rounded-2xl p-8 border border-slate-200 dark:border-slate-800 text-center text-slate-500">
+        此法規文件無具象化附件表單，請點擊上方「條文全文」標籤檢視內容。
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-10">
       {attachments.map((att, idx) => {

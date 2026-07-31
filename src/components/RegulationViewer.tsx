@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Regulation } from '../data/regulations';
 import { Bookmark } from '../types';
 import { VisualFormViewer } from './VisualFormViewer';
@@ -29,6 +29,11 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
   const [fontSize, setFontSize] = useState<'sm' | 'md' | 'lg'>('md');
   const [showRawText, setShowRawText] = useState(false);
   const [activeTab, setActiveTab] = useState<'articles' | 'attachments'>('articles');
+
+  // Automatically reset tab to 'articles' when switching regulations
+  useEffect(() => {
+    setActiveTab('articles');
+  }, [regulation.id]);
 
   const handleCopyCitation = (articleTitle: string, articleContent: string) => {
     const textToCopy = `依據「${regulation.title}」${articleTitle}規定：\n「${articleContent.replace(/\n+/g, ' ')}」`;
