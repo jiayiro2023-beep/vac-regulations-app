@@ -7,6 +7,7 @@ export type FormType =
   | 'training_補助'
   | 'training_全額'
   | 'family_切結'
+  | 'edu_allowance_table'
   | 'generic';
 
 interface OfficialFormContainerProps {
@@ -525,6 +526,90 @@ const Form切結: React.FC = () => (
   </FormWrapper>
 );
 
+// ─── 就學補助生活津貼及獎勵核發金額表 ──────────────────────────────────────────────
+const FormEduAllowanceTable: React.FC = () => (
+  <FormWrapper>
+    <FormHeader
+      agency="國軍退除役官兵輔導委員會 官方公告核發金額標準表"
+      title="國軍退除役官兵就學補助生活津貼及獎勵核發金額表"
+      note="（中華民國 115 年 7 月 1 日生效 ｜ 幣別：新臺幣）"
+    />
+
+    <SectionLabel label="一、 國內就學學雜費補助金額標準" />
+    <div className="border border-slate-800 dark:border-slate-300 border-t-0 text-xs">
+      {/* 專科及大學 */}
+      <div className="bg-slate-800 text-white px-3 py-1 font-bold">【專科及大學學雜費補助】</div>
+      <div className="grid grid-cols-2 divide-x divide-slate-800 dark:divide-slate-300 border-b border-slate-800 dark:border-slate-300">
+        <div className="p-2.5 bg-slate-50 dark:bg-slate-900 space-y-1">
+          <div className="font-bold text-blue-700 dark:text-blue-300">公立學校</div>
+          <div>• 日間部：<span className="font-bold text-slate-900 dark:text-white">40,000 元</span> / 學期</div>
+          <div>• 進修部及進修學院：<span className="font-bold text-slate-900 dark:text-white">50,000 元</span> / 學期</div>
+        </div>
+        <div className="p-2.5 bg-slate-50 dark:bg-slate-900 space-y-1">
+          <div className="font-bold text-blue-700 dark:text-blue-300">私立學校</div>
+          <div>• 日間部：<span className="font-bold text-slate-900 dark:text-white">80,000 元</span> / 學期</div>
+          <div>• 進修部及進修學院：<span className="font-bold text-slate-900 dark:text-white">60,000 元</span> / 學期</div>
+        </div>
+      </div>
+
+      {/* 研究所 */}
+      <div className="bg-slate-800 text-white px-3 py-1 font-bold">【研究所學雜費補助】</div>
+      <div className="grid grid-cols-2 divide-x divide-slate-800 dark:divide-slate-300">
+        <div className="p-2.5 space-y-1">
+          <div className="font-bold text-blue-700 dark:text-blue-300">公立研究所</div>
+          <div>• 有職業：<span className="font-bold text-emerald-700 dark:text-emerald-300">30,000 元</span> / 學期</div>
+          <div>• 無職業：<span className="font-bold text-slate-900 dark:text-white">20,000 元</span> / 學期</div>
+        </div>
+        <div className="p-2.5 space-y-1">
+          <div className="font-bold text-blue-700 dark:text-blue-300">私立研究所</div>
+          <div>• 有職業：<span className="font-bold text-emerald-700 dark:text-emerald-300">50,000 元</span> / 學期</div>
+          <div>• 無職業：<span className="font-bold text-slate-900 dark:text-white">40,000 元</span> / 學期</div>
+        </div>
+      </div>
+    </div>
+
+    <SectionLabel label="二、 國內成績優異獎勵金與就學生活津貼" />
+    <div className="border border-slate-800 dark:border-slate-300 border-t-0 text-xs divide-y divide-slate-800 dark:divide-slate-300">
+      <div className="p-3 bg-slate-50 dark:bg-slate-900 space-y-1.5">
+        <div className="font-bold text-slate-900 dark:text-white">【成績優異獎勵金】（每名 10,000 元）</div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-slate-700 dark:text-slate-300">
+          <div>• 專科及大學 公立：每學期限 50 名</div>
+          <div>• 專科及大學 私立：每學期限 100 名</div>
+          <div>• 研究所 公立：每學期限 50 名</div>
+          <div>• 研究所 私立：每學期限 50 名</div>
+        </div>
+      </div>
+      <div className="p-3 bg-amber-50 dark:bg-amber-950/40 flex items-center justify-between gap-4">
+        <div>
+          <div className="font-bold text-amber-900 dark:text-amber-200">【國內就學生活津貼】</div>
+          <div className="text-[11px] text-amber-700 dark:text-amber-300">發給對象：具有中低收入戶或低收入戶資格之退除役官兵</div>
+        </div>
+        <div className="text-base font-extrabold text-amber-900 dark:text-amber-100 bg-amber-200 dark:bg-amber-900 px-3 py-1 rounded border border-amber-400 dark:border-amber-700">
+          每月 8,429 元
+        </div>
+      </div>
+    </div>
+
+    <SectionLabel label="三、 國外就學補助與生活津貼" />
+    <div className="border border-slate-800 dark:border-slate-300 border-t-0 text-xs p-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div className="p-2.5 bg-slate-50 dark:bg-slate-900 rounded border border-slate-300 dark:border-slate-700">
+        <div className="font-bold text-blue-700 dark:text-blue-300">【國外學雜費補助】</div>
+        <div className="mt-1 font-extrabold text-sm text-slate-900 dark:text-white">50,000 元</div>
+      </div>
+      <div className="p-2.5 bg-slate-50 dark:bg-slate-900 rounded border border-slate-300 dark:border-slate-700">
+        <div className="font-bold text-amber-700 dark:text-amber-300">【國外就學生活津貼】</div>
+        <div className="mt-1 text-[11px] text-slate-500">具中低／低收入戶資格</div>
+        <div className="font-extrabold text-sm text-amber-800 dark:text-amber-200">每月 8,429 元</div>
+      </div>
+    </div>
+
+    <SectionLabel label="行政院公報刊載證明與決行章" />
+    <div className="border border-slate-800 dark:border-slate-300 border-t-0">
+      <StampBox columns={['輔導會會長簽章', '副會長審核章', '行政院公報備查章']} />
+    </div>
+  </FormWrapper>
+);
+
 // ─── 通用官方表格 ──────────────────────────────────────────────────────────────
 const FormGeneric: React.FC<{ rawTitle?: string; rawContent?: string }> = ({ rawTitle, rawContent }) => (
   <FormWrapper>
@@ -562,6 +647,8 @@ export const OfficialFormContainer: React.FC<OfficialFormContainerProps> = ({
       return <Form全額 />;
     case 'family_切結':
       return <Form切結 />;
+    case 'edu_allowance_table':
+      return <FormEduAllowanceTable />;
     default:
       return <FormGeneric rawTitle={rawTitle} rawContent={rawContent} />;
   }

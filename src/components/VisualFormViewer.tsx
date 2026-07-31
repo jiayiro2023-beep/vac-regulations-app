@@ -9,6 +9,9 @@ interface VisualFormViewerProps {
 
 function detectFormType(title: string): FormType {
   const t = title;
+  if (t.includes('就學補助') || t.includes('核發金額') || t.includes('金額表')) {
+    return 'edu_allowance_table';
+  }
   if (t.includes('備案') || t.includes('附件一') || t.includes('附件 一')) {
     return 'training_备案';
   }
