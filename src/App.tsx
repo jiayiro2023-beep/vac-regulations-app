@@ -58,15 +58,10 @@ export const App: React.FC = () => {
     });
   };
 
-  // Filter regulations based on category, keyword, and bookmarks mode
+  // Filter regulations based on keyword and bookmarks mode
   const filteredRegulations = useMemo(() => {
     return REGULATIONS_DATA.filter(reg => {
-      // 1. Category Filter
-      if (activeCategory !== 'ALL' && reg.category !== activeCategory) {
-        return false;
-      }
-
-      // 2. Bookmarks Filter
+      // 1. Bookmarks Filter
       if (showBookmarksOnly) {
         const hasBookmarkedArticle = reg.articles.some(art =>
           bookmarks.some(b => b.regulationId === reg.id && b.articleTitle === art.title)

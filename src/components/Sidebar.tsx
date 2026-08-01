@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Regulation } from '../data/regulations';
 import { CategoryType } from '../types';
 import { 
@@ -9,7 +9,7 @@ import {
   Users, 
   FolderCheck, 
   ChevronRight,
-  Layers,
+  ChevronDown,
   Sparkles,
   X
 } from 'lucide-react';
@@ -24,24 +24,44 @@ interface SidebarProps {
   onCloseMobile: () => void;
 }
 
-const CATEGORY_ITEMS: { key: CategoryType; label: string; icon: any; color: string }[] = [
-  { key: 'ALL', label: '全部法規與附表', icon: Layers, color: 'text-slate-500' },
-  { key: '就業與津貼', label: '就業與穩定津貼', icon: Briefcase, color: 'text-blue-500' },
-  { key: '職業訓練', label: '職業訓練與參照表', icon: Award, color: 'text-emerald-500' },
-  { key: '就學與進修', label: '就學與大專進修', icon: GraduationCap, color: 'text-indigo-500' },
-  { key: '考試與公營名冊', label: '就業考試與公營名冊', icon: FolderCheck, color: 'text-amber-500' },
-  { key: '眷屬權益', label: '眷屬職訓計畫', icon: Users, color: 'text-rose-500' }
+const CATEGORY_ITEMS: { key: string; label: string; icon: any; color: string }[] = [
+  { key: '就業與津貼', label: '就業與穩定津貼', icon: Briefcase, color: 'text-blue-500 dark:text-blue-400' },
+  { key: '職業訓練', label: '職業訓練與參照表', icon: Award, color: 'text-emerald-500 dark:text-emerald-400' },
+  { key: '就學與進修', label: '就學與大專進修', icon: GraduationCap, color: 'text-indigo-500 dark:text-indigo-400' },
+  { key: '考試與公營名冊', label: '就業考試與公營名冊', icon: FolderCheck, color: 'text-amber-500 dark:text-amber-400' },
+  { key: '眷屬權益', label: '眷屬職訓計畫', icon: Users, color: 'text-rose-500 dark:text-rose-400' }
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({
   regulations,
   selectedId,
   onSelectRegulation,
-  activeCategory,
-  onSelectCategory,
   isMobileOpen,
   onCloseMobile
 }) => {
+  // Find the selected regulation to auto-expand its category
+  const selectedRegulation = regulations.find(r => r.id === selectedId);
+  const selectedCategory = selectedRegulation?.category;
+
+  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
+
+  // Auto-expand the category of the selected regulation when selectedId or selectedCategory changes
+  useEffect(() => {
+    if (selectedCategory) {
+      setExpandedCategories(prev => ({
+        ...prev,
+        [selectedCategory]: true
+      }));
+    }
+  }, [selectedCategory]);
+
+  const toggleCategory = (category: string) => {
+    setExpandedCategories(prev => ({
+      ...prev,
+      [category]: !prev[category]
+    }));
+  };
+
   const content = (
     <div className="flex flex-col h-full bg-white dark:bg-slate-900 border-r border-slate-200/80 dark:border-slate-800">
       {/* Mobile Drawer Header */}
@@ -57,103 +77,100 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </button>
       </div>
 
-      {/* Category Pills Header */}
-      <div className="p-4 border-b border-slate-100 dark:border-slate-800 space-y-2">
-        <h2 className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-          法規類別導覽
-        </h2>
-        <div className="space-y-1">
-          {CATEGORY_ITEMS.map((item) => {
-            const Icon = item.icon;
-            const isSelected = activeCategory === item.key;
-            const count = item.key === 'ALL'
-              ? regulations.length 
-              : regulations.filter(r => r.category === item.key).length;
-
-            return (
-              <button
-                key={item.key}
-                onClick={() => {
-                  onSelectCategory(item.key);
-                }}
-                className={`w-full flex items-center justify-between px-3 py-2 text-xs font-medium rounded-xl transition-all ${
-                  isSelected
-                    ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-semibold border border-blue-200 dark:border-blue-800'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-200'
-                }`}
-              >
-                <div className="flex items-center space-x-2.5">
-                  <Icon className={`w-4 h-4 ${isSelected ? 'text-blue-600 dark:text-blue-400' : item.color}`} />
-                  <span>{item.label}</span>
-                </div>
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                  isSelected 
-                    ? 'bg-blue-200 dark:bg-blue-900 text-blue-800 dark:text-blue-200' 
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
-                }`}>
-                  {count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Regulation Items List */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-1.5">
-        <div className="px-2 py-1 flex items-center justify-between text-xs font-medium text-slate-400">
-          <span>法規文件列表 ({regulations.length})</span>
-          <span className="text-[10px] text-blue-500 flex items-center gap-1">
-            <Sparkles className="w-3 h-3" /> 點擊檢視條文
+      {/* Single Scrollable Container */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {/* Header Intro */}
+        <div className="px-2 py-1 flex items-center justify-between text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+          <span>法規類別目錄</span>
+          <span className="text-[10px] text-blue-500 dark:text-blue-400 flex items-center gap-1 normal-case font-bold">
+            <Sparkles className="w-3 h-3" /> 點擊展開分類
           </span>
         </div>
 
-        {regulations.length === 0 ? (
-          <div className="p-8 text-center text-xs text-slate-400">
-            無符合條件之法規
-          </div>
-        ) : (
-          regulations.map((reg) => {
-            const isSelected = reg.id === selectedId;
+        {/* Categories Accordion */}
+        <div className="space-y-2">
+          {CATEGORY_ITEMS.map((item) => {
+            const Icon = item.icon;
+            const categoryRegs = regulations.filter(r => r.category === item.key);
+            const isExpanded = !!expandedCategories[item.key];
+            const hasSelectedInCat = selectedCategory === item.key;
+
+            // If a search or bookmark filter is active, and there are no matching regulations under this category, hide the category header.
+            if (categoryRegs.length === 0) return null;
+
             return (
-              <button
-                key={reg.id}
-                onClick={() => {
-                  onSelectRegulation(reg.id);
-                  onCloseMobile();
-                }}
-                className={`w-full text-left p-3 rounded-xl border transition-all duration-200 group ${
-                  isSelected
-                    ? 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/70 dark:to-indigo-950/50 border-blue-300 dark:border-blue-700 shadow-sm'
-                    : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50/60 dark:hover:bg-slate-800/40'
+              <div 
+                key={item.key} 
+                className={`rounded-2xl border transition-all duration-200 ${
+                  hasSelectedInCat
+                    ? 'border-blue-100 dark:border-blue-900 bg-slate-50/10 dark:bg-slate-900/10'
+                    : 'border-slate-100 dark:border-slate-800/80 bg-white dark:bg-slate-950/20'
                 }`}
               >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center space-x-2">
-                    <FileText className={`w-4 h-4 mt-0.5 flex-shrink-0 ${
-                      isSelected ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 dark:text-slate-500'
-                    }`} />
-                    <span className={`text-xs font-semibold leading-snug line-clamp-2 ${
-                      isSelected ? 'text-blue-900 dark:text-blue-100' : 'text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400'
+                {/* Category Header Button */}
+                <button
+                  onClick={() => toggleCategory(item.key)}
+                  className={`w-full flex items-center justify-between p-3 text-sm font-bold transition-all rounded-2xl ${
+                    isExpanded 
+                      ? 'text-blue-600 dark:text-blue-400 bg-slate-50/80 dark:bg-slate-800/50' 
+                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50/60 dark:hover:bg-slate-800/30'
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className={`p-2 rounded-xl transition-all ${
+                      isExpanded 
+                        ? 'bg-blue-100/80 dark:bg-blue-950/60' 
+                        : 'bg-slate-100/80 dark:bg-slate-850'
                     }`}>
-                      {reg.title}
-                    </span>
+                      <Icon className={`w-4 h-4 ${isExpanded ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500'}`} />
+                    </div>
+                    <span className="text-xs tracking-wide">{item.label}</span>
                   </div>
-                  <ChevronRight className={`w-3.5 h-3.5 flex-shrink-0 mt-0.5 transition-transform ${
-                    isSelected ? 'text-blue-600 dark:text-blue-400 translate-x-0.5' : 'text-slate-300 dark:text-slate-600 opacity-0 group-hover:opacity-100'
-                  }`} />
-                </div>
-                
-                <div className="mt-2 flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500">
-                  <span className="px-1.5 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-[10px]">
-                    {reg.category}
-                  </span>
-                  <span>{reg.articles.length} 條條文/節</span>
-                </div>
-              </button>
+                  {isExpanded ? (
+                    <ChevronDown className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                  ) : (
+                    <ChevronRight className="w-4 h-4 text-slate-400" />
+                  )}
+                </button>
+
+                {/* Submenu: Regulations List */}
+                {isExpanded && (
+                  <div className="p-2 space-y-1 border-t border-slate-100/60 dark:border-slate-800/60 bg-white/40 dark:bg-slate-950/20 rounded-b-2xl">
+                    {categoryRegs.map((reg) => {
+                      const isSelected = reg.id === selectedId;
+                      return (
+                        <button
+                          key={reg.id}
+                          onClick={() => {
+                            onSelectRegulation(reg.id);
+                            onCloseMobile();
+                          }}
+                          className={`w-full text-left py-2.5 px-3 rounded-xl transition-all flex items-start space-x-2 group ${
+                            isSelected
+                              ? 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/80 dark:to-indigo-950/40 text-blue-700 dark:text-blue-300 border-l-2 border-blue-500 dark:border-blue-400 font-bold'
+                              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50/80 dark:hover:bg-slate-900 hover:text-blue-600 dark:hover:text-slate-200'
+                          }`}
+                        >
+                          <FileText className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${
+                            isSelected ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400'
+                          }`} />
+                          <div className="flex-1 min-w-0">
+                            <span className="text-xs leading-snug line-clamp-2">
+                              {reg.title}
+                            </span>
+                            <span className="text-[10px] text-slate-400 block mt-0.5 font-normal">
+                              {reg.articles.length} 條/節
+                            </span>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             );
-          })
-        )}
+          })}
+        </div>
       </div>
     </div>
   );
