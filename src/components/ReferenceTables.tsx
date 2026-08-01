@@ -1,6 +1,6 @@
 import React from 'react';
 import { Regulation } from '../data/regulations';
-import { Building2, Award, Table, CheckCircle2 } from 'lucide-react';
+import { Award } from 'lucide-react';
 
 interface ReferenceTablesProps {
   regulation: Regulation;
@@ -8,7 +8,6 @@ interface ReferenceTablesProps {
 
 export const ReferenceTables: React.FC<ReferenceTablesProps> = ({ regulation }) => {
   const isAmountTable = regulation.title.includes("就學補助生活津貼及獎勵核發金額表");
-  const isPublicEnterprise = regulation.title.includes("公營事業機構參考名冊");
 
   if (isAmountTable) {
     return (
@@ -119,42 +118,6 @@ export const ReferenceTables: React.FC<ReferenceTablesProps> = ({ regulation }) 
               </tr>
             </tbody>
           </table>
-        </div>
-      </div>
-    );
-  }
-
-  if (isPublicEnterprise) {
-    const orgs = [
-      { name: "台灣電力股份有限公司 (台電)", type: "國營事業", note: "包含專科以上層級公開甄試" },
-      { name: "台灣自來水股份有限公司 (台水)", type: "國營事業", note: "評價職務與職員公開招考" },
-      { name: "台灣中油股份有限公司 (中油)", type: "國營事業", note: "僱用人員與新進職員招考" },
-      { name: "台灣糖業股份有限公司 (台糖)", type: "國營事業", note: "新進人員甄試" },
-      { name: "中華郵政股份有限公司", type: "國營公司", note: "職缺公開甄選" },
-      { name: "臺灣菸酒股份有限公司 (台酒)", type: "國營公司", note: "從業人員招考" },
-      { name: "財政部印刷廠", type: "事業機構", note: "公開甄選" },
-      { name: "中央造幣廠 / 中央印製廠", type: "中央銀行所屬", note: "公開新進人員甄試" }
-    ];
-
-    return (
-      <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-        <div className="flex items-center space-x-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-          <Building2 className="w-5 h-5 text-blue-600" />
-          <h3 className="text-base font-bold text-slate-900 dark:text-white">
-            辦理公開招考之公營事業機構參考名冊 (113年版)
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {orgs.map((org, i) => (
-            <div key={i} className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 flex items-start space-x-3">
-              <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
-              <div>
-                <div className="text-xs font-bold text-slate-900 dark:text-white">{org.name}</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{org.note}</div>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     );

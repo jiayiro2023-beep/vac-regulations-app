@@ -28,7 +28,7 @@ const CATEGORY_ITEMS: { key: string; label: string; icon: any; color: string }[]
   { key: '就業與津貼', label: '就業與穩定津貼', icon: Briefcase, color: 'text-blue-500 dark:text-blue-400' },
   { key: '職業訓練', label: '職業訓練與參照表', icon: Award, color: 'text-emerald-500 dark:text-emerald-400' },
   { key: '就學與進修', label: '就學與大專進修', icon: GraduationCap, color: 'text-indigo-500 dark:text-indigo-400' },
-  { key: '考試與公營名冊', label: '就業考試與公營名冊', icon: FolderCheck, color: 'text-amber-500 dark:text-amber-400' },
+  { key: '國家考試', label: '國家考試', icon: FolderCheck, color: 'text-amber-500 dark:text-amber-400' },
   { key: '眷屬權益', label: '眷屬職訓計畫', icon: Users, color: 'text-rose-500 dark:text-rose-400' }
 ];
 

@@ -3,7 +3,7 @@ export type CategoryType =
   | '就業與津貼' 
   | '職業訓練' 
   | '就學與進修' 
-  | '考試與公營名冊' 
+  | '國家考試' 
   | '眷屬權益';
 
 export interface SearchFilter {
