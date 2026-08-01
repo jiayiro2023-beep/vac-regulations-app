@@ -7,6 +7,7 @@ import { SearchBar } from './components/SearchBar';
 import { RegulationViewer } from './components/RegulationViewer';
 import { CalculatorModal } from './components/CalculatorModal';
 import { ReferenceTables } from './components/ReferenceTables';
+import { HomeView } from './components/HomeView';
 
 export const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
@@ -15,7 +16,7 @@ export const App: React.FC = () => {
   });
 
   const [activeCategory, setActiveCategory] = useState<CategoryType>('ALL');
-  const [selectedRegulationId, setSelectedRegulationId] = useState<string>(REGULATIONS_DATA[0].id);
+  const [selectedRegulationId, setSelectedRegulationId] = useState<string | null>(null);
   const [keyword, setKeyword] = useState<string>('');
   const [showBookmarksOnly, setShowBookmarksOnly] = useState<boolean>(false);
   const [isCalculatorOpen, setIsCalculatorOpen] = useState<boolean>(false);
@@ -102,8 +103,8 @@ export const App: React.FC = () => {
 
   // Active regulation
   const currentRegulation = useMemo(() => {
-    return REGULATIONS_DATA.find(r => r.id === selectedRegulationId) || filteredRegulations[0] || REGULATIONS_DATA[0];
-  }, [selectedRegulationId, filteredRegulations]);
+    return REGULATIONS_DATA.find(r => r.id === selectedRegulationId) || null;
+  }, [selectedRegulationId]);
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 transition-colors">
@@ -116,7 +117,12 @@ export const App: React.FC = () => {
         onToggleBookmarksOnly={() => setShowBookmarksOnly(!showBookmarksOnly)}
         showBookmarksOnly={showBookmarksOnly}
         activeCategory={activeCategory}
-        onSelectCategory={setActiveCategory}
+        onSelectCategory={(cat) => {
+          setActiveCategory(cat);
+          if (cat === 'ALL') {
+            setSelectedRegulationId(null);
+          }
+        }}
         isMobileSidebarOpen={isMobileSidebarOpen}
         setIsMobileSidebarOpen={setIsMobileSidebarOpen}
       />
@@ -159,9 +165,10 @@ export const App: React.FC = () => {
               onToggleBookmark={handleToggleBookmark}
             />
           ) : (
-            <div className="flex-1 flex items-center justify-center p-12 text-slate-400">
-              請由左側選擇法規或調整搜尋關鍵字
-            </div>
+            <HomeView
+              onSelectRegulation={setSelectedRegulationId}
+              onOpenCalculator={() => setIsCalculatorOpen(true)}
+            />
           )}
         </main>
       </div>
