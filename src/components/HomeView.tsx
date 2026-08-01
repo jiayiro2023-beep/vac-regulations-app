@@ -19,11 +19,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
   onSelectRegulation,
   onOpenCalculator
 }) => {
-  // Find key regulations for quick access cards
   const quickLinks = [
     {
       title: "穩定就業津貼作業說明",
-      desc: "包含第一類與第二類退除役官兵穩定就業津貼最新核發標準",
+      desc: "第一類與第二類退除役官兵穩定就業津貼核發標準",
       id: "促進退除役官兵穩定就業津貼發給辦法作業說明_114.12.24修訂___1__pdf",
       icon: Briefcase,
       color: "from-blue-500/20 to-indigo-500/20 text-blue-600 dark:text-blue-400 border-blue-200/60 dark:border-blue-800/60"
@@ -52,107 +51,112 @@ export const HomeView: React.FC<HomeViewProps> = ({
   ];
 
   return (
-    <div className="flex-1 max-w-4xl mx-auto w-full p-6 sm:p-8 space-y-8 animate-fadeIn">
+    <div className="flex-1 max-w-4xl mx-auto w-full px-4 py-5 sm:px-6 sm:py-8 space-y-6 sm:space-y-8 animate-fadeIn">
+      
       {/* Hero Welcome Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-tr from-slate-900 via-indigo-950 to-slate-900 dark:from-slate-900 dark:via-blue-950/40 dark:to-slate-900 border border-slate-200 dark:border-slate-800 p-8 shadow-xl text-white">
-        {/* Glow effect */}
-        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
+      <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-tr from-slate-900 via-indigo-950 to-slate-900 dark:from-slate-900 dark:via-blue-950/40 dark:to-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-8 shadow-xl text-white">
+        {/* Glow */}
+        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-48 h-48 sm:w-64 sm:h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
         
-        <div className="relative space-y-4">
-          <span className="px-3 py-1 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">
+        <div className="relative space-y-3">
+          <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">
             退輔會承辦人法規助手
           </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
-            歡迎使用 退輔會法規檢索系統
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent leading-tight">
+            歡迎使用<br className="sm:hidden" /> 退輔會法規檢索系統
           </h2>
-          <p className="text-sm text-slate-300 max-w-xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
             本平台為輔導會就學、就業、職訓及國考相關法規與津貼標準之專用查詢入口。已整合 115 年最新生效標準與智慧型津貼試算器。
           </p>
         </div>
       </div>
 
       {/* Guide Steps Cards */}
-      <div className="space-y-4">
-        <h3 className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider pl-1">
+      <div className="space-y-3">
+        <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider pl-1">
           系統使用指引
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                <Search className="w-5 h-5" />
-              </div>
+        {/* 3-col on sm+, stacked on xs */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {/* Card 1 */}
+          <div className="flex sm:flex-col items-start gap-3 p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 flex items-center justify-center text-blue-600 dark:text-blue-400 flex-shrink-0">
+              <Search className="w-4 h-4 sm:w-5 sm:h-5" />
+            </div>
+            <div className="min-w-0">
               <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">
                 1. 全文即時檢索
               </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                在上方搜尋列中輸入任何關鍵字，即可在全部法規的條文、附件與附表中進行全文即時搜尋。
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
+                在上方搜尋列輸入關鍵字，即可全文即時搜尋所有法規條文。
               </p>
             </div>
           </div>
 
-          <div className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 dark:text-amber-400">
-                <Bookmark className="w-5 h-5" />
-              </div>
+          {/* Card 2 */}
+          <div className="flex sm:flex-col items-start gap-3 p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 dark:text-amber-400 flex-shrink-0">
+              <Bookmark className="w-4 h-4 sm:w-5 sm:h-5" />
+            </div>
+            <div className="min-w-0">
               <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">
                 2. 快速書籤儲存
               </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                點擊法規條文旁的書籤按鈕，可將常用條文收藏在瀏覽器中，方便日後透過右上角「已書籤」快速篩選。
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
+                點擊條文旁書籤按鈕，可收藏常用條文，透過「已書籤」快速篩選。
               </p>
             </div>
           </div>
 
-          <div className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-                <Calculator className="w-5 h-5" />
-              </div>
+          {/* Card 3 — with CTA */}
+          <div className="flex sm:flex-col items-start gap-3 p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400 flex-shrink-0">
+              <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
               <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">
                 3. 津貼金額試算
               </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                點擊右上角「津貼與試算器」，只需簡單勾選身分，即可自動計算穩定就業津貼、就學生活津貼等金額。
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
+                點擊「試算」開啟計算機，自動計算第二類退除役官兵未足月津貼。
               </p>
+              <button 
+                onClick={onOpenCalculator}
+                className="mt-3 flex items-center justify-between w-full px-3 py-2 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 font-semibold text-xs rounded-xl hover:bg-emerald-100 dark:hover:bg-emerald-900/30 transition-colors border border-emerald-200/50 dark:border-emerald-800/50"
+              >
+                <span>立即開啟試算器</span>
+                <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
+              </button>
             </div>
-            <button 
-              onClick={onOpenCalculator}
-              className="mt-4 flex items-center justify-between w-full px-3 py-2 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 font-semibold text-xs rounded-xl hover:bg-emerald-100 transition-colors border border-emerald-200/50 dark:border-emerald-800/50"
-            >
-              <span>立即開啟試算器</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
           </div>
         </div>
       </div>
 
       {/* Quick Entry Section */}
-      <div className="space-y-4">
-        <h3 className="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider pl-1">
+      <div className="space-y-3">
+        <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider pl-1">
           常用法規快速通道
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {quickLinks.map((link, idx) => {
             const Icon = link.icon;
             return (
               <button
                 key={idx}
                 onClick={() => onSelectRegulation(link.id)}
-                className="w-full text-left p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800/80 hover:border-blue-400 dark:hover:border-blue-600 shadow-2xs hover:shadow-sm transition-all duration-200 group flex items-start space-x-4"
+                className="w-full text-left p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800/80 hover:border-blue-400 dark:hover:border-blue-600 shadow-xs hover:shadow-sm transition-all duration-200 group flex items-start gap-3"
               >
-                <div className={`p-3 rounded-xl bg-gradient-to-br ${link.color} flex-shrink-0`}>
-                  <Icon className="w-5 h-5" />
+                <div className={`p-2.5 rounded-xl bg-gradient-to-br ${link.color} flex-shrink-0`}>
+                  <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <div className="flex-1 min-w-0 space-y-1">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between gap-1">
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">
                       {link.title}
                     </h4>
-                    <ArrowRight className="w-4 h-4 text-slate-300 dark:text-slate-700 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all flex-shrink-0" />
+                    <ArrowRight className="w-3.5 h-3.5 text-slate-300 dark:text-slate-700 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-0.5" />
                   </div>
-                  <p className="text-xs text-slate-450 dark:text-slate-400 leading-normal line-clamp-2">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-normal mt-0.5 line-clamp-2">
                     {link.desc}
                   </p>
                 </div>

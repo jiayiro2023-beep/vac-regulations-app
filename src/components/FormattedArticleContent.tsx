@@ -35,17 +35,10 @@ function normalizeContent(raw: string): string[] {
     const prevLastChar = prev[prev.length - 1];
     const lineFirstChar = line[0];
 
-    // Starts a new paragraph if:
-    //  1. Current line starts with a numbered bullet (一、二、 etc.)
-    //  2. Current line starts with (一) (二) etc.
-    //  3. Previous line ended with "：" "。" "；" "！" "？" ")" "）"
-    //  4. Current line starts with "第" (new article reference)
-    //  5. Current line starts with "◎" "※" "附件"
-    //  6. Prev line ended in digit + "元" or "月"
     const startsNewBlock =
       /^[一二三四五六七八九十百千]+[、.]/.test(line) ||
       /^[（\(][一二三四五六七八九十百千0-9]+[）\)]/.test(line) ||
-      /^[1-9]\d*\.\s/.test(line) ||     // "1. ", "2. "
+      /^[1-9]\d*\.\s/.test(line) ||
       /^[◎※附件]/.test(line) ||
       /^第[一二三四五六七八九十百千]+條/.test(line) ||
       /^項次\s*\d+/.test(line) ||
@@ -57,7 +50,6 @@ function normalizeContent(raw: string): string[] {
     if (startsNewBlock) {
       merged.push(line);
     } else {
-      // Check if we should join: prev ends in CJK / letter, next starts in CJK
       const prevIsCjkEnd = /[\u4e00-\u9fa5\uff01-\uff5e（）、。；，]$/.test(prev);
       const lineIsCjkStart = /^[\u4e00-\u9fa5\uff01-\uff5e（）、。；，(]/.test(lineFirstChar);
 
@@ -105,7 +97,7 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
         const m1 = line.match(/^([一二三四五六七八九十百千]+[、.]|[1-9]\d*[.、])\s*(.*)/s);
         // Level 2: (一) (二) （一）（二）
         const m2 = line.match(/^([（(][一二三四五六七八九十百千0-9]+[）)])\s*(.*)/s);
-        // Level 3: 1. 2. inside a sub-item (Arabic numerals under (一))
+        // Level 3: 1. 2. inside a sub-item
         const m3 = line.match(/^([1-9]\d*\.)\s+(.*)/s);
         // Special Section Banner: 【...】
         const mBanner = line.match(/^(【[^】]+】)\s*(.*)/s);
@@ -114,7 +106,6 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
         // Bullet point: • or -
         const mBullet = line.match(/^[•\-*]\s*(.*)/s);
 
-        // Section header line: 前項、本條 etc. short standalone statement
         const isAnnotation = /^◎/.test(line) || /^※/.test(line);
 
         if (isAnnotation) {
@@ -152,7 +143,8 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
           return (
             <div
               key={idx}
-              className="flex flex-col sm:flex-row sm:items-center gap-2 p-2.5 my-1.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-700/60 hover:border-blue-300 dark:hover:border-blue-600 transition-all shadow-2xs"
+              // Stack vertically on mobile, horizontal on sm+
+              className="flex flex-col sm:flex-row sm:items-start gap-2 p-3 my-1.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-700/60 hover:border-blue-300 dark:hover:border-blue-600 transition-all shadow-xs"
             >
               <span className="flex-shrink-0 px-2.5 py-1 rounded-lg bg-blue-600 text-white dark:bg-blue-500 font-extrabold text-xs tracking-wide shadow-xs w-fit">
                 {itemTag}
@@ -169,9 +161,9 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
           return (
             <div
               key={idx}
-              className="flex items-start gap-2 pl-4 py-1 text-slate-700 dark:text-slate-300 text-xs sm:text-sm"
+              className="flex items-start gap-2 pl-2 sm:pl-4 py-1 text-slate-700 dark:text-slate-300 text-xs sm:text-sm"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400 flex-shrink-0 mt-2"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400 flex-shrink-0 mt-2" />
               <div className="flex-1 leading-relaxed">
                 {renderTextWithHighlights(rest)}
               </div>
@@ -184,9 +176,9 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
           return (
             <div
               key={idx}
-              className="flex items-start gap-2.5 py-2 px-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-800 my-1"
+              className="flex items-start gap-2 sm:gap-2.5 py-2 px-2.5 sm:px-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-800 my-1"
             >
-              <span className="flex-shrink-0 mt-0.5 min-w-[2rem] text-center px-1.5 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200 font-bold text-xs border border-blue-200 dark:border-blue-800">
+              <span className="flex-shrink-0 mt-0.5 min-w-[1.75rem] sm:min-w-[2rem] text-center px-1 sm:px-1.5 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/60 text-blue-800 dark:text-blue-200 font-bold text-xs border border-blue-200 dark:border-blue-800">
                 {num}
               </span>
               <div className="flex-1 text-slate-800 dark:text-slate-200 leading-relaxed">
@@ -201,7 +193,7 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
           return (
             <div
               key={idx}
-              className="flex items-start gap-2 pl-6 pr-2 py-1.5 my-0.5 border-l-2 border-indigo-300 dark:border-indigo-600 text-slate-700 dark:text-slate-300"
+              className="flex items-start gap-2 pl-3 sm:pl-6 pr-2 py-1.5 my-0.5 border-l-2 border-indigo-300 dark:border-indigo-600 text-slate-700 dark:text-slate-300"
             >
               <span className="flex-shrink-0 font-bold text-indigo-600 dark:text-indigo-400 text-xs mt-0.5">
                 {num}
@@ -218,7 +210,7 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
           return (
             <div
               key={idx}
-              className="flex items-start gap-2 pl-10 pr-2 py-1 my-0.5 text-slate-600 dark:text-slate-400 text-xs"
+              className="flex items-start gap-2 pl-5 sm:pl-10 pr-2 py-1 my-0.5 text-slate-600 dark:text-slate-400 text-xs"
             >
               <span className="flex-shrink-0 font-semibold text-slate-500 dark:text-slate-400">
                 {num}

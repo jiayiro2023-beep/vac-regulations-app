@@ -36,32 +36,35 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <header className="sticky top-0 z-30 w-full border-b border-slate-200/80 dark:border-slate-800 glass-panel shadow-sm no-print transition-colors">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2">
         
-        {/* Left branding & mobile menu toggle */}
-        <div className="flex items-center space-x-2.5">
-          {/* Mobile sidebar toggle button */}
+        {/* Left: mobile menu + brand */}
+        <div className="flex items-center gap-2 min-w-0">
+          {/* Mobile sidebar toggle */}
           <button
             onClick={() => setIsMobileSidebarOpen(prev => !prev)}
-            className="p-2 rounded-xl lg:hidden text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition-all"
+            className="p-2 rounded-xl lg:hidden text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95 transition-all flex-shrink-0"
             aria-label="切換選單"
           >
             {isMobileSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5 text-blue-600 dark:text-blue-400" />}
           </button>
 
+          {/* Brand */}
           <div 
-            className="flex items-center space-x-2.5 cursor-pointer select-none group" 
+            className="flex items-center gap-2 cursor-pointer select-none group min-w-0" 
             onClick={() => onSelectCategory('ALL')}
           >
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-700 via-indigo-600 to-sky-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
-              <BookOpen className="w-5 h-5" />
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-blue-700 via-indigo-600 to-sky-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform flex-shrink-0">
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <div className="flex items-center space-x-1.5">
-                <h1 className="text-base sm:text-lg font-bold bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 dark:from-white dark:via-blue-100 dark:to-indigo-200 bg-clip-text text-transparent">
-                  退輔會法規檢索
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {/* xs: short title; sm+: full title */}
+                <h1 className="text-sm sm:text-lg font-bold bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 dark:from-white dark:via-blue-100 dark:to-indigo-200 bg-clip-text text-transparent whitespace-nowrap">
+                  <span className="sm:hidden">退輔法規</span>
+                  <span className="hidden sm:inline">退輔會法規檢索</span>
                 </h1>
-                <span className="px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-semibold rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                <span className="hidden sm:inline px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs font-semibold rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 whitespace-nowrap">
                   承辦人專用
                 </span>
               </div>
@@ -72,22 +75,22 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Action Controls */}
-        <div className="flex items-center space-x-1.5 sm:space-x-3">
-          {/* Bookmark filter button */}
+        {/* Right: Action controls */}
+        <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+          {/* Bookmark filter — icon only on xs */}
           <button
             onClick={onToggleBookmarksOnly}
-            className={`flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-medium rounded-xl border transition-all ${
+            className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 text-xs font-medium rounded-xl border transition-all ${
               showBookmarksOnly
                 ? 'bg-amber-500 text-white border-amber-500 shadow-sm'
                 : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
             }`}
             title="查看已書籤儲存之條文"
           >
-            <BookmarkCheck className="w-4 h-4 text-amber-500 dark:text-amber-400" />
+            <BookmarkCheck className={`w-4 h-4 flex-shrink-0 ${showBookmarksOnly ? 'text-white' : 'text-amber-500 dark:text-amber-400'}`} />
             <span className="hidden sm:inline">已書籤</span>
             {bookmarkedCount > 0 && (
-              <span className={`px-1.5 py-0.2 text-[10px] rounded-full font-bold ${
+              <span className={`px-1.5 py-0.5 text-[10px] rounded-full font-bold leading-none ${
                 showBookmarksOnly ? 'bg-amber-700 text-white' : 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
               }`}>
                 {bookmarkedCount}
@@ -95,17 +98,17 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* Calculator modal button */}
+          {/* Calculator */}
           <button
             onClick={onOpenCalculator}
-            className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-sm shadow-blue-500/20 active:scale-95 transition-all"
+            className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-sm shadow-blue-500/20 active:scale-95 transition-all"
           >
-            <Calculator className="w-4 h-4" />
+            <Calculator className="w-4 h-4 flex-shrink-0" />
             <span className="hidden sm:inline">津貼與試算器</span>
             <span className="sm:hidden">試算</span>
           </button>
 
-          {/* Print button (desktop only) */}
+          {/* Print (desktop only) */}
           <button
             onClick={() => window.print()}
             className="hidden sm:flex p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors"

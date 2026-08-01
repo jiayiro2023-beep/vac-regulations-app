@@ -336,47 +336,49 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                 return (
                   <div 
                     key={b.monthIndex} 
-                    className={`flex items-center justify-between p-3 transition-colors ${
+                    className={`p-3 transition-colors ${
                       !isEligible 
                         ? 'bg-slate-50/50 dark:bg-slate-900/10 opacity-50' 
                         : isSelected 
-                          ? 'bg-blue-50/10 dark:bg-blue-950/10' 
+                          ? 'bg-blue-50/30 dark:bg-blue-950/20' 
                           : 'bg-white dark:bg-slate-900'
                     }`}
                   >
-                    <div className="flex items-center space-x-3 min-w-0">
-                      <input
-                        type="checkbox"
-                        checked={isSelected && isEligible}
-                        disabled={!isEligible}
-                        onChange={() => handleToggleMonth(b.monthIndex)}
-                        className="rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 w-4 h-4"
-                      />
-                      <span className="font-bold text-slate-850 dark:text-slate-100">
-                        第 {b.monthIndex} 個月
-                      </span>
-                      <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
-                        ({b.startStr.slice(5)} ~ {b.endStr.slice(5)})
+                    {/* Top row: checkbox + month label + dates */}
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <input
+                          type="checkbox"
+                          checked={isSelected && isEligible}
+                          disabled={!isEligible}
+                          onChange={() => handleToggleMonth(b.monthIndex)}
+                          className="rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 w-4 h-4 flex-shrink-0"
+                        />
+                        <span className="font-bold text-slate-800 dark:text-slate-100 whitespace-nowrap">
+                          第 {b.monthIndex} 個月
+                        </span>
+                        <span className="text-[11px] text-slate-400 font-mono truncate">
+                          {b.startStr.slice(5)} ~ {b.endStr.slice(5)}
+                        </span>
+                      </div>
+                      {/* Amount — always visible */}
+                      <span className={`font-mono font-bold text-right flex-shrink-0 ${
+                        b.amount > 0 ? 'text-slate-800 dark:text-slate-100' : 'text-slate-400 dark:text-slate-600'
+                      }`}>
+                        {b.amount > 0 ? `NT$ ${b.amount.toLocaleString()}` : '—'}
                       </span>
                     </div>
 
-                    <div className="flex items-center space-x-4">
-                      {/* Status Badge */}
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                    {/* Status badge on its own line — always readable */}
+                    <div className="mt-1.5 ml-6">
+                      <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${
                         b.status === '足月'
                           ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300'
                           : b.status === '未足月'
                             ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60'
-                            : 'bg-slate-100 text-slate-450 dark:bg-slate-800 dark:text-slate-500 border border-slate-200/40 dark:border-slate-700/40'
+                            : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-500 border border-slate-200/40 dark:border-slate-700/40'
                       }`}>
-                        {b.status === '足月' ? '足月' : b.status === '未足月' ? `未足月 (${b.validDays}/${b.totalDays}天)` : '已逾輔導期'}
-                      </span>
-
-                      {/* Computed Payout */}
-                      <span className={`font-mono font-bold text-right w-20 ${
-                        b.amount > 0 ? 'text-slate-800 dark:text-slate-100' : 'text-slate-350 dark:text-slate-600'
-                      }`}>
-                        NT$ {b.amount.toLocaleString()}
+                        {b.status === '足月' ? '足月' : b.status === '未足月' ? `未足月 (${b.validDays}/${b.totalDays} 天)` : '已逾輔導期'}
                       </span>
                     </div>
                   </div>
@@ -386,42 +388,45 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
           </div>
 
           {/* Results Block */}
-          <div className="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl p-5 shadow-lg space-y-4 flex-shrink-0">
-            <div className="flex items-center justify-between border-b border-indigo-950/80 pb-3">
-              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                <span className="text-sm font-bold">穩定就業津貼試算核算結果</span>
+          <div className="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl p-4 sm:p-5 shadow-lg space-y-3 sm:space-y-4 flex-shrink-0">
+            {/* Header row */}
+            <div className="flex items-center justify-between border-b border-indigo-950/80 pb-3 gap-2">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0" />
+                <span className="text-xs sm:text-sm font-bold">穩定就業津貼試算結果</span>
               </div>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <span className="px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 whitespace-nowrap">
                 試算成功
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <div className="text-[10px] text-indigo-300 uppercase tracking-wide">核發津貼總金額</div>
-                <div className="text-3xl font-black text-emerald-400 mt-1">
-                  NT$ {summary.total.toLocaleString()}
-                </div>
-              </div>
-              <div>
-                <div className="text-[10px] text-indigo-300 uppercase tracking-wide">核算公式明細</div>
-                <div className="text-xs text-slate-300 font-mono mt-2 break-all bg-white/5 p-2 rounded-lg border border-white/10">
-                  {summary.calculationFormula}
-                </div>
+            {/* Amount — large and prominent */}
+            <div>
+              <div className="text-[10px] text-indigo-300 uppercase tracking-wide">核發津貼總金額</div>
+              <div className="text-2xl sm:text-3xl font-black text-emerald-400 mt-1">
+                NT$ {summary.total.toLocaleString()}
               </div>
             </div>
 
+            {/* Formula */}
+            <div>
+              <div className="text-[10px] text-indigo-300 uppercase tracking-wide mb-1.5">核算公式明細</div>
+              <div className="text-[11px] sm:text-xs text-slate-300 font-mono break-all bg-white/5 p-2.5 rounded-lg border border-white/10 leading-relaxed">
+                {summary.calculationFormula}
+              </div>
+            </div>
+
+            {/* Partial month details */}
             {summary.partialMonthsDetails.map((det, idx) => (
-              <p key={idx} className="text-xs text-slate-350 leading-relaxed bg-white/5 px-3 py-2 rounded-xl border border-white/5 font-mono">
+              <p key={idx} className="text-[11px] sm:text-xs text-slate-300 leading-relaxed bg-white/5 px-3 py-2 rounded-xl border border-white/5 font-mono">
                 💡 未足月計算明細：{det}
               </p>
             ))}
 
-            {/* Regulation link */}
-            <div className="pt-2 flex items-center justify-between text-xs border-t border-white/10">
+            {/* Regulation link — stacks on mobile */}
+            <div className="pt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs border-t border-white/10">
               <span className="text-slate-400 text-[11px] flex items-center gap-1">
-                <BookOpen className="w-3.5 h-3.5" />
+                <BookOpen className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>依據：穩定就業津貼發給辦法第 5 條</span>
               </span>
               <button
@@ -429,7 +434,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                   onSelectRegulation('促進退除役官兵穩定就業津貼發給辦法作業說明_114.12.24修訂___1__pdf');
                   onClose();
                 }}
-                className="flex items-center space-x-1 text-blue-300 hover:text-white font-semibold transition-colors animate-pulse"
+                className="flex items-center gap-1 text-blue-300 hover:text-white font-semibold transition-colors self-start sm:self-auto"
               >
                 <span>查看作業說明問題一</span>
                 <ChevronRight className="w-4 h-4" />
