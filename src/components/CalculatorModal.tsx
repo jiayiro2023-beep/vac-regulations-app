@@ -221,7 +221,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
         <div className="p-6 space-y-5 overflow-y-auto flex-1 text-slate-700 dark:text-slate-350">
           
           {/* Quick Presets Banner */}
-          <div className="p-3 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="p-3 bg-slate-50 border border-slate-200 dark:bg-slate-800/40 dark:border-slate-700/60 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
               <RefreshCw className="w-3.5 h-3.5 text-blue-500" />
               <span>載入官方釋例預設值：</span>
@@ -258,7 +258,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                       className={`flex-1 py-2 px-3 rounded-xl border text-xs font-bold text-center transition-all ${
                         allowanceType === type
                           ? 'bg-blue-600 text-white border-transparent shadow-xs'
-                          : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-350 hover:bg-slate-100'
+                          : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-700 dark:hover:bg-slate-700/60'
                       }`}
                     >
                       {type}
@@ -276,7 +276,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 text-slate-900 dark:bg-slate-800/60 dark:border-slate-700 dark:text-slate-100 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -287,22 +287,22 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                     type="date"
                     value={expiryDate}
                     onChange={(e) => setExpiryDate(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 text-slate-900 dark:bg-slate-800/60 dark:border-slate-700 dark:text-slate-100 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
             </div>
 
             {/* Input Right: Info Box */}
-            <div className="p-4 bg-slate-50 dark:bg-slate-850 border border-slate-150 dark:border-slate-800/80 rounded-2xl flex flex-col justify-center space-y-2">
-              <h4 className="text-xs font-bold text-slate-750 dark:text-slate-300 flex items-center gap-1.5">
+            <div className="p-4 bg-slate-50 border border-slate-200 dark:bg-slate-800/30 dark:border-slate-700/50 rounded-2xl flex flex-col justify-center space-y-2">
+              <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
                 <BookOpen className="w-4 h-4 text-blue-500" />
                 <span>比例計算說明</span>
               </h4>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+              <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                 第二類退除役官兵超過輔導期限之就業期間不予發給津貼。
               </p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+              <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
                 但<strong>輔導期限內未足月之就業期間</strong>，依日數按比率計算發給數額，四捨五入計算至 1 元。
               </p>
             </div>
@@ -352,7 +352,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                         onChange={() => handleToggleMonth(b.monthIndex)}
                         className="rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 w-4 h-4"
                       />
-                      <span className="font-bold text-slate-850 dark:text-slate-200">
+                      <span className="font-bold text-slate-850 dark:text-slate-100">
                         第 {b.monthIndex} 個月
                       </span>
                       <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
@@ -367,7 +367,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                           ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300'
                           : b.status === '未足月'
                             ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60'
-                            : 'bg-slate-100 dark:bg-slate-850 text-slate-400 dark:text-slate-500'
+                            : 'bg-slate-100 text-slate-450 dark:bg-slate-800 dark:text-slate-500 border border-slate-200/40 dark:border-slate-700/40'
                       }`}>
                         {b.status === '足月' ? '足月' : b.status === '未足月' ? `未足月 (${b.validDays}/${b.totalDays}天)` : '已逾輔導期'}
                       </span>

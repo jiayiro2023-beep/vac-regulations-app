@@ -77,7 +77,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           系統使用指引
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-250 transition-all flex flex-col justify-between">
+          <div className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between">
             <div className="space-y-3">
               <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 flex items-center justify-center text-blue-600 dark:text-blue-400">
                 <Search className="w-5 h-5" />
@@ -91,7 +91,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
           </div>
 
-          <div className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-250 transition-all flex flex-col justify-between">
+          <div className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between">
             <div className="space-y-3">
               <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 dark:text-amber-400">
                 <Bookmark className="w-5 h-5" />
@@ -105,7 +105,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
           </div>
 
-          <div className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-250 transition-all flex flex-col justify-between">
+          <div className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all flex flex-col justify-between">
             <div className="space-y-3">
               <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                 <Calculator className="w-5 h-5" />
@@ -140,14 +140,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <button
                 key={idx}
                 onClick={() => onSelectRegulation(link.id)}
-                className="w-full text-left p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-150 dark:border-slate-800/80 hover:border-blue-400 dark:hover:border-blue-600 shadow-2xs hover:shadow-sm transition-all duration-200 group flex items-start space-x-4"
+                className="w-full text-left p-5 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800/80 hover:border-blue-400 dark:hover:border-blue-600 shadow-2xs hover:shadow-sm transition-all duration-200 group flex items-start space-x-4"
               >
                 <div className={`p-3 rounded-xl bg-gradient-to-br ${link.color} flex-shrink-0`}>
                   <Icon className="w-5 h-5" />
                 </div>
                 <div className="flex-1 min-w-0 space-y-1">
                   <div className="flex items-center justify-between">
-                    <h4 className="text-xs sm:text-sm font-bold text-slate-850 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1">
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1">
                       {link.title}
                     </h4>
                     <ArrowRight className="w-4 h-4 text-slate-300 dark:text-slate-700 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all flex-shrink-0" />

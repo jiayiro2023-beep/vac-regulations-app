@@ -80,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({
             className={`flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-3 py-1.5 text-xs font-medium rounded-xl border transition-all ${
               showBookmarksOnly
                 ? 'bg-amber-500 text-white border-amber-500 shadow-sm'
-                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-750'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
             }`}
             title="查看已書籤儲存之條文"
           >

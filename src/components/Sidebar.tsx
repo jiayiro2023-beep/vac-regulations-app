@@ -120,7 +120,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <div className={`p-2 rounded-xl transition-all ${
                       isExpanded 
                         ? 'bg-blue-100/80 dark:bg-blue-950/60' 
-                        : 'bg-slate-100/80 dark:bg-slate-850'
+                        : 'bg-slate-100/80 dark:bg-slate-800'
                     }`}>
                       <Icon className={`w-4 h-4 ${isExpanded ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500'}`} />
                     </div>
