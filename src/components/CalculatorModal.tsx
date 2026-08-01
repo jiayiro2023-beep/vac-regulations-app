@@ -195,47 +195,51 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fadeIn no-print">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-fadeIn no-print">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col max-h-[95vh] sm:max-h-[90vh]">
         
         {/* Modal Header */}
-        <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-5 flex items-center justify-between flex-shrink-0">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300">
-              <Calculator className="w-5 h-5" />
+        <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-3.5 sm:p-5 flex items-center justify-between flex-shrink-0 gap-2">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300 flex-shrink-0">
+              <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
-            <div>
-              <h2 className="text-base sm:text-lg font-bold">第二類退除役官兵未足月津貼計算機</h2>
-              <p className="text-[11px] text-blue-200">穩定就業津貼發給辦法第 5 條專用試算</p>
+            <div className="min-w-0">
+              <h2 className="text-sm sm:text-base font-bold leading-tight">
+                <span className="sm:hidden">第二類退役官兵未足月津貼</span>
+                <span className="hidden sm:inline">第二類退除役官兵未足月津貼計算機</span>
+              </h2>
+              <p className="text-[10px] sm:text-[11px] text-blue-200">穩定就業津貼發給辦法第 5 條</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+            className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors flex-shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Modal Scrollable Content */}
-        <div className="p-6 space-y-5 overflow-y-auto flex-1 text-slate-700 dark:text-slate-350">
+        <div className="px-3 py-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1 text-slate-700 dark:text-slate-350">
           
           {/* Quick Presets Banner */}
-          <div className="p-3 bg-slate-50 border border-slate-200 dark:bg-slate-800/40 dark:border-slate-700/60 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="p-2.5 sm:p-3 bg-slate-50 border border-slate-200 dark:bg-slate-800/40 dark:border-slate-700/60 rounded-2xl space-y-2">
             <div className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
-              <RefreshCw className="w-3.5 h-3.5 text-blue-500" />
-              <span>載入官方釋例預設值：</span>
+              <RefreshCw className="w-3.5 h-3.5 text-blue-500 flex-shrink-0" />
+              <span>載入官方釋例預設值</span>
             </div>
-            <div className="flex gap-2 w-full sm:w-auto">
+            {/* Preset buttons — always stacked vertically on mobile */}
+            <div className="flex flex-col sm:flex-row gap-2">
               <button
                 onClick={() => loadPreset(1)}
-                className="flex-1 sm:flex-none text-[11px] font-bold px-3 py-1.5 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/40 dark:hover:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-xl transition-all border border-blue-200/50 dark:border-blue-800/50"
+                className="w-full text-[11px] font-bold px-3 py-2 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/40 dark:hover:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-xl transition-all border border-blue-200/50 dark:border-blue-800/50 text-left"
               >
                 案例一：訓後就業 (3/15投保, 6/10滿期)
               </button>
               <button
                 onClick={() => loadPreset(2)}
-                className="flex-1 sm:flex-none text-[11px] font-bold px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 rounded-xl transition-all border border-indigo-200/50 dark:border-indigo-800/50"
+                className="w-full text-[11px] font-bold px-3 py-2 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 rounded-xl transition-all border border-indigo-200/50 dark:border-indigo-800/50 text-left"
               >
                 案例二：推介就業 (3/1投保, 5/10滿期)
               </button>
@@ -294,25 +298,23 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
             </div>
 
             {/* Input Right: Info Box */}
-            <div className="p-4 bg-slate-50 border border-slate-200 dark:bg-slate-800/30 dark:border-slate-700/50 rounded-2xl flex flex-col justify-center space-y-2">
+            <div className="p-3 sm:p-4 bg-slate-50 border border-slate-200 dark:bg-slate-800/30 dark:border-slate-700/50 rounded-2xl flex flex-col justify-center space-y-2">
               <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-                <BookOpen className="w-4 h-4 text-blue-500" />
+                <BookOpen className="w-4 h-4 text-blue-500 flex-shrink-0" />
                 <span>比例計算說明</span>
               </h4>
-              <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-                第二類退除役官兵超過輔導期限之就業期間不予發給津貼。
-              </p>
-              <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-                但<strong>輔導期限內未足月之就業期間</strong>，依日數按比率計算發給數額，四捨五入計算至 1 元。
+              <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed break-words">
+                第二類退除役官兵超過輔導期限不予發給，輔導期限內未足月之就業期間依日數按比率計算，四捨五入至 1 元。
               </p>
             </div>
           </div>
 
           {/* Month Range Select Grid */}
-          <div className="space-y-2.5">
-            <div className="flex items-center justify-between pl-1">
-              <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-                選擇欲核發之就業月份區間（勾選計算）
+          <div className="space-y-2">
+            {/* Header: label + reset button — allow wrap */}
+            <div className="flex items-start justify-between gap-2 pl-1 flex-wrap">
+              <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider leading-snug">
+                選擇欲核發之就業月份
               </label>
               <button 
                 onClick={() => {
@@ -322,9 +324,9 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                   });
                   setSelectedMonths(allOn);
                 }}
-                className="text-[10px] text-blue-500 hover:text-blue-600 font-bold"
+                className="text-[10px] text-blue-500 hover:text-blue-600 font-bold whitespace-nowrap"
               >
-                重設為建議申辦月份
+                重設建議申辦月份
               </button>
             </div>
             
@@ -411,7 +413,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
             {/* Formula */}
             <div>
               <div className="text-[10px] text-indigo-300 uppercase tracking-wide mb-1.5">核算公式明細</div>
-              <div className="text-[11px] sm:text-xs text-slate-300 font-mono break-all bg-white/5 p-2.5 rounded-lg border border-white/10 leading-relaxed">
+              <div className="text-[10px] sm:text-[11px] text-slate-300 font-mono break-all overflow-wrap-anywhere bg-white/5 p-2.5 rounded-lg border border-white/10 leading-relaxed">
                 {summary.calculationFormula}
               </div>
             </div>
@@ -445,10 +447,10 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="bg-slate-50 dark:bg-slate-800/80 px-6 py-4 flex justify-end border-t border-slate-200 dark:border-slate-700 flex-shrink-0">
+        <div className="bg-slate-50 dark:bg-slate-800/80 px-3 sm:px-6 py-3 sm:py-4 flex justify-end border-t border-slate-200 dark:border-slate-700 flex-shrink-0">
           <button
             onClick={onClose}
-            className="px-5 py-2 text-xs font-semibold rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors"
+            className="px-4 sm:px-5 py-2 text-xs font-semibold rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors"
           >
             關閉試算視窗
           </button>
