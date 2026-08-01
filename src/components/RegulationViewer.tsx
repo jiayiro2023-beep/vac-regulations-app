@@ -53,11 +53,11 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
   }[fontSize];
 
   return (
-    <div className="flex-1 overflow-y-auto p-3 sm:p-6 lg:p-8 bg-slate-50 dark:bg-slate-950">
+    <div className="flex-1 overflow-y-auto p-3 sm:p-6 lg:p-8 bg-warm-page dark:bg-slate-950">
       <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
         
         {/* Header Banner */}
-        <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-6 border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
+        <div className="bg-warm-card dark:bg-slate-900 rounded-2xl p-4 sm:p-6 border border-warm dark:border-slate-800 shadow-sm space-y-3">
           
           {/* Title Row */}
           <div className="space-y-2">
@@ -156,10 +156,10 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
                 <div
                   key={idx}
                   id={`article-${idx}`}
-                  className={`bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-6 border transition-all duration-200 ${
+                  className={`bg-warm-card dark:bg-slate-900 rounded-2xl p-4 sm:p-6 border transition-all duration-200 ${
                     matchesKeyword 
                       ? 'border-amber-300 dark:border-amber-700 ring-2 ring-amber-400/20 shadow-md' 
-                      : 'border-slate-200/80 dark:border-slate-800 shadow-xs hover:border-slate-300 dark:hover:border-slate-700'
+                      : 'border-warm dark:border-slate-800 shadow-xs hover:border-amber-200/80 dark:hover:border-slate-700'
                   }`}
                 >
                   {/* Article header — stack vertically on mobile */}
@@ -213,11 +213,13 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
                   </div>
 
                   {/* Article content */}
-                  <FormattedArticleContent
-                    content={article.content}
-                    keyword={keyword}
-                    fontClass={fontClass}
-                  />
+                  <div className="article-text">
+                    <FormattedArticleContent
+                      content={article.content}
+                      keyword={keyword}
+                      fontClass={fontClass}
+                    />
+                  </div>
                 </div>
               );
             })}

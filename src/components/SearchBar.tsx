@@ -13,7 +13,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   resultStats
 }) => {
   return (
-    <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-3 py-3 sm:p-4 no-print shadow-sm">
+    <div className="bg-warm-card dark:bg-slate-900 border-b border-warm dark:border-slate-800 px-3 py-3 sm:p-4 no-print shadow-sm">
       <div className="max-w-4xl mx-auto space-y-2">
         {/* Input box */}
         <div className="relative flex items-center">
@@ -25,7 +25,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             value={keyword}
             onChange={(e) => onKeywordChange(e.target.value)}
             placeholder="輸入關鍵字、條文編號或金額…"
-            className="w-full pl-9 sm:pl-11 pr-16 sm:pr-24 py-2.5 sm:py-3 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium placeholder-slate-400 dark:placeholder-slate-500 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-inner"
+            className="w-full pl-9 sm:pl-11 pr-16 sm:pr-24 py-2.5 sm:py-3 bg-warm-page dark:bg-slate-800/80 border border-warm dark:border-slate-700 rounded-xl text-sm font-medium placeholder-stone-400 dark:placeholder-slate-500 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-inner"
           />
           {keyword ? (
             <button

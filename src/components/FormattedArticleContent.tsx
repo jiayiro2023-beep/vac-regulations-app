@@ -91,7 +91,7 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
   };
 
   return (
-    <div className={`space-y-2 ${fontClass}`}>
+    <div className={`space-y-2 ${fontClass} break-words min-w-0`}>
       {lines.map((line, idx) => {
         // Level 1: 一、二、三、… or 1. 2. 3.
         const m1 = line.match(/^([一二三四五六七八九十百千]+[、.]|[1-9]\d*[.、])\s*(.*)/s);
@@ -224,7 +224,7 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
 
         // Normal paragraph
         return (
-          <p key={idx} className="leading-relaxed text-slate-700 dark:text-slate-300 py-0.5">
+          <p key={idx} className="leading-relaxed text-slate-700 dark:text-slate-300 py-0.5 break-words">
             {renderTextWithHighlights(line)}
           </p>
         );

@@ -5,10 +5,39 @@
 @layer base {
   body {
     font-family: 'Inter', 'Noto Sans TC', system-ui, -apple-system, sans-serif;
+    /* Warm beige background for light mode */
+    background-color: #f7f4ef;
+    color: #1e1b18;
+  }
+
+  .dark body {
+    background-color: #020817;
+    color: #f8fafc;
   }
 }
 
-/* Custom scrollbars */
+/* ─── Warm beige surface palette ─── */
+:root {
+  --bg-page:      #f7f4ef;   /* warm cream page background */
+  --bg-card:      #fffefb;   /* soft warm white for cards */
+  --bg-muted:     #f0ece4;   /* warm muted surface */
+  --border-warm:  #e5dfd4;   /* warm border */
+}
+
+.dark {
+  --bg-page:    #020817;
+  --bg-card:    #0f172a;
+  --bg-muted:   #1e293b;
+  --border-warm:#334155;
+}
+
+/* Utility for warm page background */
+.bg-warm-page  { background-color: var(--bg-page); }
+.bg-warm-card  { background-color: var(--bg-card); }
+.bg-warm-muted { background-color: var(--bg-muted); }
+.border-warm   { border-color: var(--border-warm); }
+
+/* ─── Custom scrollbars ─── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -35,19 +64,29 @@
   background: rgba(100, 116, 139, 0.8);
 }
 
-/* Custom glassmorphism and print rules */
+/* ─── Glassmorphism (header) ─── */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(247, 244, 239, 0.88);  /* warm-tinted glass */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 .dark .glass-panel {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(15, 23, 42, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
+/* ─── Mobile text wrapping fix ─── */
+/* Ensures CJK and long strings wrap properly on narrow viewports */
+.article-text,
+.article-text * {
+  overflow-wrap: break-word;
+  word-break: break-word;
+  min-width: 0;
+}
+
+/* ─── Print rules ─── */
 @media print {
   body {
     background: white !important;

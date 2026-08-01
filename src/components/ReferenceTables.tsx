@@ -69,7 +69,7 @@ export const ReferenceTables: React.FC<ReferenceTablesProps> = ({ regulation }) 
     ];
 
     return (
-      <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+      <div className="bg-warm-card dark:bg-slate-900 rounded-2xl p-4 sm:p-6 border border-warm dark:border-slate-800 shadow-sm space-y-4">
         {/* Header */}
         <div className="flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
           <Award className="w-5 h-5 text-amber-500 flex-shrink-0" />

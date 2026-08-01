@@ -79,7 +79,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         {/* 3-col on sm+, stacked on xs */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {/* Card 1 */}
-          <div className="flex sm:flex-col items-start gap-3 p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all">
+          <div className="flex sm:flex-col items-start gap-3 p-4 bg-warm-card dark:bg-slate-900 rounded-2xl border border-warm dark:border-slate-800 shadow-sm hover:border-amber-200 dark:hover:border-slate-700 transition-all">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 flex items-center justify-center text-blue-600 dark:text-blue-400 flex-shrink-0">
               <Search className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
@@ -94,7 +94,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
 
           {/* Card 2 */}
-          <div className="flex sm:flex-col items-start gap-3 p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all">
+          <div className="flex sm:flex-col items-start gap-3 p-4 bg-warm-card dark:bg-slate-900 rounded-2xl border border-warm dark:border-slate-800 shadow-sm hover:border-amber-200 dark:hover:border-slate-700 transition-all">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 dark:text-amber-400 flex-shrink-0">
               <Bookmark className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
@@ -109,7 +109,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
           </div>
 
           {/* Card 3 — with CTA */}
-          <div className="flex sm:flex-col items-start gap-3 p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all">
+          <div className="flex sm:flex-col items-start gap-3 p-4 bg-warm-card dark:bg-slate-900 rounded-2xl border border-warm dark:border-slate-800 shadow-sm hover:border-amber-200 dark:hover:border-slate-700 transition-all">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400 flex-shrink-0">
               <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
@@ -144,7 +144,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <button
                 key={idx}
                 onClick={() => onSelectRegulation(link.id)}
-                className="w-full text-left p-4 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800/80 hover:border-blue-400 dark:hover:border-blue-600 shadow-xs hover:shadow-sm transition-all duration-200 group flex items-start gap-3"
+                className="w-full text-left p-4 bg-warm-card dark:bg-slate-900 rounded-2xl border border-warm dark:border-slate-800/80 hover:border-amber-300 dark:hover:border-blue-600 shadow-xs hover:shadow-sm transition-all duration-200 group flex items-start gap-3"
               >
                 <div className={`p-2.5 rounded-xl bg-gradient-to-br ${link.color} flex-shrink-0`}>
                   <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
