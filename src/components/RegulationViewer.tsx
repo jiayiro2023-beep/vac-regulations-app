@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Regulation } from '../data/regulations';
-import { Bookmark } from '../types';
 import { VisualFormViewer } from './VisualFormViewer';
 import { FormattedArticleContent } from './FormattedArticleContent';
 import { 
   Copy, 
   Check, 
-  Bookmark as BookmarkIcon, 
-  BookmarkCheck, 
   ListOrdered, 
   FileSpreadsheet,
   Type
@@ -16,15 +13,11 @@ import {
 interface RegulationViewerProps {
   regulation: Regulation;
   keyword: string;
-  bookmarks: Bookmark[];
-  onToggleBookmark: (regId: string, articleTitle: string) => void;
 }
 
 export const RegulationViewer: React.FC<RegulationViewerProps> = ({
   regulation,
-  keyword,
-  bookmarks,
-  onToggleBookmark
+  keyword
 }) => {
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null);
   const [fontSize, setFontSize] = useState<'sm' | 'md' | 'lg'>('md');
@@ -42,9 +35,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
     setTimeout(() => setCopiedTitle(null), 2000);
   };
 
-  const isBookmarked = (articleTitle: string) => {
-    return bookmarks.some(b => b.regulationId === regulation.id && b.articleTitle === articleTitle);
-  };
+
 
   const fontClass = {
     sm: 'text-sm sm:text-xs leading-relaxed',
@@ -146,7 +137,6 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
         ) : (
           <div className="space-y-3 sm:space-y-4">
             {regulation.articles.map((article, idx) => {
-              const bookmarked = isBookmarked(article.title);
               const matchesKeyword = keyword && (
                 article.title.toLowerCase().includes(keyword.toLowerCase()) ||
                 article.content.toLowerCase().includes(keyword.toLowerCase())
@@ -195,19 +185,6 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
                             <span className="sm:hidden">複製</span>
                           </>
                         )}
-                      </button>
-
-                      {/* Bookmark */}
-                      <button
-                        onClick={() => onToggleBookmark(regulation.id, article.title)}
-                        className={`p-1.5 rounded-lg border transition-colors ${
-                          bookmarked
-                            ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-300 border-amber-300 dark:border-amber-800'
-                            : 'bg-slate-50 dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700 hover:text-amber-500'
-                        }`}
-                        title={bookmarked ? "移除書籤" : "加入書籤"}
-                      >
-                        {bookmarked ? <BookmarkCheck className="w-4 h-4 fill-amber-500 text-amber-500" /> : <BookmarkIcon className="w-4 h-4" />}
                       </button>
                     </div>
                   </div>

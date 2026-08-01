@@ -5,7 +5,6 @@ import {
   GraduationCap, 
   FolderCheck, 
   Search, 
-  Bookmark, 
   Calculator, 
   ArrowRight 
 } from 'lucide-react';
@@ -76,8 +75,8 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider pl-1">
           系統使用指引
         </h3>
-        {/* 3-col on sm+, stacked on xs */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {/* 2-col on sm+, stacked on xs */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {/* Card 1 */}
           <div className="flex sm:flex-col items-start gap-3 p-4 bg-warm-card dark:bg-slate-900 rounded-2xl border border-warm dark:border-slate-800 shadow-sm hover:border-amber-200 dark:hover:border-slate-700 transition-all">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 flex items-center justify-center text-blue-600 dark:text-blue-400 flex-shrink-0">
@@ -93,29 +92,14 @@ export const HomeView: React.FC<HomeViewProps> = ({
             </div>
           </div>
 
-          {/* Card 2 */}
-          <div className="flex sm:flex-col items-start gap-3 p-4 bg-warm-card dark:bg-slate-900 rounded-2xl border border-warm dark:border-slate-800 shadow-sm hover:border-amber-200 dark:hover:border-slate-700 transition-all">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-50 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 dark:text-amber-400 flex-shrink-0">
-              <Bookmark className="w-4 h-4 sm:w-5 sm:h-5" />
-            </div>
-            <div className="min-w-0">
-              <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">
-                2. 快速書籤儲存
-              </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
-                點擊條文旁書籤按鈕，可收藏常用條文，透過「已書籤」快速篩選。
-              </p>
-            </div>
-          </div>
-
-          {/* Card 3 — with CTA */}
+          {/* Card 2 — with CTA */}
           <div className="flex sm:flex-col items-start gap-3 p-4 bg-warm-card dark:bg-slate-900 rounded-2xl border border-warm dark:border-slate-800 shadow-sm hover:border-amber-200 dark:hover:border-slate-700 transition-all">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 flex items-center justify-center text-emerald-600 dark:text-emerald-400 flex-shrink-0">
               <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div className="flex-1 min-w-0">
               <h4 className="text-sm font-bold text-slate-800 dark:text-slate-200">
-                3. 津貼金額試算
+                2. 津貼金額試算
               </h4>
               <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1">
                 點擊「試算」開啟計算機，自動計算第二類退除役官兵未足月津貼。

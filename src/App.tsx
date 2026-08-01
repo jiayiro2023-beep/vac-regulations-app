@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { REGULATIONS_DATA, Regulation } from './data/regulations';
-import { CategoryType, Bookmark } from './types';
+import { CategoryType } from './types';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { SearchBar } from './components/SearchBar';
@@ -18,18 +18,8 @@ export const App: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<CategoryType>('ALL');
   const [selectedRegulationId, setSelectedRegulationId] = useState<string | null>(null);
   const [keyword, setKeyword] = useState<string>('');
-  const [showBookmarksOnly, setShowBookmarksOnly] = useState<boolean>(false);
   const [isCalculatorOpen, setIsCalculatorOpen] = useState<boolean>(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
-
-  const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => {
-    try {
-      const saved = localStorage.getItem('vac_bookmarks');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
 
   // Dark mode effect
   useEffect(() => {
@@ -42,34 +32,11 @@ export const App: React.FC = () => {
     }
   }, [darkMode]);
 
-  // Bookmarks effect
-  useEffect(() => {
-    localStorage.setItem('vac_bookmarks', JSON.stringify(bookmarks));
-  }, [bookmarks]);
 
-  // Toggle bookmark handler
-  const handleToggleBookmark = (regulationId: string, articleTitle: string) => {
-    setBookmarks(prev => {
-      const exists = prev.some(b => b.regulationId === regulationId && b.articleTitle === articleTitle);
-      if (exists) {
-        return prev.filter(b => !(b.regulationId === regulationId && b.articleTitle === articleTitle));
-      } else {
-        return [...prev, { regulationId, articleTitle }];
-      }
-    });
-  };
 
   // Filter regulations based on keyword and bookmarks mode
   const filteredRegulations = useMemo(() => {
     return REGULATIONS_DATA.filter(reg => {
-      // 1. Bookmarks Filter
-      if (showBookmarksOnly) {
-        const hasBookmarkedArticle = reg.articles.some(art =>
-          bookmarks.some(b => b.regulationId === reg.id && b.articleTitle === art.title)
-        );
-        if (!hasBookmarkedArticle) return false;
-      }
-
       // 3. Keyword Filter
       if (keyword.trim()) {
         const kw = keyword.toLowerCase().trim();
@@ -82,7 +49,7 @@ export const App: React.FC = () => {
 
       return true;
     });
-  }, [activeCategory, keyword, showBookmarksOnly, bookmarks]);
+  }, [activeCategory, keyword]);
 
   // Result stats for SearchBar
   const resultStats = useMemo(() => {
@@ -113,9 +80,6 @@ export const App: React.FC = () => {
         darkMode={darkMode}
         setDarkMode={setDarkMode}
         onOpenCalculator={() => setIsCalculatorOpen(true)}
-        bookmarkedCount={bookmarks.length}
-        onToggleBookmarksOnly={() => setShowBookmarksOnly(!showBookmarksOnly)}
-        showBookmarksOnly={showBookmarksOnly}
         activeCategory={activeCategory}
         onSelectCategory={(cat) => {
           setActiveCategory(cat);
@@ -156,13 +120,10 @@ export const App: React.FC = () => {
             </div>
           )}
 
-          {/* Main Viewer */}
           {currentRegulation ? (
             <RegulationViewer
               regulation={currentRegulation}
               keyword={keyword}
-              bookmarks={bookmarks}
-              onToggleBookmark={handleToggleBookmark}
             />
           ) : (
             <HomeView

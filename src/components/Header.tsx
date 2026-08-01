@@ -5,7 +5,6 @@ import {
   Moon, 
   Sun, 
   Printer, 
-  BookmarkCheck,
   Menu,
   X
 } from 'lucide-react';
@@ -14,9 +13,6 @@ interface HeaderProps {
   darkMode: boolean;
   setDarkMode: (val: boolean | ((prev: boolean) => boolean)) => void;
   onOpenCalculator: () => void;
-  bookmarkedCount: number;
-  onToggleBookmarksOnly: () => void;
-  showBookmarksOnly: boolean;
   activeCategory: string;
   onSelectCategory: (cat: any) => void;
   isMobileSidebarOpen: boolean;
@@ -27,9 +23,6 @@ export const Header: React.FC<HeaderProps> = ({
   darkMode,
   setDarkMode,
   onOpenCalculator,
-  bookmarkedCount,
-  onToggleBookmarksOnly,
-  showBookmarksOnly,
   onSelectCategory,
   isMobileSidebarOpen,
   setIsMobileSidebarOpen
@@ -77,26 +70,7 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right: Action controls */}
         <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-          {/* Bookmark filter — icon only on xs */}
-          <button
-            onClick={onToggleBookmarksOnly}
-            className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1.5 text-xs font-medium rounded-xl border transition-all ${
-              showBookmarksOnly
-                ? 'bg-amber-500 text-white border-amber-500 shadow-sm'
-                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700'
-            }`}
-            title="查看已書籤儲存之條文"
-          >
-            <BookmarkCheck className={`w-4 h-4 flex-shrink-0 ${showBookmarksOnly ? 'text-white' : 'text-amber-500 dark:text-amber-400'}`} />
-            <span className="hidden sm:inline">已書籤</span>
-            {bookmarkedCount > 0 && (
-              <span className={`px-1.5 py-0.5 text-[10px] rounded-full font-bold leading-none ${
-                showBookmarksOnly ? 'bg-amber-700 text-white' : 'bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200'
-              }`}>
-                {bookmarkedCount}
-              </span>
-            )}
-          </button>
+
 
           {/* Calculator */}
           <button

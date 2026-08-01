@@ -11,7 +11,4 @@ export interface SearchFilter {
   category: CategoryType;
 }
 
-export interface Bookmark {
-  regulationId: string;
-  articleTitle: string;
-}
+
