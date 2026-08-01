@@ -38,9 +38,9 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({
 
 
   const fontClass = {
-    sm: 'text-sm sm:text-xs leading-relaxed',
-    md: 'text-base sm:text-sm leading-relaxed',
-    lg: 'text-lg sm:text-base leading-relaxed'
+    sm: 'text-[15px] sm:text-xs leading-relaxed',
+    md: 'text-[17px] sm:text-sm leading-relaxed',
+    lg: 'text-[19px] sm:text-base leading-relaxed'
   }[fontSize];
 
   return (

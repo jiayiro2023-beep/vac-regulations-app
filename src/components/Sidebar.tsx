@@ -124,7 +124,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     }`}>
                       <Icon className={`w-4 h-4 ${isExpanded ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500'}`} />
                     </div>
-                    <span className="text-xs tracking-wide">{item.label}</span>
+                    <span className="text-sm lg:text-xs tracking-wide">{item.label}</span>
                   </div>
                   {isExpanded ? (
                     <ChevronDown className="w-4 h-4 text-blue-600 dark:text-blue-400" />
@@ -155,10 +155,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             isSelected ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400'
                           }`} />
                           <div className="flex-1 min-w-0">
-                            <span className="text-xs leading-snug line-clamp-2">
+                            <span className="text-[13.5px] lg:text-xs leading-snug line-clamp-2">
                               {reg.title}
                             </span>
-                            <span className="text-[10px] text-slate-400 block mt-0.5 font-normal">
+                            <span className="text-[11px] lg:text-[10px] text-slate-400 block mt-0.5 font-normal">
                               {reg.articles.length} 條/節
                             </span>
                           </div>
