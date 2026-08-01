@@ -130,7 +130,7 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
                 <span>{title}</span>
               </div>
               {rest && (
-                <div className="mt-1 text-slate-700 dark:text-slate-300 text-xs">
+                <div className="mt-1 text-slate-700 dark:text-slate-300 text-sm sm:text-xs">
                   {renderTextWithHighlights(rest)}
                 </div>
               )}
@@ -149,7 +149,7 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
               <span className="flex-shrink-0 px-2.5 py-1 rounded-lg bg-blue-600 text-white dark:bg-blue-500 font-extrabold text-xs tracking-wide shadow-xs w-fit">
                 {itemTag}
               </span>
-              <div className="flex-1 text-slate-800 dark:text-slate-200 font-medium leading-relaxed text-xs sm:text-sm">
+              <div className="flex-1 text-slate-800 dark:text-slate-200 font-medium leading-relaxed text-sm">
                 {renderTextWithHighlights(rest)}
               </div>
             </div>
@@ -161,7 +161,7 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
           return (
             <div
               key={idx}
-              className="flex items-start gap-2 pl-2 sm:pl-4 py-1 text-slate-700 dark:text-slate-300 text-xs sm:text-sm"
+              className="flex items-start gap-2 pl-2 sm:pl-4 py-1 text-slate-700 dark:text-slate-300 text-sm"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400 flex-shrink-0 mt-2" />
               <div className="flex-1 leading-relaxed">
@@ -210,7 +210,7 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
           return (
             <div
               key={idx}
-              className="flex items-start gap-2 pl-5 sm:pl-10 pr-2 py-1 my-0.5 text-slate-600 dark:text-slate-400 text-xs"
+              className="flex items-start gap-2 pl-5 sm:pl-10 pr-2 py-1 my-0.5 text-slate-650 dark:text-slate-400 text-sm sm:text-xs"
             >
               <span className="flex-shrink-0 font-semibold text-slate-500 dark:text-slate-400">
                 {num}
