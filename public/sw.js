@@ -1,4 +1,4 @@
-const CACHE_NAME = 'vac-regulations-v5';
+const CACHE_NAME = 'vac-regulations-v6';
 const APP_SHELL = ['/', '/index.html', '/manifest.webmanifest', '/favicon.svg', '/offline.html'];
 
 self.addEventListener('install', (event) => {

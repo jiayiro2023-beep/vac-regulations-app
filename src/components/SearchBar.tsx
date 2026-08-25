@@ -21,7 +21,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   const scopeLabel = activeCategory === 'ALL' ? '全部法規' : activeCategory;
 
   return (
-    <section className="border-b border-slate-200/80 bg-white/70 px-3 py-4 backdrop-blur-sm dark:border-slate-800 dark:bg-slate-950/55 sm:px-6 sm:py-5 lg:px-8 no-print">
+    <section className="relative z-30 isolate border-b border-slate-200/80 bg-white/70 px-3 py-4 backdrop-blur-sm dark:border-slate-800 dark:bg-slate-950/55 sm:px-6 sm:py-5 lg:px-8 no-print">
       <div className="mx-auto max-w-[860px]">
         <div className="mb-2.5 flex flex-wrap items-end justify-between gap-3">
           <div className="min-w-0">

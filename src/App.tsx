@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { REGULATIONS_DATA } from './data/regulations';
 import { CategoryType } from './types';
 import { Header } from './components/Header';
@@ -9,6 +9,7 @@ import { CalculatorModal } from './components/CalculatorModal';
 import { ReferenceTables } from './components/ReferenceTables';
 import { HomeView } from './components/HomeView';
 import { ReadingPreferences, readReadingPreferences, saveReadingPreferences } from './components/ReadingSettings';
+import { ScrollToTopButton } from './components/ScrollToTopButton';
 
 export const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
@@ -22,6 +23,7 @@ export const App: React.FC = () => {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState<boolean>(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
   const [isOffline, setIsOffline] = useState<boolean>(() => typeof navigator !== 'undefined' && !navigator.onLine);
+  const regulationScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
@@ -146,13 +148,14 @@ export const App: React.FC = () => {
           )}
 
           {currentRegulation ? (
-            <RegulationViewer
-              regulation={currentRegulation}
-              keyword={keyword}
-              fontScale={readingPreferences.fontScale}
-              lineHeight={readingPreferences.lineHeight}
-              fontFamily={readingPreferences.fontFamily}
-            />
+              <RegulationViewer
+                regulation={currentRegulation}
+                keyword={keyword}
+                fontScale={readingPreferences.fontScale}
+                lineHeight={readingPreferences.lineHeight}
+                fontFamily={readingPreferences.fontFamily}
+                scrollContainerRef={regulationScrollRef}
+              />
           ) : (
             <HomeView
               onSelectRegulation={handleSelectRegulation}
@@ -160,6 +163,7 @@ export const App: React.FC = () => {
               regulationCount={REGULATIONS_DATA.length}
             />
           )}
+          <ScrollToTopButton targetRef={currentRegulation ? regulationScrollRef : undefined} />
         </main>
       </div>
 

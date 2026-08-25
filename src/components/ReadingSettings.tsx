@@ -104,7 +104,7 @@ export const ReadingSettings: React.FC<ReadingSettingsProps> = ({ value, onChang
   const currentLineHeight = LINE_HEIGHT_OPTIONS.find((option) => option.value === value.lineHeight)?.label;
 
   return (
-    <div ref={panelRef} className="relative z-20">
+    <div ref={panelRef} className="relative z-[70]">
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
@@ -120,7 +120,7 @@ export const ReadingSettings: React.FC<ReadingSettingsProps> = ({ value, onChang
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-[calc(100%+8px)] w-[min(88vw,340px)] rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900 dark:shadow-black/30" role="dialog" aria-label="閱讀設定面板">
+        <div className="absolute right-0 top-[calc(100%+8px)] z-[80] max-h-[min(70vh,560px)] w-[min(88vw,340px)] overflow-y-auto overscroll-contain rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900 dark:shadow-black/30" role="dialog" aria-label="閱讀設定面板">
           <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-3 dark:border-slate-800">
             <div>
               <div className="flex items-center gap-2 text-sm font-extrabold text-slate-900 dark:text-white">

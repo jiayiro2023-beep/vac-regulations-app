@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { Regulation } from '../data/regulations';
 import { VisualFormViewer } from './VisualFormViewer';
 import type { FontFamily, FontScale, LineHeight } from './ReadingSettings';
@@ -18,9 +18,10 @@ interface RegulationViewerProps {
   fontScale: FontScale;
   lineHeight: LineHeight;
   fontFamily: FontFamily;
+  scrollContainerRef?: React.RefObject<HTMLDivElement>;
 }
 
-export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, keyword, fontScale, lineHeight, fontFamily }) => {
+export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, keyword, fontScale, lineHeight, fontFamily, scrollContainerRef }) => {
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null);
   const [showRawText, setShowRawText] = useState(false);
   const [activeTab, setActiveTab] = useState<'articles' | 'attachments'>('articles');
@@ -29,6 +30,20 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
     setActiveTab('articles');
     setShowRawText(false);
   }, [regulation.id]);
+
+  useLayoutEffect(() => {
+    const scrollToTop = () => {
+      const container = scrollContainerRef?.current;
+      if (container) container.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      document.scrollingElement?.scrollTo({ top: 0, behavior: 'auto' });
+    };
+
+    scrollToTop();
+    const frame = window.requestAnimationFrame(scrollToTop);
+    return () => window.cancelAnimationFrame(frame);
+  }, [regulation.id, scrollContainerRef]);
 
   const handleCopyCitation = (articleTitle: string, articleContent: string) => {
     const textToCopy = `依據「${regulation.title}」${articleTitle}規定：\n「${articleContent.replace(/\n+/g, ' ')}」`;
@@ -44,7 +59,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
   }[fontScale];
 
   return (
-    <div className="flex-1 overflow-y-auto bg-warm-page px-3 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+    <div ref={scrollContainerRef} className="flex-1 overflow-y-auto bg-warm-page px-3 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
       <div className="mx-auto w-full max-w-[860px] space-y-4 sm:space-y-6">
         <section className="surface-card rounded-[24px] p-4 sm:rounded-[28px] sm:p-6">
           <div className="flex items-start justify-between gap-3">
