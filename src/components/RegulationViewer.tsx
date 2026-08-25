@@ -3,6 +3,7 @@ import { Regulation } from '../data/regulations';
 import { VisualFormViewer } from './VisualFormViewer';
 import type { FontFamily, FontScale, LineHeight } from './ReadingSettings';
 import { FormattedArticleContent } from './FormattedArticleContent';
+import { RawTextContent } from './RawTextContent';
 import {
   Copy,
   Check,
@@ -116,8 +117,13 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
         </section>
 
         {showRawText ? (
-          <div className="surface-card rounded-[24px] p-4 font-mono text-[13px] leading-7 text-slate-700 dark:text-slate-300 sm:p-6">
-            <pre className="whitespace-pre-wrap break-words font-inherit">{regulation.rawText}</pre>
+          <div className="surface-card raw-text-card rounded-[24px] p-4 sm:p-6">
+            <RawTextContent
+              content={regulation.rawText}
+              fontScale={fontScale}
+              lineHeight={lineHeight}
+              fontFamily={fontFamily}
+            />
           </div>
         ) : activeTab === 'attachments' && regulation.attachments ? (
           <VisualFormViewer attachments={regulation.attachments} />

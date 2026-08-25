@@ -218,6 +218,167 @@
   hanging-punctuation: allow-end;
 }
 
+.raw-text-content {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-wrap: pretty;
+}
+
+.raw-text-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.raw-text-paragraph,
+.raw-text-heading,
+.raw-text-annotation,
+.raw-text-table-row {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hanging-punctuation: allow-end;
+}
+
+.raw-text-paragraph {
+  margin: 0;
+  color: var(--ink);
+}
+
+.raw-text-article-row {
+  margin: 1.15rem 0 0.25rem;
+  min-width: 0;
+}
+
+.raw-text-article-marker {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  border-radius: 0.75rem;
+  background: var(--brand-soft);
+  padding: 0.28rem 0.7rem;
+  color: var(--brand-deep);
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.raw-text-list-row {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin: 0.25rem 0;
+  padding: 0.25rem 0;
+  color: var(--ink);
+}
+
+.raw-text-list-marker {
+  min-width: 2.1rem;
+  flex-shrink: 0;
+  border-radius: 0.55rem;
+  background: var(--brand-soft);
+  padding: 0.1rem 0.3rem;
+  color: var(--brand-deep);
+  text-align: center;
+  font-size: 0.86em;
+  font-weight: 800;
+}
+
+.raw-text-heading {
+  margin: 1.25rem 0 0.35rem;
+  color: var(--brand-deep);
+  font-weight: 800;
+}
+
+.raw-text-content > .space-y-3 > .raw-text-heading:first-child {
+  margin-top: 0;
+}
+
+.raw-text-annotation {
+  margin: 0.75rem 0 0;
+  border-left: 2px solid #f2bf4b;
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: color-mix(in srgb, #fff4ce 72%, var(--surface));
+  padding: 0.6rem 0.8rem;
+  color: var(--ink-muted);
+  font-size: 0.92em;
+}
+
+.raw-text-table-flow {
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.raw-text-table-row {
+  margin: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+  padding: 0.35rem 0;
+  line-height: inherit;
+}
+
+.raw-text-table-row:last-child {
+  border-bottom: 0;
+}
+
+.raw-text-form-row {
+  min-width: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 72%, transparent);
+  padding: 0.35rem 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.raw-text-form-row:last-child {
+  border-bottom: 0;
+}
+
+.raw-text-table-row--annotation {
+  margin-top: 0.5rem;
+  border-left: 2px solid #f2bf4b;
+  border-bottom: 0;
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: color-mix(in srgb, #fff4ce 72%, var(--surface));
+  padding: 0.65rem 0.8rem;
+  color: var(--ink-muted);
+  font-size: 0.92em;
+}
+
+.dark .raw-text-annotation,
+.dark .raw-text-table-row--annotation {
+  background: color-mix(in srgb, #4a3510 48%, var(--surface));
+}
+
+@media (max-width: 639px) {
+  .raw-text-paragraph {
+    text-align: left;
+  }
+
+  .raw-text-heading {
+    margin-top: 1rem;
+  }
+
+  .raw-text-article-row {
+    margin-top: 0.9rem;
+  }
+
+  .raw-text-list-row {
+    gap: 0.45rem;
+  }
+
+  .raw-text-list-marker {
+    min-width: 1.9rem;
+  }
+
+  .raw-text-table-flow {
+    gap: 0.25rem;
+  }
+
+  .raw-text-table-row,
+  .raw-text-form-row {
+    padding: 0.5rem 0;
+  }
+}
+
 /* Keep document-like attachments usable on narrow screens without squeezing tables. */
   .official-form-scroll {
     overflow-x: auto;
