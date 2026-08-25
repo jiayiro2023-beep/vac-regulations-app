@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#102b4a" />
+    <title>離線模式｜退輔會法規檢索</title>
+    <style>
+      :root { color-scheme: light; font-family: system-ui, -apple-system, "Noto Sans TC", sans-serif; background: #f4f7fb; color: #172235; }
+      body { min-height: 100vh; margin: 0; display: grid; place-items: center; padding: 24px; box-sizing: border-box; }
+      main { width: min(100%, 520px); border: 1px solid #dfe7f0; border-radius: 24px; padding: 32px; background: #fff; box-shadow: 0 18px 44px rgba(29, 55, 88, .12); text-align: center; }
+      .mark { width: 56px; height: 56px; margin: 0 auto 18px; display: grid; place-items: center; border-radius: 18px; background: #12345c; color: #fff; font-size: 28px; }
+      h1 { margin: 0; font-size: 1.45rem; } p { margin: 12px 0 0; line-height: 1.8; color: #657389; }
+      button { margin-top: 24px; border: 0; border-radius: 12px; padding: 12px 18px; background: #1b568f; color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="mark" aria-hidden="true">▣</div>
+      <h1>目前處於離線狀態</h1>
+      <p>已快取的法規內容仍可使用。若要載入尚未快取的內容，請恢復網路後重新整理。</p>
+      <button type="button" onclick="location.reload()">重新整理</button>
+    </main>
+  </body>
+</html>

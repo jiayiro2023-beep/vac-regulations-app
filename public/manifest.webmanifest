@@ -1,0 +1,28 @@
+{
+  "name": "退輔會法規檢索",
+  "short_name": "退輔法規",
+  "description": "國軍退除役官兵輔導法規承辦人智慧查詢與津貼試算系統。",
+  "lang": "zh-TW",
+  "dir": "ltr",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#102b4a",
+  "background_color": "#f4f7fb",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -7,10 +7,12 @@ import {
   Menu,
   X,
   ShieldCheck,
+  WifiOff,
 } from 'lucide-react';
 
 interface HeaderProps {
   darkMode: boolean;
+  isOffline: boolean;
   setDarkMode: (val: boolean | ((prev: boolean) => boolean)) => void;
   onOpenCalculator: () => void;
   activeCategory: string;
@@ -21,6 +23,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({
   darkMode,
+  isOffline,
   setDarkMode,
   onOpenCalculator,
   onSelectCategory,
@@ -69,6 +72,12 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         <div className="flex flex-shrink-0 items-center gap-1.5 sm:gap-2">
+          {isOffline && (
+            <span className="inline-flex h-10 items-center gap-1.5 rounded-xl border border-amber-200 bg-amber-50 px-2 text-xs font-bold text-amber-700 dark:border-amber-800 dark:bg-amber-950/50 dark:text-amber-200" title="目前使用已快取的離線內容">
+              <WifiOff className="h-4 w-4" aria-hidden="true" />
+              <span className="hidden sm:inline">離線可用</span>
+            </span>
+          )}
           <button
             onClick={onOpenCalculator}
             className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-[#1b568f] px-3 text-xs font-bold text-white shadow-md shadow-blue-900/15 transition-all hover:bg-[#154574] active:scale-[0.97] sm:h-11 sm:px-4 sm:text-sm"

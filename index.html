@@ -4,7 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#102b4a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="description" content="國軍退除役官兵輔導法規承辦人智慧查詢與津貼試算系統。" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script>
       try {
@@ -12,18 +17,27 @@
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
         const savedScale = localStorage.getItem('vac_font_scale');
-        const fontScale = savedScale === 'sm' || savedScale === 'lg' ? savedScale : 'md';
+        const savedPreferences = JSON.parse(localStorage.getItem('vac_reading_preferences') || '{}');
+        const fontScale = savedPreferences.fontScale === 'sm' || savedPreferences.fontScale === 'lg'
+          ? savedPreferences.fontScale
+          : savedScale === 'sm' || savedScale === 'lg' ? savedScale : 'md';
+        const lineHeight = savedPreferences.lineHeight === 'compact' || savedPreferences.lineHeight === 'spacious'
+          ? savedPreferences.lineHeight : 'comfortable';
+        const fontFamily = savedPreferences.fontFamily === 'system' || savedPreferences.fontFamily === 'serif'
+          ? savedPreferences.fontFamily : 'sans';
         document.documentElement.classList.toggle('dark', isDark);
         document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
         document.documentElement.dataset.fontScale = fontScale;
+        document.documentElement.dataset.lineHeight = lineHeight;
+        document.documentElement.dataset.fontFamily = fontFamily;
       } catch (error) {
-        // Theme hydration is progressive; React applies the final state after mount.
+        // Theme and reading settings are applied again by React after mount.
       }
     </script>
     <title>國軍退除役官兵輔導法規｜承辦人智慧查詢與試算系統</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;800;900&family=Noto+Serif+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
   </head>
   <body class="bg-slate-50 font-sans antialiased selection:bg-blue-600 selection:text-white dark:bg-slate-950">
     <div id="root"></div>

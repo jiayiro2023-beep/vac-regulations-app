@@ -8,19 +8,20 @@ import { RegulationViewer } from './components/RegulationViewer';
 import { CalculatorModal } from './components/CalculatorModal';
 import { ReferenceTables } from './components/ReferenceTables';
 import { HomeView } from './components/HomeView';
-import { FontScale, readFontScale, saveFontScale } from './components/FontSizeControl';
+import { ReadingPreferences, readReadingPreferences, saveReadingPreferences } from './components/ReadingSettings';
 
 export const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     return localStorage.getItem('vac_theme') === 'dark' ||
       (!('vac_theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
   });
-  const [fontScale, setFontScale] = useState<FontScale>(readFontScale);
+  const [readingPreferences, setReadingPreferences] = useState<ReadingPreferences>(readReadingPreferences);
   const [activeCategory, setActiveCategory] = useState<CategoryType>('ALL');
   const [selectedRegulationId, setSelectedRegulationId] = useState<string | null>(null);
   const [keyword, setKeyword] = useState<string>('');
   const [isCalculatorOpen, setIsCalculatorOpen] = useState<boolean>(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
+  const [isOffline, setIsOffline] = useState<boolean>(() => typeof navigator !== 'undefined' && !navigator.onLine);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
@@ -29,9 +30,22 @@ export const App: React.FC = () => {
   }, [darkMode]);
 
   useEffect(() => {
-    document.documentElement.dataset.fontScale = fontScale;
-    saveFontScale(fontScale);
-  }, [fontScale]);
+    const handleOnlineState = () => setIsOffline(!navigator.onLine);
+    window.addEventListener('online', handleOnlineState);
+    window.addEventListener('offline', handleOnlineState);
+    return () => {
+      window.removeEventListener('online', handleOnlineState);
+      window.removeEventListener('offline', handleOnlineState);
+    };
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.dataset.fontScale = readingPreferences.fontScale;
+    root.dataset.lineHeight = readingPreferences.lineHeight;
+    root.dataset.fontFamily = readingPreferences.fontFamily;
+    saveReadingPreferences(readingPreferences);
+  }, [readingPreferences]);
 
   const searchedRegulations = useMemo(() => {
     const normalizedKeyword = keyword.toLowerCase().trim();
@@ -94,6 +108,7 @@ export const App: React.FC = () => {
       <Header
         darkMode={darkMode}
         setDarkMode={setDarkMode}
+        isOffline={isOffline}
         onOpenCalculator={() => setIsCalculatorOpen(true)}
         activeCategory={activeCategory}
         onSelectCategory={handleSelectCategory}
@@ -118,8 +133,8 @@ export const App: React.FC = () => {
             onKeywordChange={setKeyword}
             resultStats={resultStats}
             activeCategory={activeCategory}
-            fontScale={fontScale}
-            onFontScaleChange={setFontScale}
+            readingPreferences={readingPreferences}
+            onReadingPreferencesChange={setReadingPreferences}
           />
 
           {currentRegulation && (
@@ -134,7 +149,9 @@ export const App: React.FC = () => {
             <RegulationViewer
               regulation={currentRegulation}
               keyword={keyword}
-              fontScale={fontScale}
+              fontScale={readingPreferences.fontScale}
+              lineHeight={readingPreferences.lineHeight}
+              fontFamily={readingPreferences.fontFamily}
             />
           ) : (
             <HomeView

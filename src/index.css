@@ -19,6 +19,10 @@
     --accent: #0f8b76;
     --accent-soft: #e5f5f0;
     --focus: #4d9de0;
+    --font-ui: 'Noto Sans TC', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-reading: 'Noto Sans TC', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --line-height-base: 1.65;
+    --line-height-reading: 2.05;
   }
 
   .dark {
@@ -53,10 +57,40 @@
   html[data-font-scale='md'] { font-size: 18px; }
   html[data-font-scale='lg'] { font-size: 19.5px; }
 
+  html[data-font-family='sans'] {
+    --font-ui: 'Noto Sans TC', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-reading: 'Noto Sans TC', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  html[data-font-family='system'] {
+    --font-ui: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-reading: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  html[data-font-family='serif'] {
+    --font-ui: 'Noto Serif TC', 'PMingLiU', 'MingLiU', serif;
+    --font-reading: 'Noto Serif TC', 'PMingLiU', 'MingLiU', serif;
+  }
+
+  html[data-line-height='compact'] {
+    --line-height-base: 1.55;
+    --line-height-reading: 1.85;
+  }
+
+  html[data-line-height='comfortable'] {
+    --line-height-base: 1.65;
+    --line-height-reading: 2.05;
+  }
+
+  html[data-line-height='spacious'] {
+    --line-height-base: 1.75;
+    --line-height-reading: 2.3;
+  }
+
   body {
     margin: 0;
     min-width: 320px;
-    font-family: 'Noto Sans TC', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: var(--font-ui);
     background-color: var(--page);
     background-image:
       radial-gradient(circle at 8% -10%, rgba(93, 156, 219, 0.13), transparent 27rem),
@@ -64,7 +98,7 @@
     color: var(--ink);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    line-height: 1.65;
+    line-height: var(--line-height-base);
   }
 
   .dark body {
@@ -161,23 +195,42 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-.article-text,
-.article-text * {
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  min-width: 0;
-}
+  .article-text,
+  .article-text * {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    min-width: 0;
+  }
+
+  [data-reading-line-height] {
+    line-height: var(--line-height-reading);
+  }
+
+  [data-reading-line-height] [class*='leading-'] {
+    line-height: inherit !important;
+  }
+
+  [data-reading-font-family] {
+    font-family: var(--font-reading);
+  }
 
 .article-text p {
   hanging-punctuation: allow-end;
 }
 
 /* Keep document-like attachments usable on narrow screens without squeezing tables. */
-.official-form-scroll {
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scrollbar-width: thin;
-}
+  .official-form-scroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+  }
+
+  @supports (content-visibility: auto) {
+    .regulation-article {
+      content-visibility: auto;
+      contain-intrinsic-size: 360px;
+    }
+  }
 
 /* Custom scrollbars */
 ::-webkit-scrollbar {

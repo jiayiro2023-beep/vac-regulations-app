@@ -1,13 +1,13 @@
 import { Search, X, Sparkles, Command } from 'lucide-react';
-import { FontScale, FontSizeNudge } from './FontSizeControl';
+import { ReadingPreferences, ReadingSettings } from './ReadingSettings';
 
 interface SearchBarProps {
   keyword: string;
   onKeywordChange: (kw: string) => void;
   resultStats: { regCount: number; matchCount: number };
   activeCategory: string;
-  fontScale: FontScale;
-  onFontScaleChange: (value: FontScale) => void;
+  readingPreferences: ReadingPreferences;
+  onReadingPreferencesChange: (value: ReadingPreferences) => void;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({
@@ -15,8 +15,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   onKeywordChange,
   resultStats,
   activeCategory,
-  fontScale,
-  onFontScaleChange,
+  readingPreferences,
+  onReadingPreferencesChange,
 }) => {
   const scopeLabel = activeCategory === 'ALL' ? '全部法規' : activeCategory;
 
@@ -32,7 +32,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             <span className="hidden items-center gap-1 text-xs font-semibold text-slate-400 dark:text-slate-500 sm:flex">
               <Command className="h-3 w-3" /> 即時檢索
             </span>
-            <FontSizeNudge value={fontScale} onChange={onFontScaleChange} />
+            <ReadingSettings value={readingPreferences} onChange={onReadingPreferencesChange} />
           </div>
         </div>
 

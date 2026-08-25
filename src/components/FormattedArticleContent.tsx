@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import type { FontFamily, LineHeight } from './ReadingSettings';
 
 interface FormattedArticleContentProps {
   content: string;
   keyword: string;
   fontClass: string;
+  lineHeight: LineHeight;
+  fontFamily: FontFamily;
 }
 
 /**
@@ -64,12 +67,14 @@ function normalizeContent(raw: string): string[] {
   return merged;
 }
 
-export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = ({
+const FormattedArticleContentView: React.FC<FormattedArticleContentProps> = ({
   content,
   keyword,
   fontClass,
+  lineHeight,
+  fontFamily,
 }) => {
-  const lines = normalizeContent(content);
+  const lines = useMemo(() => normalizeContent(content), [content]);
 
   const renderTextWithHighlights = (text: string): React.ReactNode => {
     if (!keyword.trim()) return text;
@@ -91,7 +96,11 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
   };
 
   return (
-    <div className={`space-y-3 ${fontClass} break-words min-w-0 text-slate-700 dark:text-slate-300`}>
+    <div
+      data-reading-line-height={lineHeight}
+      data-reading-font-family={fontFamily}
+      className={`space-y-3 ${fontClass} break-words min-w-0 text-slate-700 dark:text-slate-300`}
+    >
 
       {lines.map((line, idx) => {
         // Level 1: 一、二、三、… or 1. 2. 3.
@@ -233,3 +242,5 @@ export const FormattedArticleContent: React.FC<FormattedArticleContentProps> = (
     </div>
   );
 };
+
+export const FormattedArticleContent = React.memo(FormattedArticleContentView);

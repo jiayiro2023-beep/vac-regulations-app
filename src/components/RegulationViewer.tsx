@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Regulation } from '../data/regulations';
 import { VisualFormViewer } from './VisualFormViewer';
-import { FontScale } from './FontSizeControl';
+import type { FontFamily, FontScale, LineHeight } from './ReadingSettings';
 import { FormattedArticleContent } from './FormattedArticleContent';
 import {
   Copy,
@@ -16,9 +16,11 @@ interface RegulationViewerProps {
   regulation: Regulation;
   keyword: string;
   fontScale: FontScale;
+  lineHeight: LineHeight;
+  fontFamily: FontFamily;
 }
 
-export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, keyword, fontScale }) => {
+export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, keyword, fontScale, lineHeight, fontFamily }) => {
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null);
   const [showRawText, setShowRawText] = useState(false);
   const [activeTab, setActiveTab] = useState<'articles' | 'attachments'>('articles');
@@ -115,7 +117,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
                 <article
                   key={index}
                   id={`article-${index}`}
-                  className={`rounded-[22px] border bg-white p-4 transition-all dark:bg-slate-900 sm:rounded-[26px] sm:p-6 ${matchesKeyword ? 'border-amber-300 shadow-[0_10px_28px_rgba(214,158,46,0.12)] ring-4 ring-amber-400/10 dark:border-amber-700' : 'border-slate-200/90 shadow-[0_8px_22px_rgba(31,65,102,0.04)] hover:border-blue-200 dark:border-slate-800 dark:hover:border-slate-700'}`}
+                  className={`regulation-article rounded-[22px] border bg-white p-4 transition-all dark:bg-slate-900 sm:rounded-[26px] sm:p-6 ${matchesKeyword ? 'border-amber-300 shadow-[0_10px_28px_rgba(214,158,46,0.12)] ring-4 ring-amber-400/10 dark:border-amber-700' : 'border-slate-200/90 shadow-[0_8px_22px_rgba(31,65,102,0.04)] hover:border-blue-200 dark:border-slate-800 dark:hover:border-slate-700'}`}
                 >
                   <div className="mb-4 flex items-start justify-between gap-3 border-b border-slate-100 pb-3.5 dark:border-slate-800">
                     <h2 className="flex min-w-0 items-start gap-2.5 text-[15px] font-extrabold leading-relaxed text-[#173e68] dark:text-blue-200 sm:text-base">
@@ -132,7 +134,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
                     </button>
                   </div>
                   <div className="article-text">
-                    <FormattedArticleContent content={article.content} keyword={keyword} fontClass={fontClass} />
+                    <FormattedArticleContent content={article.content} keyword={keyword} fontClass={fontClass} lineHeight={lineHeight} fontFamily={fontFamily} />
                   </div>
                 </article>
               );

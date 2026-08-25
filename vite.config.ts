@@ -5,6 +5,20 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-    open: true
-  }
+    open: true,
+  },
+  build: {
+    target: 'es2020',
+    modulePreload: { polyfill: false },
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'icon-vendor': ['lucide-react'],
+          'regulations-data': ['./src/data/regulations.ts'],
+        },
+      },
+    },
+  },
 });
