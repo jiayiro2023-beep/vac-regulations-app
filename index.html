@@ -11,8 +11,11 @@
         const savedTheme = localStorage.getItem('vac_theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+        const savedScale = localStorage.getItem('vac_font_scale');
+        const fontScale = savedScale === 'sm' || savedScale === 'lg' ? savedScale : 'md';
         document.documentElement.classList.toggle('dark', isDark);
         document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+        document.documentElement.dataset.fontScale = fontScale;
       } catch (error) {
         // Theme hydration is progressive; React applies the final state after mount.
       }

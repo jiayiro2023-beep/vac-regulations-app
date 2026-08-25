@@ -1,12 +1,7 @@
 import { Type } from 'lucide-react';
 
 export type FontScale = 'sm' | 'md' | 'lg';
-
-interface FontSizeControlProps {
-  value: FontScale;
-  onChange: (value: FontScale) => void;
-  compact?: boolean;
-}
+export const FONT_SCALE_STORAGE_KEY = 'vac_font_scale';
 
 const OPTIONS: { value: FontScale; label: string; title: string }[] = [
   { value: 'sm', label: 'A−', title: '較小字級' },
@@ -14,7 +9,30 @@ const OPTIONS: { value: FontScale; label: string; title: string }[] = [
   { value: 'lg', label: 'A＋', title: '較大字級' },
 ];
 
-export const FontSizeControl: React.FC<FontSizeControlProps> = ({ value, onChange, compact = false }) => (
+export const readFontScale = (): FontScale => {
+  try {
+    const saved = localStorage.getItem(FONT_SCALE_STORAGE_KEY);
+    return saved === 'sm' || saved === 'lg' ? saved : 'md';
+  } catch {
+    return 'md';
+  }
+};
+
+export const saveFontScale = (value: FontScale) => {
+  try {
+    localStorage.setItem(FONT_SCALE_STORAGE_KEY, value);
+  } catch {
+    // Continue gracefully when browser storage is unavailable.
+  }
+};
+
+interface FontSizeControlProps {
+  value: FontScale;
+  onChange: (value: FontScale) => void;
+  compact?: boolean;
+}
+
+const FontSizeControl: React.FC<FontSizeControlProps> = ({ value, onChange, compact = false }) => (
   <div className={`flex items-center gap-1.5 ${compact ? '' : 'rounded-xl border border-slate-200 bg-slate-50 p-1 dark:border-slate-700 dark:bg-slate-800/80'}`} aria-label="調整介面字級">
     {!compact && <Type className="ml-1 h-3.5 w-3.5 text-slate-400" aria-hidden="true" />}
     {OPTIONS.map((option) => (
@@ -38,7 +56,7 @@ export const FontSizeControl: React.FC<FontSizeControlProps> = ({ value, onChang
 );
 
 export const FontSizeNudge: React.FC<{ value: FontScale; onChange: (value: FontScale) => void }> = ({ value, onChange }) => (
-  <div className="rounded-xl border border-slate-200 bg-white p-1 dark:border-slate-700 dark:bg-slate-900" aria-label="微調整介面字級">
+  <div className="rounded-xl border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900" aria-label="微調整介面字級">
     <FontSizeControl value={value} onChange={onChange} compact />
   </div>
 );

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Regulation } from '../data/regulations';
 import { VisualFormViewer } from './VisualFormViewer';
-import { FontScale, FontSizeControl } from './FontSizeControl';
+import { FontScale } from './FontSizeControl';
 import { FormattedArticleContent } from './FormattedArticleContent';
 import {
   Copy,
@@ -16,10 +16,9 @@ interface RegulationViewerProps {
   regulation: Regulation;
   keyword: string;
   fontScale: FontScale;
-  onFontScaleChange: (value: FontScale) => void;
 }
 
-export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, keyword, fontScale, onFontScaleChange }) => {
+export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, keyword, fontScale }) => {
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null);
   const [showRawText, setShowRawText] = useState(false);
   const [activeTab, setActiveTab] = useState<'articles' | 'attachments'>('articles');
@@ -69,7 +68,6 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
           <h1 className="mt-4 text-xl font-black leading-snug tracking-[-0.025em] text-slate-900 dark:text-white sm:text-2xl">{regulation.title}</h1>
 
           <div className="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-4 dark:border-slate-800 no-print">
-            <FontSizeControl value={fontScale} onChange={onFontScaleChange} />
             <button
               onClick={() => setShowRawText((prev) => !prev)}
               className={`min-h-9 rounded-xl border px-3 text-[13px] font-bold transition-all ${showRawText ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-blue-800 dark:hover:bg-blue-950/40'}`}
