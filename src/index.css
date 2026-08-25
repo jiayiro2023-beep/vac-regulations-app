@@ -46,12 +46,12 @@
   html {
     min-width: 320px;
     scroll-behavior: smooth;
-    font-size: 17px;
+    font-size: 18px;
   }
 
-  html[data-font-scale='sm'] { font-size: 16px; }
-  html[data-font-scale='md'] { font-size: 17px; }
-  html[data-font-scale='lg'] { font-size: 18.5px; }
+  html[data-font-scale='sm'] { font-size: 17px; }
+  html[data-font-scale='md'] { font-size: 18px; }
+  html[data-font-scale='lg'] { font-size: 19.5px; }
 
   body {
     margin: 0;
@@ -64,6 +64,7 @@
     color: var(--ink);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    line-height: 1.65;
   }
 
   .dark body {

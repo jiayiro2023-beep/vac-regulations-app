@@ -28,7 +28,7 @@ export const Header: React.FC<HeaderProps> = ({
   setIsMobileSidebarOpen,
 }) => {
   return (
-    <header className="sticky top-0 z-30 w-full border-b border-slate-200/80 bg-white/90 shadow-[0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-xl dark:border-slate-800/90 dark:bg-slate-950/88 no-print transition-colors">
+    <header className="sticky top-0 z-30 w-full border-b border-slate-200/80 bg-white/90 shadow-[0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-xl dark:border-slate-800/90 dark:bg-slate-950/95 no-print transition-colors">
       <div className="mx-auto flex h-[68px] w-full max-w-[1440px] items-center justify-between gap-3 px-3 sm:h-[76px] sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
           <button
@@ -89,11 +89,13 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={() => setDarkMode((prev) => !prev)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition-all hover:bg-slate-100 hover:text-slate-800 active:scale-[0.97] dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+            className={`flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition-all active:scale-[0.97] xl:w-auto xl:gap-2 xl:px-3 ${darkMode ? 'bg-slate-800 text-amber-300 hover:bg-slate-700 dark:text-amber-200' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800'}` }
             title={darkMode ? '切換亮色模式' : '切換深色模式'}
             aria-label={darkMode ? '切換亮色模式' : '切換深色模式'}
+            aria-pressed={darkMode}
           >
             {darkMode ? <Sun className="h-[18px] w-[18px] text-amber-300" /> : <Moon className="h-[18px] w-[18px]" />}
+            <span className="hidden text-xs font-bold xl:inline">{darkMode ? '亮色' : '深色'}</span>
           </button>
         </div>
       </div>

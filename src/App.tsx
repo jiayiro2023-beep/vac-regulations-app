@@ -27,6 +27,7 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
+    document.documentElement.style.colorScheme = darkMode ? 'dark' : 'light';
     localStorage.setItem('vac_theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
 

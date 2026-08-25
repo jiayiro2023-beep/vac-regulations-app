@@ -66,7 +66,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className="flex items-center justify-between border-b border-slate-100 px-4 py-4 dark:border-slate-800 lg:px-5">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">Knowledge base</p>
-          <h2 className="mt-1 text-sm font-extrabold text-slate-800 dark:text-slate-100">法規分類與目錄</h2>
+          <h2 className="mt-1 text-base font-extrabold text-slate-800 dark:text-slate-100">法規分類與目錄</h2>
         </div>
         <button
           onClick={onCloseMobile}
@@ -90,7 +90,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <LayoutGrid className="h-4 w-4" />
           </span>
           <span className="flex-1">
-            <span className="block text-[13px] font-extrabold">全部法規</span>
+            <span className="block text-sm font-extrabold">全部法規</span>
             <span className="mt-0.5 block text-[11px] text-slate-400 dark:text-slate-500">瀏覽完整法規庫</span>
           </span>
           <span className="rounded-full bg-white px-2 py-0.5 text-[11px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">{regulations.length}</span>
@@ -131,7 +131,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <Icon className={`h-4 w-4 ${item.color}`} />
                     </span>
                     <span className="min-w-0">
-                      <span className={`block truncate text-[13px] font-extrabold ${hasSelectedInCat ? 'text-blue-800 dark:text-blue-200' : 'text-slate-700 dark:text-slate-200'}`}>{item.label}</span>
+                      <span className={`block whitespace-normal text-sm font-extrabold leading-snug ${hasSelectedInCat ? 'text-blue-800 dark:text-blue-200' : 'text-slate-700 dark:text-slate-200'}`}>{item.label}</span>
                       <span className="mt-0.5 block text-[11px] font-medium text-slate-400 dark:text-slate-500">{categoryRegs.length} 份法規</span>
                     </span>
                   </span>
@@ -157,7 +157,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         >
                           <FileText className={`mt-0.5 h-3.5 w-3.5 flex-shrink-0 ${isSelected ? 'text-blue-100' : 'text-slate-400 dark:text-slate-500'}`} />
                           <span className="min-w-0 flex-1">
-                            <span className="block text-[13px] font-bold leading-snug">{reg.title}</span>
+                            <span className="block text-sm font-bold leading-snug">{reg.title}</span>
                             <span className={`mt-1 block text-[11px] ${isSelected ? 'text-blue-100' : 'text-slate-400 dark:text-slate-500'}`}>{reg.articles.length} 條／節</span>
                           </span>
                         </button>
@@ -172,21 +172,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
 
       <div className="border-t border-slate-100 px-4 py-3 dark:border-slate-800">
-        <p className="text-[11px] leading-relaxed text-slate-400 dark:text-slate-500">資料依據現行公開法規與作業規定整理，正式辦理仍請依最新公文及主管機關公告為準。</p>
+        <p className="text-xs leading-relaxed text-slate-400 dark:text-slate-500">資料依據現行公開法規與作業規定整理，正式辦理仍請依最新公文及主管機關公告為準。</p>
       </div>
     </div>
   );
 
   return (
     <>
-      <aside className="sticky top-[76px] hidden h-[calc(100vh-76px)] w-[288px] flex-shrink-0 lg:flex no-print">
+      <aside className="sticky top-[76px] hidden h-[calc(100vh-76px)] w-[304px] flex-shrink-0 lg:flex no-print">
         {content}
       </aside>
 
       {isMobileOpen && (
         <div className="fixed inset-0 z-40 flex lg:hidden" role="dialog" aria-modal="true" aria-label="法規分類與目錄">
           <button className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm" onClick={onCloseMobile} aria-label="關閉目錄遮罩" />
-          <div className="relative z-10 h-full w-[min(86vw,340px)] shadow-2xl">
+          <div className="relative z-10 h-full w-[min(88vw,360px)] shadow-2xl">
             {content}
           </div>
         </div>

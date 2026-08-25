@@ -83,15 +83,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div className="mt-7 grid max-w-lg grid-cols-3 gap-2.5 sm:gap-3">
               <div className="rounded-2xl border border-white/10 bg-white/[0.07] p-3 backdrop-blur-sm">
                 <div className="text-xl font-black text-white sm:text-2xl">{regulationCount}</div>
-                <div className="mt-1 text-[11px] font-medium text-blue-100/60 sm:text-[11px]">份法規文件</div>
+                <div className="mt-1 text-xs font-medium text-blue-100/60 sm:text-[11px]">份法規文件</div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/[0.07] p-3 backdrop-blur-sm">
                 <div className="text-xl font-black text-white sm:text-2xl">115</div>
-                <div className="mt-1 text-[11px] font-medium text-blue-100/60 sm:text-[11px]">最新修訂年度</div>
+                <div className="mt-1 text-xs font-medium text-blue-100/60 sm:text-[11px]">最新修訂年度</div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/[0.07] p-3 backdrop-blur-sm">
                 <div className="text-xl font-black text-[#71dcc5] sm:text-2xl">即時</div>
-                <div className="mt-1 text-[11px] font-medium text-blue-100/60 sm:text-[11px]">全文搜尋</div>
+                <div className="mt-1 text-xs font-medium text-blue-100/60 sm:text-[11px]">全文搜尋</div>
               </div>
             </div>
           </div>
@@ -135,7 +135,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <div>
                 <span className="text-xs font-bold uppercase tracking-[0.14em] text-blue-600 dark:text-blue-300">01 · Search</span>
                 <h3 className="mt-1 text-sm font-extrabold text-slate-800 dark:text-slate-100">全文即時檢索</h3>
-                <p className="mt-1.5 text-[13px] leading-6 text-slate-500 dark:text-slate-400">從上方搜尋列輸入關鍵字，立即篩選法規與符合的條文。</p>
+                <p className="mt-1.5 text-sm leading-6 text-slate-500 dark:text-slate-400">從上方搜尋列輸入關鍵字，立即篩選法規與符合的條文。</p>
               </div>
             </div>
           </div>
@@ -146,7 +146,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <div className="min-w-0 flex-1">
                 <span className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-600 dark:text-emerald-300">02 · Calculate</span>
                 <h3 className="mt-1 text-sm font-extrabold text-slate-800 dark:text-slate-100">津貼金額試算</h3>
-                <p className="mt-1.5 text-[13px] leading-6 text-slate-500 dark:text-slate-400">依投保與輔導期限，試算第二類退除役官兵的核發金額。</p>
+                <p className="mt-1.5 text-sm leading-6 text-slate-500 dark:text-slate-400">依投保與輔導期限，試算第二類退除役官兵的核發金額。</p>
                 <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-300">開啟試算器 <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span>
               </div>
             </div>
@@ -178,7 +178,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                     <span className="text-sm font-extrabold leading-snug text-slate-800 transition-colors group-hover:text-blue-700 dark:text-slate-100 dark:group-hover:text-blue-300">{link.title}</span>
                     <ArrowUpRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-slate-300 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-500 dark:text-slate-600" />
                   </span>
-                  <span className="mt-1.5 block text-[13px] leading-6 text-slate-500 dark:text-slate-400">{link.desc}</span>
+                  <span className="mt-1.5 block text-sm leading-6 text-slate-500 dark:text-slate-400">{link.desc}</span>
                 </span>
               </button>
             );

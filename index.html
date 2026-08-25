@@ -6,6 +6,17 @@
     <meta name="theme-color" content="#102b4a" />
     <meta name="description" content="國軍退除役官兵輔導法規承辦人智慧查詢與津貼試算系統。" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      try {
+        const savedTheme = localStorage.getItem('vac_theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+        document.documentElement.classList.toggle('dark', isDark);
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+      } catch (error) {
+        // Theme hydration is progressive; React applies the final state after mount.
+      }
+    </script>
     <title>國軍退除役官兵輔導法規｜承辦人智慧查詢與試算系統</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
