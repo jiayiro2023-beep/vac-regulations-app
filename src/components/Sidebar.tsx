@@ -1,141 +1,145 @@
-import React, { useState, useEffect } from 'react';
-import { Regulation } from '../data/regulations';
-import { CategoryType } from '../types';
-import { 
-  FileText, 
-  Briefcase, 
-  GraduationCap, 
-  Award, 
-  Users, 
-  FolderCheck, 
+import { useEffect, useState } from 'react';
+import {
+  FileText,
+  Briefcase,
+  GraduationCap,
+  Award,
+  Users,
+  FolderCheck,
   ChevronRight,
   ChevronDown,
-  Sparkles,
-  X
+  LayoutGrid,
+  X,
 } from 'lucide-react';
 
+interface RegulationItem {
+  id: string;
+  title: string;
+  category: string;
+  articles: unknown[];
+}
+
 interface SidebarProps {
-  regulations: Regulation[];
-  selectedId: string;
+  regulations: RegulationItem[];
+  selectedId?: string;
   onSelectRegulation: (id: string) => void;
-  activeCategory: CategoryType;
-  onSelectCategory: (cat: CategoryType) => void;
+  activeCategory: string;
+  onSelectCategory: (cat: any) => void;
   isMobileOpen: boolean;
   onCloseMobile: () => void;
 }
 
-const CATEGORY_ITEMS: { key: string; label: string; icon: any; color: string }[] = [
-  { key: '就業與津貼', label: '就業與穩定津貼', icon: Briefcase, color: 'text-blue-500 dark:text-blue-400' },
-  { key: '職業訓練', label: '職業訓練與參照表', icon: Award, color: 'text-emerald-500 dark:text-emerald-400' },
-  { key: '就學與進修', label: '就學與大專進修', icon: GraduationCap, color: 'text-indigo-500 dark:text-indigo-400' },
-  { key: '國家考試', label: '國家考試', icon: FolderCheck, color: 'text-amber-500 dark:text-amber-400' },
-  { key: '眷屬權益', label: '眷屬職訓計畫', icon: Users, color: 'text-rose-500 dark:text-rose-400' }
+const CATEGORY_ITEMS: { key: string; label: string; icon: typeof Briefcase; color: string; tint: string }[] = [
+  { key: '就業與津貼', label: '就業與穩定津貼', icon: Briefcase, color: 'text-blue-600 dark:text-blue-300', tint: 'bg-blue-50 dark:bg-blue-950/60' },
+  { key: '職業訓練', label: '職業訓練與參照表', icon: Award, color: 'text-emerald-600 dark:text-emerald-300', tint: 'bg-emerald-50 dark:bg-emerald-950/50' },
+  { key: '就學與進修', label: '就學與大專進修', icon: GraduationCap, color: 'text-violet-600 dark:text-violet-300', tint: 'bg-violet-50 dark:bg-violet-950/50' },
+  { key: '國家考試', label: '國家考試', icon: FolderCheck, color: 'text-amber-600 dark:text-amber-300', tint: 'bg-amber-50 dark:bg-amber-950/50' },
+  { key: '眷屬權益', label: '眷屬職訓計畫', icon: Users, color: 'text-rose-600 dark:text-rose-300', tint: 'bg-rose-50 dark:bg-rose-950/50' },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({
   regulations,
   selectedId,
   onSelectRegulation,
+  activeCategory,
+  onSelectCategory,
   isMobileOpen,
-  onCloseMobile
+  onCloseMobile,
 }) => {
-  // Find the selected regulation to auto-expand its category
-  const selectedRegulation = regulations.find(r => r.id === selectedId);
+  const selectedRegulation = regulations.find((reg) => reg.id === selectedId);
   const selectedCategory = selectedRegulation?.category;
-
   const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
 
-  // Auto-expand the category of the selected regulation when selectedId or selectedCategory changes
   useEffect(() => {
     if (selectedCategory) {
-      setExpandedCategories(prev => ({
-        ...prev,
-        [selectedCategory]: true
-      }));
+      setExpandedCategories((prev) => ({ ...prev, [selectedCategory]: true }));
     }
   }, [selectedCategory]);
 
-  const toggleCategory = (category: string) => {
-    setExpandedCategories(prev => ({
-      ...prev,
-      [category]: !prev[category]
-    }));
+  const handleSelectCategory = (category: string) => {
+    onSelectCategory(category);
+    if (category === 'ALL') onCloseMobile();
   };
 
   const content = (
-    <div className="flex flex-col h-full bg-warm-card dark:bg-slate-900 border-r border-warm dark:border-slate-800">
-      {/* Mobile Drawer Header */}
-      <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between lg:hidden">
-        <span className="text-sm font-bold text-slate-800 dark:text-slate-200">
-          法規分類與目錄
-        </span>
+    <div className="flex h-full flex-col border-r border-slate-200/80 bg-white/90 dark:border-slate-800 dark:bg-slate-950/90">
+      <div className="flex items-center justify-between border-b border-slate-100 px-4 py-4 dark:border-slate-800 lg:px-5">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">Knowledge base</p>
+          <h2 className="mt-1 text-sm font-extrabold text-slate-800 dark:text-slate-100">法規分類與目錄</h2>
+        </div>
         <button
           onClick={onCloseMobile}
-          className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+          className="flex h-9 w-9 items-center justify-center rounded-xl text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-white lg:hidden"
+          aria-label="關閉法規目錄"
         >
-          <X className="w-5 h-5" />
+          <X className="h-5 w-5" />
         </button>
       </div>
 
-      {/* Single Scrollable Container */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {/* Header Intro */}
-        <div className="px-2 py-1 flex items-center justify-between text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
-          <span>法規類別目錄</span>
-          <span className="text-[10px] text-blue-500 dark:text-blue-400 flex items-center gap-1 normal-case font-bold">
-            <Sparkles className="w-3 h-3" /> 點擊展開分類
+      <div className="flex-1 overflow-y-auto px-3 py-4 sm:px-4">
+        <button
+          onClick={() => handleSelectCategory('ALL')}
+          className={`mb-4 flex min-h-11 w-full items-center gap-3 rounded-2xl border px-3.5 py-2.5 text-left transition-all active:scale-[0.99] ${
+            activeCategory === 'ALL'
+              ? 'border-blue-200 bg-blue-50 text-blue-800 shadow-sm dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-200'
+              : 'border-slate-200 bg-slate-50/80 text-slate-600 hover:border-blue-200 hover:bg-blue-50/60 hover:text-blue-700 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-300 dark:hover:border-blue-800 dark:hover:bg-blue-950/40 dark:hover:text-blue-200'
+          }`}
+        >
+          <span className={`flex h-8 w-8 items-center justify-center rounded-xl ${activeCategory === 'ALL' ? 'bg-blue-600 text-white' : 'bg-white text-slate-500 dark:bg-slate-800 dark:text-slate-300'}`}>
+            <LayoutGrid className="h-4 w-4" />
           </span>
+          <span className="flex-1">
+            <span className="block text-xs font-extrabold">全部法規</span>
+            <span className="mt-0.5 block text-[10px] text-slate-400 dark:text-slate-500">瀏覽完整法規庫</span>
+          </span>
+          <span className="rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">{regulations.length}</span>
+        </button>
+
+        <div className="mb-2 flex items-center justify-between px-1">
+          <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-400 dark:text-slate-500">法規類別</span>
+          <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500">點擊展開</span>
         </div>
 
-        {/* Categories Accordion */}
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           {CATEGORY_ITEMS.map((item) => {
             const Icon = item.icon;
-            const categoryRegs = regulations.filter(r => r.category === item.key);
+            const categoryRegs = regulations.filter((reg) => reg.category === item.key);
             const isExpanded = !!expandedCategories[item.key];
-            const hasSelectedInCat = selectedCategory === item.key;
+            const hasSelectedInCat = selectedCategory === item.key || activeCategory === item.key;
 
-            // If a search or bookmark filter is active, and there are no matching regulations under this category, hide the category header.
             if (categoryRegs.length === 0) return null;
 
             return (
-              <div 
-                key={item.key} 
-                className={`rounded-2xl border transition-all duration-200 ${
+              <div
+                key={item.key}
+                className={`overflow-hidden rounded-2xl border transition-all duration-200 ${
                   hasSelectedInCat
-                    ? 'border-blue-100 dark:border-blue-900 bg-slate-50/10 dark:bg-slate-900/10'
-                    : 'border-slate-100 dark:border-slate-800/80 bg-white dark:bg-slate-950/20'
+                    ? 'border-blue-200/90 bg-blue-50/30 shadow-sm dark:border-blue-900 dark:bg-blue-950/20'
+                    : 'border-slate-200/80 bg-white dark:border-slate-800 dark:bg-slate-900/40'
                 }`}
               >
-                {/* Category Header Button */}
                 <button
-                  onClick={() => toggleCategory(item.key)}
-                  className={`w-full flex items-center justify-between p-3 text-sm font-bold transition-all rounded-2xl ${
-                    isExpanded 
-                      ? 'text-blue-600 dark:text-blue-400 bg-slate-50/80 dark:bg-slate-800/50' 
-                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50/60 dark:hover:bg-slate-800/30'
+                  onClick={() => setExpandedCategories((prev) => ({ ...prev, [item.key]: !prev[item.key] }))}
+                  className={`flex min-h-[58px] w-full items-center justify-between gap-2 px-3 py-2.5 text-left transition-colors ${
+                    isExpanded ? 'bg-slate-50/80 dark:bg-slate-800/50' : 'hover:bg-slate-50 dark:hover:bg-slate-800/40'
                   }`}
+                  aria-expanded={isExpanded}
                 >
-                  <div className="flex items-center space-x-3">
-                    <div className={`p-2 rounded-xl transition-all ${
-                      isExpanded 
-                        ? 'bg-blue-100/80 dark:bg-blue-950/60' 
-                        : 'bg-slate-100/80 dark:bg-slate-800'
-                    }`}>
-                      <Icon className={`w-4 h-4 ${isExpanded ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500'}`} />
-                    </div>
-                    <span className="text-sm lg:text-xs tracking-wide">{item.label}</span>
-                  </div>
-                  {isExpanded ? (
-                    <ChevronDown className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                  ) : (
-                    <ChevronRight className="w-4 h-4 text-slate-400" />
-                  )}
+                  <span className="flex min-w-0 items-center gap-2.5">
+                    <span className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-xl ${item.tint}`}>
+                      <Icon className={`h-4 w-4 ${item.color}`} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className={`block truncate text-xs font-extrabold ${hasSelectedInCat ? 'text-blue-800 dark:text-blue-200' : 'text-slate-700 dark:text-slate-200'}`}>{item.label}</span>
+                      <span className="mt-0.5 block text-[10px] font-medium text-slate-400 dark:text-slate-500">{categoryRegs.length} 份法規</span>
+                    </span>
+                  </span>
+                  {isExpanded ? <ChevronDown className="h-4 w-4 flex-shrink-0 text-blue-500" /> : <ChevronRight className="h-4 w-4 flex-shrink-0 text-slate-400" />}
                 </button>
 
-                {/* Submenu: Regulations List */}
                 {isExpanded && (
-                  <div className="p-2 space-y-1 border-t border-slate-100/60 dark:border-slate-800/60 bg-white/40 dark:bg-slate-950/20 rounded-b-2xl">
+                  <div className="space-y-1 border-t border-slate-100 bg-white/70 p-2 dark:border-slate-800 dark:bg-slate-950/30">
                     {categoryRegs.map((reg) => {
                       const isSelected = reg.id === selectedId;
                       return (
@@ -145,23 +149,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             onSelectRegulation(reg.id);
                             onCloseMobile();
                           }}
-                          className={`w-full text-left py-2.5 px-3 rounded-xl transition-all flex items-start space-x-2 group ${
+                          className={`flex min-h-[52px] w-full items-start gap-2 rounded-xl px-2.5 py-2 text-left transition-all active:scale-[0.99] ${
                             isSelected
-                              ? 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/80 dark:to-indigo-950/40 text-blue-700 dark:text-blue-300 border-l-2 border-blue-500 dark:border-blue-400 font-bold'
-                              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50/80 dark:hover:bg-slate-900 hover:text-blue-600 dark:hover:text-slate-200'
+                              ? 'bg-blue-600 text-white shadow-md shadow-blue-900/15'
+                              : 'text-slate-600 hover:bg-blue-50 hover:text-blue-800 dark:text-slate-400 dark:hover:bg-blue-950/50 dark:hover:text-blue-100'
                           }`}
                         >
-                          <FileText className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${
-                            isSelected ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400'
-                          }`} />
-                          <div className="flex-1 min-w-0">
-                            <span className="text-[13.5px] lg:text-xs leading-snug line-clamp-2">
-                              {reg.title}
-                            </span>
-                            <span className="text-[11px] lg:text-[10px] text-slate-400 block mt-0.5 font-normal">
-                              {reg.articles.length} 條/節
-                            </span>
-                          </div>
+                          <FileText className={`mt-0.5 h-3.5 w-3.5 flex-shrink-0 ${isSelected ? 'text-blue-100' : 'text-slate-400 dark:text-slate-500'}`} />
+                          <span className="min-w-0 flex-1">
+                            <span className="block text-[12px] font-bold leading-snug">{reg.title}</span>
+                            <span className={`mt-1 block text-[10px] ${isSelected ? 'text-blue-100' : 'text-slate-400 dark:text-slate-500'}`}>{reg.articles.length} 條／節</span>
+                          </span>
                         </button>
                       );
                     })}
@@ -172,26 +170,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
           })}
         </div>
       </div>
+
+      <div className="border-t border-slate-100 px-4 py-3 dark:border-slate-800">
+        <p className="text-[10px] leading-relaxed text-slate-400 dark:text-slate-500">資料依據現行公開法規與作業規定整理，正式辦理仍請依最新公文及主管機關公告為準。</p>
+      </div>
     </div>
   );
 
   return (
     <>
-      {/* Desktop Sidebar (visible >= lg) */}
-      <aside className="hidden lg:flex w-80 flex-shrink-0 h-[calc(100vh-4rem)] sticky top-16 no-print">
+      <aside className="sticky top-[76px] hidden h-[calc(100vh-76px)] w-[288px] flex-shrink-0 lg:flex no-print">
         {content}
       </aside>
 
-      {/* Mobile Drawer (visible < lg when open) */}
       {isMobileOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden flex">
-          {/* Backdrop */}
-          <div 
-            className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"
-            onClick={onCloseMobile}
-          />
-          {/* Drawer content */}
-          <div className="relative w-80 max-w-[85vw] h-full shadow-2xl z-50">
+        <div className="fixed inset-0 z-40 flex lg:hidden" role="dialog" aria-modal="true" aria-label="法規分類與目錄">
+          <button className="absolute inset-0 bg-slate-950/55 backdrop-blur-sm" onClick={onCloseMobile} aria-label="關閉目錄遮罩" />
+          <div className="relative z-10 h-full w-[min(86vw,340px)] shadow-2xl">
             {content}
           </div>
         </div>

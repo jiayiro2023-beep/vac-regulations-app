@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { REGULATIONS_DATA, Regulation } from './data/regulations';
+import { useEffect, useMemo, useState } from 'react';
+import { REGULATIONS_DATA } from './data/regulations';
 import { CategoryType } from './types';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
@@ -14,127 +14,124 @@ export const App: React.FC = () => {
     return localStorage.getItem('vac_theme') === 'dark' ||
       (!('vac_theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
   });
-
   const [activeCategory, setActiveCategory] = useState<CategoryType>('ALL');
   const [selectedRegulationId, setSelectedRegulationId] = useState<string | null>(null);
   const [keyword, setKeyword] = useState<string>('');
   const [isCalculatorOpen, setIsCalculatorOpen] = useState<boolean>(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
 
-  // Dark mode effect
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('vac_theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('vac_theme', 'light');
-    }
+    document.documentElement.classList.toggle('dark', darkMode);
+    localStorage.setItem('vac_theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
 
+  const searchedRegulations = useMemo(() => {
+    const normalizedKeyword = keyword.toLowerCase().trim();
+    if (!normalizedKeyword) return REGULATIONS_DATA;
 
-
-  // Filter regulations based on keyword and bookmarks mode
-  const filteredRegulations = useMemo(() => {
-    return REGULATIONS_DATA.filter(reg => {
-      // 3. Keyword Filter
-      if (keyword.trim()) {
-        const kw = keyword.toLowerCase().trim();
-        const titleMatch = reg.title.toLowerCase().includes(kw);
-        const articleMatch = reg.articles.some(
-          art => art.title.toLowerCase().includes(kw) || art.content.toLowerCase().includes(kw)
-        );
-        return titleMatch || articleMatch;
-      }
-
-      return true;
+    return REGULATIONS_DATA.filter((reg) => {
+      const titleMatch = reg.title.toLowerCase().includes(normalizedKeyword);
+      const articleMatch = reg.articles.some(
+        (article) => article.title.toLowerCase().includes(normalizedKeyword) || article.content.toLowerCase().includes(normalizedKeyword),
+      );
+      return titleMatch || articleMatch;
     });
-  }, [activeCategory, keyword]);
+  }, [keyword]);
 
-  // Result stats for SearchBar
+  const filteredRegulations = useMemo(() => {
+    if (activeCategory === 'ALL') return searchedRegulations;
+    return searchedRegulations.filter((reg) => reg.category === activeCategory);
+  }, [activeCategory, searchedRegulations]);
+
   const resultStats = useMemo(() => {
     if (!keyword.trim()) return { regCount: filteredRegulations.length, matchCount: 0 };
-    const kw = keyword.toLowerCase().trim();
-    let totalMatches = 0;
-
-    filteredRegulations.forEach(reg => {
-      reg.articles.forEach(art => {
-        if (art.title.toLowerCase().includes(kw) || art.content.toLowerCase().includes(kw)) {
-          totalMatches += 1;
-        }
-      });
-    });
-
-    return { regCount: filteredRegulations.length, matchCount: totalMatches };
+    const normalizedKeyword = keyword.toLowerCase().trim();
+    const matchCount = filteredRegulations.reduce((total, reg) => (
+      total + reg.articles.filter(
+        (article) => article.title.toLowerCase().includes(normalizedKeyword) || article.content.toLowerCase().includes(normalizedKeyword),
+      ).length
+    ), 0);
+    return { regCount: filteredRegulations.length, matchCount };
   }, [filteredRegulations, keyword]);
 
-  // Active regulation
-  const currentRegulation = useMemo(() => {
-    return REGULATIONS_DATA.find(r => r.id === selectedRegulationId) || null;
-  }, [selectedRegulationId]);
+  const currentRegulation = useMemo(
+    () => REGULATIONS_DATA.find((reg) => reg.id === selectedRegulationId) || null,
+    [selectedRegulationId],
+  );
+
+  const handleSelectRegulation = (regulationId: string) => {
+    const selected = REGULATIONS_DATA.find((reg) => reg.id === regulationId);
+    setSelectedRegulationId(regulationId);
+    if (selected) setActiveCategory(selected.category as CategoryType);
+    setIsMobileSidebarOpen(false);
+  };
+
+  const handleSelectCategory = (category: CategoryType) => {
+    setActiveCategory(category);
+    setIsMobileSidebarOpen(false);
+
+    if (category === 'ALL') {
+      setSelectedRegulationId(null);
+      return;
+    }
+
+    setSelectedRegulationId((currentId) => {
+      const selected = REGULATIONS_DATA.find((reg) => reg.id === currentId);
+      return selected?.category === category ? currentId : null;
+    });
+  };
 
   return (
-    <div className="min-h-screen flex flex-col bg-warm-page dark:bg-slate-950 transition-colors">
-      {/* Top Header Navigation */}
+    <div className="flex min-h-screen flex-col bg-warm-page text-slate-900 transition-colors dark:bg-slate-950 dark:text-slate-100">
       <Header
         darkMode={darkMode}
         setDarkMode={setDarkMode}
         onOpenCalculator={() => setIsCalculatorOpen(true)}
         activeCategory={activeCategory}
-        onSelectCategory={(cat) => {
-          setActiveCategory(cat);
-          if (cat === 'ALL') {
-            setSelectedRegulationId(null);
-          }
-        }}
+        onSelectCategory={handleSelectCategory}
         isMobileSidebarOpen={isMobileSidebarOpen}
         setIsMobileSidebarOpen={setIsMobileSidebarOpen}
       />
 
-      {/* Main Layout Area */}
-      <div className="flex-1 flex flex-col lg:flex-row max-w-7xl w-full mx-auto">
-        {/* Left Sidebar */}
+      <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col lg:flex-row">
         <Sidebar
-          regulations={filteredRegulations}
+          regulations={keyword ? searchedRegulations : REGULATIONS_DATA}
           selectedId={currentRegulation?.id}
-          onSelectRegulation={setSelectedRegulationId}
+          onSelectRegulation={handleSelectRegulation}
           activeCategory={activeCategory}
-          onSelectCategory={setActiveCategory}
+          onSelectCategory={handleSelectCategory}
           isMobileOpen={isMobileSidebarOpen}
           onCloseMobile={() => setIsMobileSidebarOpen(false)}
         />
 
-        {/* Right Main Content Panel */}
-        <main className="flex-1 flex flex-col min-w-0">
-          {/* Global Search Bar */}
+        <main className="flex min-w-0 flex-1 flex-col">
           <SearchBar
             keyword={keyword}
             onKeywordChange={setKeyword}
             resultStats={resultStats}
+            activeCategory={activeCategory}
           />
 
-          {/* Reference Table overlay if applicable */}
           {currentRegulation && (
-            <div className="px-4 pt-4 lg:px-8 max-w-4xl mx-auto w-full">
-              <ReferenceTables regulation={currentRegulation} />
+            <div className="w-full px-3 pt-4 sm:px-6 lg:px-8">
+              <div className="mx-auto max-w-[860px]">
+                <ReferenceTables regulation={currentRegulation} />
+              </div>
             </div>
           )}
 
           {currentRegulation ? (
-            <RegulationViewer
-              regulation={currentRegulation}
-              keyword={keyword}
-            />
+            <RegulationViewer regulation={currentRegulation} keyword={keyword} />
           ) : (
             <HomeView
-              onSelectRegulation={setSelectedRegulationId}
+              onSelectRegulation={handleSelectRegulation}
               onOpenCalculator={() => setIsCalculatorOpen(true)}
+              regulationCount={REGULATIONS_DATA.length}
             />
           )}
         </main>
       </div>
 
-      {/* Interactive Case Officer Calculator Modal */}
       <CalculatorModal
         isOpen={isCalculatorOpen}
         onClose={() => setIsCalculatorOpen(false)}
