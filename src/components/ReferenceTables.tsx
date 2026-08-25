@@ -138,13 +138,13 @@ export const ReferenceTables: React.FC<ReferenceTablesProps> = ({ regulation }) 
               <div className="border-t border-slate-200 dark:border-slate-700/60 pt-2 space-y-1.5">
                 {/* Target label+value */}
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide">適用對象</span>
-                  <span className="text-xs text-slate-600 dark:text-slate-300">{row.target}</span>
+                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">適用對象</span>
+                  <span className="text-[13px] text-slate-600 dark:text-slate-300">{row.target}</span>
                 </div>
                 {/* Note label+value */}
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wide">備註</span>
-                  <span className="text-xs text-slate-500 dark:text-slate-400">{row.note}</span>
+                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">備註</span>
+                  <span className="text-[13px] text-slate-500 dark:text-slate-400">{row.note}</span>
                 </div>
               </div>
             </div>

@@ -34,8 +34,8 @@ export const VisualFormViewer: React.FC<VisualFormViewerProps> = ({ attachments 
               <div className="flex min-w-0 items-center gap-3">
                 <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300"><FileCheck className="h-5 w-5" /></span>
                 <div className="min-w-0">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-emerald-700 dark:text-emerald-300">Official attachment</p>
-                  <h2 className="mt-1 text-sm font-extrabold leading-snug text-slate-900 dark:text-white">{attachment.title}</h2>
+                  <p className="text-xs font-bold uppercase tracking-[0.15em] text-emerald-700 dark:text-emerald-300">Official attachment</p>
+                  <h2 className="mt-1 text-[15px] font-extrabold leading-snug text-slate-900 dark:text-white">{attachment.title}</h2>
                 </div>
               </div>
               <button
@@ -51,7 +51,7 @@ export const VisualFormViewer: React.FC<VisualFormViewerProps> = ({ attachments 
             </div>
 
             <details className="group border-t border-slate-100 px-4 py-3 dark:border-slate-800 sm:px-6">
-              <summary className="flex cursor-pointer select-none items-center gap-2 text-xs font-bold text-slate-500 transition-colors hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300">
+              <summary className="flex cursor-pointer select-none items-center gap-2 text-[13px] font-bold text-slate-500 transition-colors hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300">
                 <ClipboardList className="h-4 w-4 text-blue-500" />
                 <span>展開原始條項全文對照</span>
                 <ChevronDown className="ml-auto h-4 w-4 transition-transform group-open:rotate-180" />

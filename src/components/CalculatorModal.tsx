@@ -209,7 +209,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                 <span className="sm:hidden">第二類退役官兵未足月津貼</span>
                 <span className="hidden sm:inline">第二類退除役官兵未足月津貼計算機</span>
               </h2>
-              <p className="text-[10px] sm:text-[11px] text-blue-200">穩定就業津貼發給辦法第 5 條</p>
+              <p className="text-xs text-blue-200">穩定就業津貼發給辦法第 5 條</p>
             </div>
           </div>
           <button
@@ -225,7 +225,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
           
           {/* Quick Presets Banner */}
           <div className="space-y-2 rounded-2xl border border-blue-100 bg-blue-50/60 p-3 dark:border-blue-900/60 dark:bg-blue-950/20 sm:p-4">
-            <div className="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 text-[13px] font-semibold text-slate-600 dark:text-slate-300">
               <RefreshCw className="w-3.5 h-3.5 text-blue-500 flex-shrink-0" />
               <span>載入官方釋例預設值</span>
             </div>
@@ -233,13 +233,13 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
             <div className="flex flex-col sm:flex-row gap-2">
               <button
                 onClick={() => loadPreset(1)}
-                className="w-full text-[11px] font-bold px-3 py-2 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/40 dark:hover:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-xl transition-all border border-blue-200/50 dark:border-blue-800/50 text-left"
+                className="w-full text-[13px] font-bold px-3 py-2.5 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/40 dark:hover:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-xl transition-all border border-blue-200/50 dark:border-blue-800/50 text-left"
               >
                 案例一：訓後就業 (3/15投保, 6/10滿期)
               </button>
               <button
                 onClick={() => loadPreset(2)}
-                className="w-full text-[11px] font-bold px-3 py-2 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 rounded-xl transition-all border border-indigo-200/50 dark:border-indigo-800/50 text-left"
+                className="w-full text-[13px] font-bold px-3 py-2.5 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 rounded-xl transition-all border border-indigo-200/50 dark:border-indigo-800/50 text-left"
               >
                 案例二：推介就業 (3/1投保, 5/10滿期)
               </button>
@@ -251,7 +251,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
             {/* Input Left: Type & Dates */}
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                <label className="block text-[13px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                   穩定就業津貼項目
                 </label>
                 <div className="flex gap-2">
@@ -259,9 +259,9 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                     <button
                       key={type}
                       onClick={() => setAllowanceType(type)}
-                      className={`flex-1 py-2 px-3 rounded-xl border text-xs font-bold text-center transition-all ${
+                      className={`flex-1 py-2 px-3 rounded-xl border text-[13px] font-bold text-center transition-all ${
                         allowanceType === type
-                          ? 'bg-blue-600 text-white border-transparent shadow-xs'
+                          ? 'bg-blue-600 text-white border-transparent shadow-sm'
                           : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-700 dark:hover:bg-slate-700/60'
                       }`}
                     >
@@ -273,25 +273,25 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                  <label className="block text-[13px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     投保就業開始日
                   </label>
                   <input
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 text-slate-900 dark:bg-slate-800/60 dark:border-slate-700 dark:text-slate-100 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 text-slate-900 dark:bg-slate-800/60 dark:border-slate-700 dark:text-slate-100 rounded-xl text-[14px] font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                  <label className="block text-[13px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                     輔導期限屆滿日
                   </label>
                   <input
                     type="date"
                     value={expiryDate}
                     onChange={(e) => setExpiryDate(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 text-slate-900 dark:bg-slate-800/60 dark:border-slate-700 dark:text-slate-100 rounded-xl text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 text-slate-900 dark:bg-slate-800/60 dark:border-slate-700 dark:text-slate-100 rounded-xl text-[14px] font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
@@ -299,11 +299,11 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
 
             {/* Input Right: Info Box */}
             <div className="p-3 sm:p-4 bg-slate-50 border border-slate-200 dark:bg-slate-800/30 dark:border-slate-700/50 rounded-2xl flex flex-col justify-center space-y-2">
-              <h4 className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+              <h4 className="flex items-center gap-1.5 text-[14px] font-bold text-slate-800 dark:text-slate-200">
                 <BookOpen className="w-4 h-4 text-blue-500 flex-shrink-0" />
                 <span>比例計算說明</span>
               </h4>
-              <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed break-words">
+              <p className="text-[13px] leading-6 text-slate-600 dark:text-slate-300 break-words">
                 第二類退除役官兵超過輔導期限不予發給，輔導期限內未足月之就業期間依日數按比率計算，四捨五入至 1 元。
               </p>
             </div>
@@ -313,7 +313,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
           <div className="space-y-2">
             {/* Header: label + reset button — allow wrap */}
             <div className="flex items-start justify-between gap-2 pl-1 flex-wrap">
-              <label className="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider leading-snug">
+              <label className="block text-[13px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider leading-snug">
                 選擇欲核發之就業月份
               </label>
               <button 
@@ -324,13 +324,13 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                   });
                   setSelectedMonths(allOn);
                 }}
-                className="text-[10px] text-blue-500 hover:text-blue-600 font-bold whitespace-nowrap"
+                className="text-[13px] font-bold text-blue-600 hover:text-blue-700 whitespace-nowrap"
               >
                 重設建議申辦月份
               </button>
             </div>
             
-            <div className="overflow-hidden rounded-2xl border border-slate-200 text-xs dark:border-slate-800">
+            <div className="overflow-hidden rounded-2xl border border-slate-200 text-[14px] dark:border-slate-800">
               {blocks.map((b) => {
                 const isSelected = !!selectedMonths[b.monthIndex];
                 const isEligible = b.status !== '逾期';
@@ -359,7 +359,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                         <span className="font-bold text-slate-800 dark:text-slate-100 whitespace-nowrap">
                           第 {b.monthIndex} 個月
                         </span>
-                        <span className="text-[11px] text-slate-400 font-mono truncate">
+                        <span className="text-xs text-slate-400 font-mono truncate">
                           {b.startStr.slice(5)} ~ {b.endStr.slice(5)}
                         </span>
                       </div>
@@ -373,7 +373,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
 
                     {/* Status badge on its own line — always readable */}
                     <div className="mt-1.5 ml-6">
-                      <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${
+                      <span className={`inline-block rounded px-2 py-0.5 text-xs font-bold ${
                         b.status === '足月'
                           ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300'
                           : b.status === '未足月'
@@ -395,16 +395,16 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
             <div className="flex items-center justify-between border-b border-indigo-950/80 pb-3 gap-2">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 flex-shrink-0" />
-                <span className="text-xs sm:text-sm font-bold">穩定就業津貼試算結果</span>
+                <span className="text-[14px] font-bold sm:text-[15px]">穩定就業津貼試算結果</span>
               </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 whitespace-nowrap">
+              <span className="px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 whitespace-nowrap">
                 試算成功
               </span>
             </div>
 
             {/* Amount — large and prominent */}
             <div>
-              <div className="text-[10px] text-indigo-300 uppercase tracking-wide">核發津貼總金額</div>
+              <div className="text-xs font-semibold uppercase tracking-wide text-indigo-200">核發津貼總金額</div>
               <div className="text-2xl sm:text-3xl font-black text-emerald-400 mt-1">
                 NT$ {summary.total.toLocaleString()}
               </div>
@@ -412,22 +412,22 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
 
             {/* Formula */}
             <div>
-              <div className="text-[10px] text-indigo-300 uppercase tracking-wide mb-1.5">核算公式明細</div>
-              <div className="text-[10px] sm:text-[11px] text-slate-300 font-mono break-all overflow-wrap-anywhere bg-white/5 p-2.5 rounded-lg border border-white/10 leading-relaxed">
+              <div className="mb-1.5 text-xs font-semibold uppercase tracking-wide text-indigo-200">核算公式明細</div>
+              <div className="text-xs font-mono text-slate-300 break-all overflow-wrap-anywhere bg-white/5 p-2.5 rounded-lg border border-white/10 leading-relaxed">
                 {summary.calculationFormula}
               </div>
             </div>
 
             {/* Partial month details */}
             {summary.partialMonthsDetails.map((det, idx) => (
-              <p key={idx} className="text-[11px] sm:text-xs text-slate-300 leading-relaxed bg-white/5 px-3 py-2 rounded-xl border border-white/5 font-mono">
+              <p key={idx} className="text-[13px] text-slate-300 leading-relaxed bg-white/5 px-3 py-2 rounded-xl border border-white/5 font-mono">
                 未足月計算明細：{det}
               </p>
             ))}
 
             {/* Regulation link — stacks on mobile */}
             <div className="pt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs border-t border-white/10">
-              <span className="text-slate-400 text-[11px] flex items-center gap-1">
+              <span className="flex items-center gap-1 text-[13px] text-slate-400">
                 <BookOpen className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>依據：穩定就業津貼發給辦法第 5 條</span>
               </span>
@@ -450,7 +450,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
         <div className="flex flex-shrink-0 justify-end border-t border-slate-200 bg-slate-50 px-3 py-3 dark:border-slate-700 dark:bg-slate-800/80 sm:px-6 sm:py-4">
           <button
             onClick={onClose}
-            className="px-4 sm:px-5 py-2 text-xs font-semibold rounded-xl bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors"
+            className="rounded-xl bg-slate-200 px-4 py-2.5 text-[13px] font-semibold text-slate-700 transition-colors hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600"
           >
             關閉試算視窗
           </button>

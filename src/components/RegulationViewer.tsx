@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Regulation } from '../data/regulations';
 import { VisualFormViewer } from './VisualFormViewer';
+import { FontScale, FontSizeControl } from './FontSizeControl';
 import { FormattedArticleContent } from './FormattedArticleContent';
 import {
   Copy,
   Check,
   ListOrdered,
   FileSpreadsheet,
-  Type,
   FileText,
   Printer,
 } from 'lucide-react';
@@ -15,11 +15,12 @@ import {
 interface RegulationViewerProps {
   regulation: Regulation;
   keyword: string;
+  fontScale: FontScale;
+  onFontScaleChange: (value: FontScale) => void;
 }
 
-export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, keyword }) => {
+export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, keyword, fontScale, onFontScaleChange }) => {
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null);
-  const [fontSize, setFontSize] = useState<'sm' | 'md' | 'lg'>('md');
   const [showRawText, setShowRawText] = useState(false);
   const [activeTab, setActiveTab] = useState<'articles' | 'attachments'>('articles');
 
@@ -36,10 +37,10 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
   };
 
   const fontClass = {
-    sm: 'text-[15px] sm:text-sm leading-[1.9]',
-    md: 'text-[17px] sm:text-[15px] leading-[2]',
-    lg: 'text-[19px] sm:text-base leading-[2.1]',
-  }[fontSize];
+    sm: 'text-[16px] sm:text-[16px] leading-[1.95]',
+    md: 'text-[18px] sm:text-[17px] leading-[2.05]',
+    lg: 'text-[20px] sm:text-[19px] leading-[2.15]',
+  }[fontScale];
 
   return (
     <div className="flex-1 overflow-y-auto bg-warm-page px-3 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
@@ -50,10 +51,10 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
               <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700 dark:bg-blue-950/70 dark:text-blue-300"><FileText className="h-4 w-4" /></span>
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-[10px] font-extrabold text-blue-700 dark:border-blue-800 dark:bg-blue-950/60 dark:text-blue-200">{regulation.category}</span>
-                  <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500">{regulation.articles.length} 條／節</span>
+                  <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-[11px] font-extrabold text-blue-700 dark:border-blue-800 dark:bg-blue-950/60 dark:text-blue-200">{regulation.category}</span>
+                  <span className="text-[11px] font-medium text-slate-400 dark:text-slate-500">{regulation.articles.length} 條／節</span>
                 </div>
-                <p className="mt-2 hidden max-w-full truncate text-[10px] font-medium text-slate-400 dark:text-slate-500 sm:block">來源檔案：{regulation.filename}</p>
+                <p className="mt-2 hidden max-w-full truncate text-[11px] font-medium text-slate-400 dark:text-slate-500 sm:block">來源檔案：{regulation.filename}</p>
               </div>
             </div>
             <button
@@ -68,23 +69,10 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
           <h1 className="mt-4 text-xl font-black leading-snug tracking-[-0.025em] text-slate-900 dark:text-white sm:text-2xl">{regulation.title}</h1>
 
           <div className="mt-5 flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-4 dark:border-slate-800 no-print">
-            <div className="flex items-center gap-1.5 rounded-xl bg-slate-50 p-1 dark:bg-slate-800/80">
-              <Type className="ml-1 h-3.5 w-3.5 text-slate-400" />
-              {(['sm', 'md', 'lg'] as const).map((size, index) => (
-                <button
-                  key={size}
-                  onClick={() => setFontSize(size)}
-                  className={`min-h-8 min-w-8 rounded-lg px-2 text-xs font-bold transition-all ${fontSize === size ? 'bg-white text-blue-700 shadow-sm dark:bg-slate-700 dark:text-blue-200' : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white'}`}
-                  title={['小字體', '標準字體', '大字體'][index]}
-                  aria-label={['小字體', '標準字體', '大字體'][index]}
-                >
-                  {['A−', 'A', 'A＋'][index]}
-                </button>
-              ))}
-            </div>
+            <FontSizeControl value={fontScale} onChange={onFontScaleChange} />
             <button
               onClick={() => setShowRawText((prev) => !prev)}
-              className={`min-h-9 rounded-xl border px-3 text-xs font-bold transition-all ${showRawText ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-blue-800 dark:hover:bg-blue-950/40'}`}
+              className={`min-h-9 rounded-xl border px-3 text-[13px] font-bold transition-all ${showRawText ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-200 bg-white text-slate-600 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-blue-800 dark:hover:bg-blue-950/40'}`}
             >
               {showRawText ? '回到條文排版' : '檢視純文字'}
             </button>
@@ -93,7 +81,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
           <div className="mt-4 flex items-center gap-1 border-b border-slate-100 dark:border-slate-800 no-print">
             <button
               onClick={() => { setActiveTab('articles'); setShowRawText(false); }}
-              className={`flex min-h-10 items-center gap-1.5 border-b-2 px-2.5 text-xs font-extrabold transition-colors sm:px-3 ${activeTab === 'articles' ? 'border-blue-600 text-blue-700 dark:border-blue-400 dark:text-blue-200' : 'border-transparent text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
+              className={`flex min-h-10 items-center gap-1.5 border-b-2 px-2.5 text-[13px] font-extrabold transition-colors sm:px-3 ${activeTab === 'articles' ? 'border-blue-600 text-blue-700 dark:border-blue-400 dark:text-blue-200' : 'border-transparent text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
             >
               <ListOrdered className="h-4 w-4" />
               <span>條文全文</span>
@@ -102,7 +90,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
             {regulation.attachments && regulation.attachments.length > 0 && (
               <button
                 onClick={() => { setActiveTab('attachments'); setShowRawText(false); }}
-                className={`flex min-h-10 items-center gap-1.5 border-b-2 px-2.5 text-xs font-extrabold transition-colors sm:px-3 ${activeTab === 'attachments' ? 'border-emerald-600 text-emerald-700 dark:border-emerald-400 dark:text-emerald-200' : 'border-transparent text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
+                className={`flex min-h-10 items-center gap-1.5 border-b-2 px-2.5 text-[13px] font-extrabold transition-colors sm:px-3 ${activeTab === 'attachments' ? 'border-emerald-600 text-emerald-700 dark:border-emerald-400 dark:text-emerald-200' : 'border-transparent text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'}`}
               >
                 <FileSpreadsheet className="h-4 w-4" />
                 <span>附件表單</span>
@@ -138,7 +126,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
                     </h2>
                     <button
                       onClick={() => handleCopyCitation(article.title, article.content)}
-                      className={`flex h-9 flex-shrink-0 items-center gap-1.5 rounded-xl border px-2.5 text-xs font-bold transition-all ${copiedTitle === article.title ? 'border-emerald-600 bg-emerald-600 text-white' : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-blue-700 dark:hover:bg-blue-950/40'}`}
+                      className={`flex h-9 flex-shrink-0 items-center gap-1.5 rounded-xl border px-2.5 text-[13px] font-bold transition-all ${copiedTitle === article.title ? 'border-emerald-600 bg-emerald-600 text-white' : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-blue-700 dark:hover:bg-blue-950/40'}`}
                       title="複製公文引述格式"
                     >
                       {copiedTitle === article.title ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5 text-blue-600 dark:text-blue-300" />}

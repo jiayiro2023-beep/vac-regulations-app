@@ -83,22 +83,22 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div className="mt-7 grid max-w-lg grid-cols-3 gap-2.5 sm:gap-3">
               <div className="rounded-2xl border border-white/10 bg-white/[0.07] p-3 backdrop-blur-sm">
                 <div className="text-xl font-black text-white sm:text-2xl">{regulationCount}</div>
-                <div className="mt-1 text-[10px] font-medium text-blue-100/60 sm:text-[11px]">份法規文件</div>
+                <div className="mt-1 text-[11px] font-medium text-blue-100/60 sm:text-[11px]">份法規文件</div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/[0.07] p-3 backdrop-blur-sm">
                 <div className="text-xl font-black text-white sm:text-2xl">115</div>
-                <div className="mt-1 text-[10px] font-medium text-blue-100/60 sm:text-[11px]">最新修訂年度</div>
+                <div className="mt-1 text-[11px] font-medium text-blue-100/60 sm:text-[11px]">最新修訂年度</div>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/[0.07] p-3 backdrop-blur-sm">
                 <div className="text-xl font-black text-[#71dcc5] sm:text-2xl">即時</div>
-                <div className="mt-1 text-[10px] font-medium text-blue-100/60 sm:text-[11px]">全文搜尋</div>
+                <div className="mt-1 text-[11px] font-medium text-blue-100/60 sm:text-[11px]">全文搜尋</div>
               </div>
             </div>
           </div>
 
           <div className="hidden min-h-[270px] rounded-[24px] border border-white/10 bg-white/[0.07] p-5 backdrop-blur-sm lg:flex lg:flex-col lg:justify-between">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-100/60">Workspace guide</span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-100/60">Workspace guide</span>
               <ShieldCheck className="h-5 w-5 text-emerald-300" />
             </div>
             <div>
@@ -123,19 +123,19 @@ export const HomeView: React.FC<HomeViewProps> = ({
       <section>
         <div className="mb-3 flex items-end justify-between gap-3 px-1">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-300">Start here</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-300">Start here</p>
             <h2 className="mt-1 text-base font-extrabold text-slate-800 dark:text-slate-100">常用操作</h2>
           </div>
-          <span className="hidden text-[11px] font-medium text-slate-400 dark:text-slate-500 sm:inline">快速熟悉工作流程</span>
+          <span className="hidden text-xs font-medium text-slate-400 dark:text-slate-500 sm:inline">快速熟悉工作流程</span>
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="surface-card rounded-[22px] p-4 transition-all hover:-translate-y-0.5 sm:p-5">
             <div className="flex items-start gap-3">
               <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-blue-700 dark:bg-blue-950/70 dark:text-blue-300"><Search className="h-5 w-5" /></span>
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-blue-600 dark:text-blue-300">01 · Search</span>
+                <span className="text-xs font-bold uppercase tracking-[0.14em] text-blue-600 dark:text-blue-300">01 · Search</span>
                 <h3 className="mt-1 text-sm font-extrabold text-slate-800 dark:text-slate-100">全文即時檢索</h3>
-                <p className="mt-1.5 text-xs leading-5 text-slate-500 dark:text-slate-400">從上方搜尋列輸入關鍵字，立即篩選法規與符合的條文。</p>
+                <p className="mt-1.5 text-[13px] leading-6 text-slate-500 dark:text-slate-400">從上方搜尋列輸入關鍵字，立即篩選法規與符合的條文。</p>
               </div>
             </div>
           </div>
@@ -144,9 +144,9 @@ export const HomeView: React.FC<HomeViewProps> = ({
             <div className="flex items-start gap-3">
               <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300"><Calculator className="h-5 w-5" /></span>
               <div className="min-w-0 flex-1">
-                <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-600 dark:text-emerald-300">02 · Calculate</span>
+                <span className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-600 dark:text-emerald-300">02 · Calculate</span>
                 <h3 className="mt-1 text-sm font-extrabold text-slate-800 dark:text-slate-100">津貼金額試算</h3>
-                <p className="mt-1.5 text-xs leading-5 text-slate-500 dark:text-slate-400">依投保與輔導期限，試算第二類退除役官兵的核發金額。</p>
+                <p className="mt-1.5 text-[13px] leading-6 text-slate-500 dark:text-slate-400">依投保與輔導期限，試算第二類退除役官兵的核發金額。</p>
                 <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-300">開啟試算器 <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span>
               </div>
             </div>
@@ -157,10 +157,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
       <section>
         <div className="mb-3 flex items-end justify-between gap-3 px-1">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-300">Quick access</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-300">Quick access</p>
             <h2 className="mt-1 text-base font-extrabold text-slate-800 dark:text-slate-100">常用法規快速通道</h2>
           </div>
-          <span className="text-[11px] font-medium text-slate-400 dark:text-slate-500">{quickLinks.length} 個入口</span>
+          <span className="text-xs font-medium text-slate-400 dark:text-slate-500">{quickLinks.length} 個入口</span>
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           {quickLinks.map((link) => {
@@ -178,7 +178,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                     <span className="text-sm font-extrabold leading-snug text-slate-800 transition-colors group-hover:text-blue-700 dark:text-slate-100 dark:group-hover:text-blue-300">{link.title}</span>
                     <ArrowUpRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-slate-300 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-500 dark:text-slate-600" />
                   </span>
-                  <span className="mt-1.5 block text-xs leading-5 text-slate-500 dark:text-slate-400">{link.desc}</span>
+                  <span className="mt-1.5 block text-[13px] leading-6 text-slate-500 dark:text-slate-400">{link.desc}</span>
                 </span>
               </button>
             );

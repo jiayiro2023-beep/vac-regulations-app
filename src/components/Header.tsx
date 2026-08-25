@@ -53,15 +53,15 @@ export const Header: React.FC<HeaderProps> = ({
             </span>
             <span className="min-w-0">
               <span className="flex flex-wrap items-center gap-1.5">
-                <span className="block truncate text-[15px] font-extrabold tracking-[-0.02em] text-slate-900 dark:text-white sm:text-[18px]">
+                <span className="block truncate text-base font-extrabold tracking-[-0.02em] text-slate-900 dark:text-white sm:text-[19px]">
                   <span className="sm:hidden">退輔法規</span>
                   <span className="hidden sm:inline">退輔會法規檢索</span>
                 </span>
-                <span className="hidden rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-bold tracking-wide text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300 sm:inline-flex">
+                <span className="hidden rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[11px] font-bold tracking-wide text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-300 sm:inline-flex">
                   承辦人專用
                 </span>
               </span>
-              <span className="mt-0.5 hidden text-[11px] font-medium tracking-[0.02em] text-slate-500 dark:text-slate-400 md:block">
+              <span className="mt-0.5 hidden text-xs font-medium tracking-[0.02em] text-slate-500 dark:text-slate-400 md:block">
                 115 年最新修訂 · 法規全文與津貼試算
               </span>
             </span>

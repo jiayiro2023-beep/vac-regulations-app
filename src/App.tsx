@@ -8,11 +8,16 @@ import { RegulationViewer } from './components/RegulationViewer';
 import { CalculatorModal } from './components/CalculatorModal';
 import { ReferenceTables } from './components/ReferenceTables';
 import { HomeView } from './components/HomeView';
+import { FontScale } from './components/FontSizeControl';
 
 export const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     return localStorage.getItem('vac_theme') === 'dark' ||
       (!('vac_theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  });
+  const [fontScale, setFontScale] = useState<FontScale>(() => {
+    const saved = localStorage.getItem('vac_font_scale');
+    return saved === 'sm' || saved === 'lg' ? saved : 'md';
   });
   const [activeCategory, setActiveCategory] = useState<CategoryType>('ALL');
   const [selectedRegulationId, setSelectedRegulationId] = useState<string | null>(null);
@@ -24,6 +29,11 @@ export const App: React.FC = () => {
     document.documentElement.classList.toggle('dark', darkMode);
     localStorage.setItem('vac_theme', darkMode ? 'dark' : 'light');
   }, [darkMode]);
+
+  useEffect(() => {
+    document.documentElement.dataset.fontScale = fontScale;
+    localStorage.setItem('vac_font_scale', fontScale);
+  }, [fontScale]);
 
   const searchedRegulations = useMemo(() => {
     const normalizedKeyword = keyword.toLowerCase().trim();
@@ -110,6 +120,8 @@ export const App: React.FC = () => {
             onKeywordChange={setKeyword}
             resultStats={resultStats}
             activeCategory={activeCategory}
+            fontScale={fontScale}
+            onFontScaleChange={setFontScale}
           />
 
           {currentRegulation && (
@@ -121,7 +133,12 @@ export const App: React.FC = () => {
           )}
 
           {currentRegulation ? (
-            <RegulationViewer regulation={currentRegulation} keyword={keyword} />
+            <RegulationViewer
+              regulation={currentRegulation}
+              keyword={keyword}
+              fontScale={fontScale}
+              onFontScaleChange={setFontScale}
+            />
           ) : (
             <HomeView
               onSelectRegulation={handleSelectRegulation}
