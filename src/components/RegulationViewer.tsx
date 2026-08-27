@@ -14,6 +14,7 @@ import {
   ChevronUp,
   ChevronDown,
   Search,
+  BookOpen,
 } from 'lucide-react';
 
 export interface RegulationViewerHandle {
@@ -65,12 +66,75 @@ export const RegulationViewer = forwardRef<RegulationViewerHandle, RegulationVie
   const [activeTab, setActiveTab] = useState<'articles' | 'attachments'>('articles');
   const [currentMatchIndex, setCurrentMatchIndex] = useState<number>(0);
   const [totalMatches, setTotalMatches] = useState<number>(0);
+  const [scrollProgress, setScrollProgress] = useState<number>(0);
   const contentContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setActiveTab('articles');
     setShowRawText(false);
+    setScrollProgress(0);
   }, [regulation.id]);
+
+  // Track reading progress based on scroll position
+  useEffect(() => {
+    const calculateProgress = () => {
+      const container = scrollContainerRef?.current;
+      const content = contentContainerRef.current;
+
+      // 1. Container-based scrolling
+      if (container && container.scrollHeight > container.clientHeight + 10) {
+        const maxScroll = container.scrollHeight - container.clientHeight;
+        if (maxScroll > 0) {
+          const pct = Math.min(100, Math.max(0, Math.round((container.scrollTop / maxScroll) * 100)));
+          setScrollProgress(pct);
+          return;
+        }
+      }
+
+      // 2. Window/Document-based scrolling
+      if (content) {
+        const rect = content.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const totalHeight = rect.height;
+
+        if (totalHeight <= windowHeight) {
+          setScrollProgress(100);
+          return;
+        }
+
+        const topOffset = 120; // Top header + search bar offset
+        const scrolled = topOffset - rect.top;
+        const maxScroll = totalHeight - windowHeight + topOffset;
+
+        if (maxScroll > 0) {
+          const pct = Math.min(100, Math.max(0, Math.round((scrolled / maxScroll) * 100)));
+          setScrollProgress(pct);
+          return;
+        }
+      }
+
+      // 3. Fallback to document scroll
+      const winScroll = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (docHeight > 0) {
+        const pct = Math.min(100, Math.max(0, Math.round((winScroll / docHeight) * 100)));
+        setScrollProgress(pct);
+      }
+    };
+
+    calculateProgress();
+
+    const container = scrollContainerRef?.current;
+    window.addEventListener('scroll', calculateProgress, { passive: true });
+    window.addEventListener('resize', calculateProgress, { passive: true });
+    container?.addEventListener('scroll', calculateProgress, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', calculateProgress);
+      window.removeEventListener('resize', calculateProgress);
+      container?.removeEventListener('scroll', calculateProgress);
+    };
+  }, [regulation.id, activeTab, showRawText, scrollContainerRef]);
 
   useLayoutEffect(() => {
     const scrollToTop = () => {
@@ -182,6 +246,76 @@ export const RegulationViewer = forwardRef<RegulationViewerHandle, RegulationVie
 
   return (
     <div ref={scrollContainerRef} className="flex-1 overflow-y-auto bg-warm-page px-3 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8 relative">
+      {/* 1. Ambient Floating Top Progress Line (Fixed right under the top header, 0 extra vertical height) */}
+      <div
+        className="fixed top-[68px] sm:top-[76px] left-0 right-0 z-30 h-[3px] bg-[#e3dcce]/40 dark:bg-slate-800/60 pointer-events-none no-print transition-colors"
+        role="progressbar"
+        aria-valuenow={scrollProgress}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="法規閱讀進度"
+      >
+        <div
+          className="h-full bg-gradient-to-r from-[#1b4d82] via-[#2563eb] to-[#0ea5e9] dark:from-blue-500 dark:via-blue-400 dark:to-cyan-300 transition-all duration-150 ease-out shadow-[0_0_8px_rgba(37,99,235,0.4)]"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+
+      {/* 2. Compact Floating Reading Progress Badge (Bottom Left, balanced with ScrollToTop on bottom right) */}
+      <button
+        type="button"
+        onClick={() => {
+          const container = scrollContainerRef?.current;
+          if (container && container.scrollHeight > container.clientHeight + 4) {
+            container.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            document.scrollingElement?.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }}
+        title={`點擊回到頂端（目前閱讀進度 ${scrollProgress}%）`}
+        aria-label={`目前閱讀進度 ${scrollProgress}%，點擊回到頂端`}
+        className="fixed bottom-5 left-4 sm:bottom-7 sm:left-7 z-40 no-print flex items-center gap-2 rounded-full border border-[#e3dcce]/90 bg-white/95 px-3 py-1.5 shadow-[0_10px_24px_rgba(70,55,30,0.12)] backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-lg active:translate-y-0 dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 dark:shadow-[0_10px_24px_rgba(0,0,0,0.4)] group"
+      >
+        {/* Circular Progress SVG */}
+        <div className="relative flex h-5 w-5 items-center justify-center flex-shrink-0">
+          <svg className="h-5 w-5 -rotate-90 transform" viewBox="0 0 24 24">
+            <circle
+              cx="12"
+              cy="12"
+              r="8"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              fill="transparent"
+              className="text-[#e3dcce] dark:text-slate-700"
+            />
+            <circle
+              cx="12"
+              cy="12"
+              r="8"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              fill="transparent"
+              strokeDasharray={50.265}
+              strokeDashoffset={50.265 * (1 - scrollProgress / 100)}
+              className="text-[#1b4d82] dark:text-blue-400 transition-all duration-150"
+            />
+          </svg>
+          {scrollProgress === 100 ? (
+            <Check className="absolute h-2.5 w-2.5 text-[#1b4d82] dark:text-blue-300 stroke-[3]" />
+          ) : (
+            <BookOpen className="absolute h-2.5 w-2.5 text-[#1b4d82] dark:text-blue-300" />
+          )}
+        </div>
+
+        <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 hidden xs:inline">
+          {scrollProgress === 100 ? '已讀完' : '進度'}
+        </span>
+        <span className="font-mono text-xs font-black text-[#1b4d82] dark:text-blue-300">
+          {scrollProgress}%
+        </span>
+      </button>
+
       <div ref={contentContainerRef} className="mx-auto w-full max-w-[860px] space-y-3 sm:space-y-6">
         <section className="surface-card rounded-[24px] p-4 sm:rounded-[28px] sm:p-6">
           <div className="flex items-start justify-between gap-3">
