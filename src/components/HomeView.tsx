@@ -54,15 +54,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
   ];
 
   const toneMap = {
-    blue: { icon: 'bg-blue-100 text-blue-700 dark:bg-blue-950/70 dark:text-blue-300', hover: 'hover:border-blue-300 dark:hover:border-blue-700' },
-    emerald: { icon: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300', hover: 'hover:border-emerald-300 dark:hover:border-emerald-700' },
-    violet: { icon: 'bg-violet-100 text-violet-700 dark:bg-violet-950/70 dark:text-violet-300', hover: 'hover:border-violet-300 dark:hover:border-violet-700' },
-    amber: { icon: 'bg-amber-100 text-amber-700 dark:bg-amber-950/70 dark:text-amber-300', hover: 'hover:border-amber-300 dark:hover:border-amber-700' },
+    blue: { icon: 'bg-[#eaf1fb] text-[#1b4d82] dark:bg-blue-950/70 dark:text-blue-300', hover: 'hover:border-[#1b4d82]/40 hover:bg-[#fcfbf7]' },
+    emerald: { icon: 'bg-[#e6f4ef] text-[#116d5b] dark:bg-emerald-950/70 dark:text-emerald-300', hover: 'hover:border-[#116d5b]/40 hover:bg-[#fcfbf7]' },
+    violet: { icon: 'bg-[#eeedfa] text-[#5243aa] dark:bg-violet-950/70 dark:text-violet-300', hover: 'hover:border-[#5243aa]/40 hover:bg-[#fcfbf7]' },
+    amber: { icon: 'bg-[#fef4e2] text-[#9c6010] dark:bg-amber-950/70 dark:text-amber-300', hover: 'hover:border-[#9c6010]/40 hover:bg-[#fcfbf7]' },
   } as const;
 
   return (
     <div className="mx-auto w-full max-w-[900px] flex-1 space-y-7 px-3 py-5 sm:space-y-9 sm:px-6 sm:py-8 lg:px-8 lg:py-10 animate-riseIn">
-      <section className="relative isolate overflow-hidden rounded-[26px] bg-[#102b4a] text-white shadow-[0_20px_50px_rgba(17,53,91,0.2)] sm:rounded-[32px]">
+      <section className="relative isolate overflow-hidden rounded-[26px] bg-gradient-to-br from-[#102b4a] via-[#14375d] to-[#0d233c] text-white shadow-[0_20px_50px_rgba(25,35,45,0.15)] sm:rounded-[32px]">
         <div className="absolute -right-24 -top-28 h-72 w-72 rounded-full border-[34px] border-white/5" />
         <div className="absolute -bottom-32 right-12 h-72 w-72 rounded-full bg-[#188b7b]/15 blur-3xl" />
         <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-blue-400/10 blur-3xl" />
@@ -123,31 +123,31 @@ export const HomeView: React.FC<HomeViewProps> = ({
       <section>
         <div className="mb-3 flex items-end justify-between gap-3 px-1">
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-300">Start here</p>
-            <h2 className="mt-1 text-base font-extrabold text-slate-800 dark:text-slate-100">常用操作</h2>
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#1b4d82] dark:text-blue-300">Start here</p>
+            <h2 className="mt-1 text-base font-extrabold text-[#1c222b] dark:text-slate-100">常用操作</h2>
           </div>
-          <span className="hidden text-xs font-medium text-slate-400 dark:text-slate-500 sm:inline">快速熟悉工作流程</span>
+          <span className="hidden text-xs font-medium text-[#7d7768] dark:text-slate-500 sm:inline">快速熟悉工作流程</span>
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="surface-card rounded-[22px] p-4 transition-all hover:-translate-y-0.5 sm:p-5">
             <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-blue-100 text-blue-700 dark:bg-blue-950/70 dark:text-blue-300"><Search className="h-5 w-5" /></span>
+              <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-[#eaf1fb] text-[#1b4d82] dark:bg-blue-950/70 dark:text-blue-300"><Search className="h-5 w-5" /></span>
               <div>
-                <span className="text-xs font-bold uppercase tracking-[0.14em] text-blue-600 dark:text-blue-300">01 · Search</span>
-                <h3 className="mt-1 text-sm font-extrabold text-slate-800 dark:text-slate-100">全文即時檢索</h3>
-                <p className="mt-1.5 text-sm leading-6 text-slate-500 dark:text-slate-400">從上方搜尋列輸入關鍵字，立即篩選法規與符合的條文。</p>
+                <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#1b4d82] dark:text-blue-300">01 · Search</span>
+                <h3 className="mt-1 text-sm font-extrabold text-[#1c222b] dark:text-slate-100">全文即時檢索</h3>
+                <p className="mt-1.5 text-sm leading-6 text-[#635c4e] dark:text-slate-400">從上方搜尋列輸入關鍵字，立即篩選法規與符合的條文。</p>
               </div>
             </div>
           </div>
 
-          <button onClick={onOpenCalculator} className="surface-card group rounded-[22px] p-4 text-left transition-all hover:-translate-y-0.5 hover:border-emerald-300 dark:hover:border-emerald-700 sm:p-5">
+          <button onClick={onOpenCalculator} className="surface-card group rounded-[22px] p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[#116d5b]/40 dark:hover:border-emerald-700 sm:p-5">
             <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300"><Calculator className="h-5 w-5" /></span>
+              <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-[#e6f4ef] text-[#116d5b] dark:bg-emerald-950/70 dark:text-emerald-300"><Calculator className="h-5 w-5" /></span>
               <div className="min-w-0 flex-1">
-                <span className="text-xs font-bold uppercase tracking-[0.14em] text-emerald-600 dark:text-emerald-300">02 · Calculate</span>
-                <h3 className="mt-1 text-sm font-extrabold text-slate-800 dark:text-slate-100">津貼金額試算</h3>
-                <p className="mt-1.5 text-sm leading-6 text-slate-500 dark:text-slate-400">依投保與輔導期限，試算第二類退除役官兵的核發金額。</p>
-                <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-300">開啟試算器 <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span>
+                <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#116d5b] dark:text-emerald-300">02 · Calculate</span>
+                <h3 className="mt-1 text-sm font-extrabold text-[#1c222b] dark:text-slate-100">津貼金額試算</h3>
+                <p className="mt-1.5 text-sm leading-6 text-[#635c4e] dark:text-slate-400">依投保與輔導期限，試算第二類退除役官兵的核發金額。</p>
+                <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#116d5b] dark:text-emerald-300">開啟試算器 <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span>
               </div>
             </div>
           </button>
@@ -157,10 +157,10 @@ export const HomeView: React.FC<HomeViewProps> = ({
       <section>
         <div className="mb-3 flex items-end justify-between gap-3 px-1">
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-600 dark:text-blue-300">Quick access</p>
-            <h2 className="mt-1 text-base font-extrabold text-slate-800 dark:text-slate-100">常用法規快速通道</h2>
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#1b4d82] dark:text-blue-300">Quick access</p>
+            <h2 className="mt-1 text-base font-extrabold text-[#1c222b] dark:text-slate-100">常用法規快速通道</h2>
           </div>
-          <span className="text-xs font-medium text-slate-400 dark:text-slate-500">{quickLinks.length} 個入口</span>
+          <span className="text-xs font-medium text-[#7d7768] dark:text-slate-500">{quickLinks.length} 個入口</span>
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           {quickLinks.map((link) => {
@@ -170,15 +170,15 @@ export const HomeView: React.FC<HomeViewProps> = ({
               <button
                 key={link.id}
                 onClick={() => onSelectRegulation(link.id)}
-                className={`group flex min-h-[100px] w-full items-start gap-3 rounded-[22px] border border-slate-200/90 bg-white p-4 text-left shadow-[0_8px_22px_rgba(31,65,102,0.045)] transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(31,65,102,0.1)] dark:border-slate-800 dark:bg-slate-900/80 ${tone.hover}`}
+                className={`group flex min-h-[100px] w-full items-start gap-3 rounded-[22px] border border-[#e3dcce] bg-white p-4 text-left shadow-[0_4px_16px_rgba(60,45,20,0.035)] transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(60,45,20,0.08)] dark:border-slate-800 dark:bg-slate-900/80 ${tone.hover}`}
               >
                 <span className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl ${tone.icon}`}><Icon className="h-5 w-5" /></span>
                 <span className="min-w-0 flex-1">
                   <span className="flex items-start justify-between gap-2">
-                    <span className="text-sm font-extrabold leading-snug text-slate-800 transition-colors group-hover:text-blue-700 dark:text-slate-100 dark:group-hover:text-blue-300">{link.title}</span>
-                    <ArrowUpRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-slate-300 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-blue-500 dark:text-slate-600" />
+                    <span className="text-sm font-extrabold leading-snug text-[#1c222b] transition-colors group-hover:text-[#1b4d82] dark:text-slate-100 dark:group-hover:text-blue-300">{link.title}</span>
+                    <ArrowUpRight className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#a29b8c] transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#1b4d82] dark:text-slate-600" />
                   </span>
-                  <span className="mt-1.5 block text-sm leading-6 text-slate-500 dark:text-slate-400">{link.desc}</span>
+                  <span className="mt-1.5 block text-sm leading-6 text-[#635c4e] dark:text-slate-400">{link.desc}</span>
                 </span>
               </button>
             );
@@ -186,7 +186,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
       </section>
 
-      <p className="px-1 text-[11px] leading-relaxed text-slate-400 dark:text-slate-500">資料依據現行公開法規與作業規定整理；正式辦理時，仍請以最新公文、公告及主管機關解釋為準。</p>
+      <p className="px-1 text-[11px] leading-relaxed text-[#7d7768] dark:text-slate-500">資料依據現行公開法規與作業規定整理；正式辦理時，仍請以最新公文、公告及主管機關解釋為準。</p>
     </div>
   );
 };

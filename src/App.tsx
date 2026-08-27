@@ -4,7 +4,7 @@ import { CategoryType } from './types';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { SearchBar } from './components/SearchBar';
-import { RegulationViewer } from './components/RegulationViewer';
+import { RegulationViewer, RegulationViewerHandle } from './components/RegulationViewer';
 import { CalculatorModal } from './components/CalculatorModal';
 import { ReferenceTables } from './components/ReferenceTables';
 import { HomeView } from './components/HomeView';
@@ -24,6 +24,16 @@ export const App: React.FC = () => {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
   const [isOffline, setIsOffline] = useState<boolean>(() => typeof navigator !== 'undefined' && !navigator.onLine);
   const regulationScrollRef = useRef<HTMLDivElement>(null);
+  const regulationViewerRef = useRef<RegulationViewerHandle>(null);
+  const [searchMatchStats, setSearchMatchStats] = useState<{ current: number; total: number }>({ current: 0, total: 0 });
+
+  const handleNextMatch = () => {
+    regulationViewerRef.current?.nextMatch();
+  };
+
+  const handlePrevMatch = () => {
+    regulationViewerRef.current?.prevMatch();
+  };
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
@@ -77,6 +87,27 @@ export const App: React.FC = () => {
     ), 0);
     return { regCount: filteredRegulations.length, matchCount };
   }, [filteredRegulations, keyword]);
+
+  const matchingRegulations = useMemo(() => {
+    const normalizedKeyword = keyword.toLowerCase().trim();
+    if (!normalizedKeyword) return [];
+
+    return searchedRegulations.map((reg) => {
+      const articleMatches = reg.articles.filter(
+        (article) =>
+          article.title.toLowerCase().includes(normalizedKeyword) ||
+          article.content.toLowerCase().includes(normalizedKeyword),
+      ).length;
+      const titleMatches = reg.title.toLowerCase().includes(normalizedKeyword);
+      return {
+        id: reg.id,
+        title: reg.title,
+        category: reg.category,
+        matchCount: articleMatches + (titleMatches ? 1 : 0),
+        articleMatchCount: articleMatches,
+      };
+    });
+  }, [searchedRegulations, keyword]);
 
   const currentRegulation = useMemo(
     () => REGULATIONS_DATA.find((reg) => reg.id === selectedRegulationId) || null,
@@ -137,6 +168,16 @@ export const App: React.FC = () => {
             activeCategory={activeCategory}
             readingPreferences={readingPreferences}
             onReadingPreferencesChange={setReadingPreferences}
+            hasSelectedRegulation={Boolean(currentRegulation)}
+            matchingRegulations={matchingRegulations}
+            selectedRegulationId={currentRegulation?.id}
+            onSelectRegulation={handleSelectRegulation}
+            searchMatchNav={currentRegulation && keyword.trim() ? {
+              current: searchMatchStats.current,
+              total: searchMatchStats.total,
+              onNext: handleNextMatch,
+              onPrev: handlePrevMatch,
+            } : undefined}
           />
 
           {currentRegulation && (
@@ -149,12 +190,14 @@ export const App: React.FC = () => {
 
           {currentRegulation ? (
               <RegulationViewer
+                ref={regulationViewerRef}
                 regulation={currentRegulation}
                 keyword={keyword}
                 fontScale={readingPreferences.fontScale}
                 lineHeight={readingPreferences.lineHeight}
                 fontFamily={readingPreferences.fontFamily}
                 scrollContainerRef={regulationScrollRef}
+                onMatchStatsChange={setSearchMatchStats}
               />
           ) : (
             <HomeView

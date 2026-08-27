@@ -30,17 +30,17 @@ export const VisualFormViewer: React.FC<VisualFormViewerProps> = ({ attachments 
         const formType = detectFormType(attachment.title);
         return (
           <section key={index} className="surface-card overflow-hidden rounded-[24px] sm:rounded-[28px]">
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-4 py-4 dark:border-slate-800 sm:px-6 sm:py-5">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#e3dcce]/70 px-4 py-4 dark:border-slate-800 sm:px-6 sm:py-5">
               <div className="flex min-w-0 items-center gap-3">
-                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300"><FileCheck className="h-5 w-5" /></span>
+                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-[#e6f4ef] text-[#116d5b] dark:bg-emerald-950/70 dark:text-emerald-300"><FileCheck className="h-5 w-5" /></span>
                 <div className="min-w-0">
-                  <p className="text-xs font-bold uppercase tracking-[0.15em] text-emerald-700 dark:text-emerald-300">Official attachment</p>
-                  <h2 className="mt-1 text-[15px] font-extrabold leading-snug text-slate-900 dark:text-white">{attachment.title}</h2>
+                  <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#116d5b] dark:text-emerald-300">Official attachment</p>
+                  <h2 className="mt-1 text-[15px] font-extrabold leading-snug text-[#1c222b] dark:text-white">{attachment.title}</h2>
                 </div>
               </div>
               <button
                 onClick={() => window.print()}
-                className="flex h-9 items-center gap-1.5 rounded-xl border border-slate-200 px-3 text-xs font-bold text-slate-600 transition-colors hover:border-emerald-200 hover:bg-emerald-50 hover:text-emerald-700 dark:border-slate-700 dark:text-slate-300 dark:hover:border-emerald-800 dark:hover:bg-emerald-950/40 dark:hover:text-emerald-200"
+                className="flex h-9 items-center gap-1.5 rounded-xl border border-[#e3dcce] px-3 text-xs font-bold text-[#7d7768] transition-colors hover:border-emerald-300 hover:bg-[#e6f4ef] hover:text-[#116d5b] dark:border-slate-700 dark:text-slate-300 dark:hover:border-emerald-800 dark:hover:bg-emerald-950/40 dark:hover:text-emerald-200"
               >
                 <Printer className="h-3.5 w-3.5" /> 列印
               </button>
@@ -50,13 +50,13 @@ export const VisualFormViewer: React.FC<VisualFormViewerProps> = ({ attachments 
               <OfficialFormContainer formType={formType} rawTitle={attachment.title} rawContent={attachment.content} />
             </div>
 
-            <details className="group border-t border-slate-100 px-4 py-3 dark:border-slate-800 sm:px-6">
-              <summary className="flex cursor-pointer select-none items-center gap-2 text-[13px] font-bold text-slate-500 transition-colors hover:text-blue-700 dark:text-slate-400 dark:hover:text-blue-300">
-                <ClipboardList className="h-4 w-4 text-blue-500" />
+            <details className="group border-t border-[#e3dcce]/70 px-4 py-3 dark:border-slate-800 sm:px-6">
+              <summary className="flex cursor-pointer select-none items-center gap-2 text-[13px] font-bold text-[#7d7768] transition-colors hover:text-[#1b4d82] dark:text-slate-400 dark:hover:text-blue-300">
+                <ClipboardList className="h-4 w-4 text-[#1b4d82]" />
                 <span>展開原始條項全文對照</span>
                 <ChevronDown className="ml-auto h-4 w-4 transition-transform group-open:rotate-180" />
               </summary>
-              <div className="mt-3 whitespace-pre-wrap break-words rounded-2xl border border-slate-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-200">{attachment.content}</div>
+              <div className="mt-3 whitespace-pre-wrap break-words rounded-2xl border border-[#e3dcce] bg-[#faf8f3] p-4 text-xs leading-6 text-[#5f594d] dark:border-slate-700 dark:bg-slate-800/50 dark:text-slate-200">{attachment.content}</div>
             </details>
           </section>
         );

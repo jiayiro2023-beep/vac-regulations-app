@@ -108,7 +108,7 @@ export const ReadingSettings: React.FC<ReadingSettingsProps> = ({ value, onChang
       <button
         type="button"
         onClick={() => setIsOpen((open) => !open)}
-        className={`inline-flex min-h-10 items-center gap-1.5 rounded-xl border px-2.5 text-xs font-extrabold transition-all active:scale-[0.98] sm:px-3 ${isOpen ? 'border-blue-300 bg-blue-50 text-blue-700 dark:border-blue-700 dark:bg-blue-950/60 dark:text-blue-200' : 'border-slate-200 bg-white text-slate-600 shadow-sm hover:border-blue-200 hover:bg-blue-50/70 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-blue-700 dark:hover:bg-blue-950/50'}`}
+        className={`inline-flex min-h-10 items-center gap-1.5 rounded-xl border px-2.5 text-xs font-extrabold transition-all active:scale-[0.98] sm:px-3 ${isOpen ? 'border-blue-300 bg-[#eef4fb] text-[#1b4d82] dark:border-blue-700 dark:bg-blue-950/60 dark:text-blue-200' : 'border-[#e3dcce] bg-white text-slate-700 shadow-sm hover:border-blue-300 hover:bg-[#f5efe2] dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-blue-700 dark:hover:bg-blue-950/50'}`}
         aria-expanded={isOpen}
         aria-haspopup="dialog"
         aria-label="開啟閱讀設定"
@@ -120,19 +120,19 @@ export const ReadingSettings: React.FC<ReadingSettingsProps> = ({ value, onChang
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-[calc(100%+8px)] z-[80] max-h-[min(70vh,560px)] w-[min(88vw,340px)] overflow-y-auto overscroll-contain rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900 dark:shadow-black/30" role="dialog" aria-label="閱讀設定面板">
-          <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-3 dark:border-slate-800">
+        <div className="absolute right-0 top-[calc(100%+8px)] z-[80] max-h-[min(70vh,560px)] w-[min(88vw,340px)] overflow-y-auto overscroll-contain rounded-2xl border border-[#e3dcce] bg-white p-4 shadow-2xl shadow-slate-900/10 dark:border-slate-700 dark:bg-slate-900 dark:shadow-black/30" role="dialog" aria-label="閱讀設定面板">
+          <div className="flex items-start justify-between gap-3 border-b border-[#e3dcce]/80 pb-3 dark:border-slate-800">
             <div>
-              <div className="flex items-center gap-2 text-sm font-extrabold text-slate-900 dark:text-white">
-                <Eye className="h-4 w-4 text-blue-600 dark:text-blue-300" aria-hidden="true" />
+              <div className="flex items-center gap-2 text-sm font-extrabold text-[#1c222b] dark:text-white">
+                <Eye className="h-4 w-4 text-[#1b4d82] dark:text-blue-300" aria-hidden="true" />
                 閱讀設定
               </div>
-              <p className="mt-1 text-xs leading-relaxed text-slate-400 dark:text-slate-500">調整後會自動記憶，下次開啟仍會保留。</p>
+              <p className="mt-1 text-xs leading-relaxed text-[#7d7768] dark:text-slate-500">調整後會自動記憶，下次開啟仍會保留。</p>
             </div>
             <button
               type="button"
               onClick={reset}
-              className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-bold text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+              className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-bold text-[#7d7768] transition-colors hover:bg-[#eee7d8] hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-200"
               title="恢復閱讀設定"
             >
               <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
@@ -141,14 +141,14 @@ export const ReadingSettings: React.FC<ReadingSettingsProps> = ({ value, onChang
           </div>
 
           <fieldset className="mt-4">
-            <legend className="mb-2 text-xs font-extrabold tracking-wide text-slate-700 dark:text-slate-200">字體大小</legend>
+            <legend className="mb-2 text-xs font-extrabold tracking-wide text-slate-800 dark:text-slate-200">字體大小</legend>
             <div className="grid grid-cols-3 gap-2">
               {FONT_SCALE_OPTIONS.map((option) => (
                 <button
                   key={option.value}
                   type="button"
                   onClick={() => update('fontScale', option.value)}
-                  className={`rounded-xl border px-2 py-2 text-center transition-all active:scale-[0.98] ${value.fontScale === option.value ? 'border-blue-300 bg-blue-50 text-blue-700 ring-1 ring-blue-200 dark:border-blue-700 dark:bg-blue-950/60 dark:text-blue-200 dark:ring-blue-800' : 'border-slate-200 text-slate-600 hover:border-blue-200 hover:bg-blue-50/60 dark:border-slate-700 dark:text-slate-300 dark:hover:border-blue-700 dark:hover:bg-blue-950/50'}`}
+                  className={`rounded-xl border px-2 py-2 text-center transition-all active:scale-[0.98] ${value.fontScale === option.value ? 'border-blue-300 bg-[#eef4fb] text-[#1b4d82] ring-1 ring-blue-200 dark:border-blue-700 dark:bg-blue-950/60 dark:text-blue-200 dark:ring-blue-800' : 'border-[#e3dcce] text-slate-700 hover:border-blue-300 hover:bg-[#f7f2e8] dark:border-slate-700 dark:text-slate-300 dark:hover:border-blue-700 dark:hover:bg-blue-950/50'}`}
                   aria-pressed={value.fontScale === option.value}
                 >
                   <span className="block text-sm font-black">A{option.value === 'sm' ? '−' : option.value === 'lg' ? '＋' : ''}</span>
@@ -159,14 +159,14 @@ export const ReadingSettings: React.FC<ReadingSettingsProps> = ({ value, onChang
           </fieldset>
 
           <fieldset className="mt-4">
-            <legend className="mb-2 text-xs font-extrabold tracking-wide text-slate-700 dark:text-slate-200">內文行距</legend>
+            <legend className="mb-2 text-xs font-extrabold tracking-wide text-slate-800 dark:text-slate-200">內文行距</legend>
             <div className="grid grid-cols-3 gap-2">
               {LINE_HEIGHT_OPTIONS.map((option) => (
                 <button
                   key={option.value}
                   type="button"
                   onClick={() => update('lineHeight', option.value)}
-                  className={`rounded-xl border px-2 py-2 text-center transition-all active:scale-[0.98] ${value.lineHeight === option.value ? 'border-emerald-300 bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 dark:border-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-200 dark:ring-emerald-800' : 'border-slate-200 text-slate-600 hover:border-emerald-200 hover:bg-emerald-50/60 dark:border-slate-700 dark:text-slate-300 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/30'}`}
+                  className={`rounded-xl border px-2 py-2 text-center transition-all active:scale-[0.98] ${value.lineHeight === option.value ? 'border-emerald-300 bg-[#e6f4ef] text-[#116d5b] ring-1 ring-emerald-200 dark:border-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-200 dark:ring-emerald-800' : 'border-[#e3dcce] text-slate-700 hover:border-emerald-300 hover:bg-[#eaf4ee] dark:border-slate-700 dark:text-slate-300 dark:hover:border-emerald-700 dark:hover:bg-emerald-950/30'}`}
                   aria-pressed={value.lineHeight === option.value}
                 >
                   <span className="block text-sm font-black">{option.label}</span>
@@ -177,14 +177,14 @@ export const ReadingSettings: React.FC<ReadingSettingsProps> = ({ value, onChang
           </fieldset>
 
           <fieldset className="mt-4">
-            <legend className="mb-2 text-xs font-extrabold tracking-wide text-slate-700 dark:text-slate-200">字型樣式</legend>
+            <legend className="mb-2 text-xs font-extrabold tracking-wide text-slate-800 dark:text-slate-200">字型樣式</legend>
             <div className="space-y-2">
               {FONT_FAMILY_OPTIONS.map((option) => (
                 <button
                   key={option.value}
                   type="button"
                   onClick={() => update('fontFamily', option.value)}
-                  className={`flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left transition-all active:scale-[0.99] ${value.fontFamily === option.value ? 'border-violet-300 bg-violet-50 text-violet-800 ring-1 ring-violet-200 dark:border-violet-700 dark:bg-violet-950/40 dark:text-violet-200 dark:ring-violet-800' : 'border-slate-200 text-slate-600 hover:border-violet-200 hover:bg-violet-50/50 dark:border-slate-700 dark:text-slate-300 dark:hover:border-violet-700 dark:hover:bg-violet-950/30'}`}
+                  className={`flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left transition-all active:scale-[0.99] ${value.fontFamily === option.value ? 'border-violet-300 bg-[#eeedfa] text-[#5243aa] ring-1 ring-violet-200 dark:border-violet-700 dark:bg-violet-950/40 dark:text-violet-200 dark:ring-violet-800' : 'border-[#e3dcce] text-slate-700 hover:border-violet-300 hover:bg-[#f3f0fa] dark:border-slate-700 dark:text-slate-300 dark:hover:border-violet-700 dark:hover:bg-violet-950/30'}`}
                   aria-pressed={value.fontFamily === option.value}
                 >
                   <span className={`text-sm font-bold ${option.value === 'serif' ? 'font-serif' : ''}`}>{option.label}</span>

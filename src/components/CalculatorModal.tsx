@@ -196,10 +196,10 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/65 p-2 backdrop-blur-sm animate-fadeIn no-print sm:p-4">
-      <div className="flex max-h-[96vh] w-full max-w-3xl flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-[0_24px_80px_rgba(0,0,0,0.25)] dark:border-slate-800 dark:bg-slate-900 sm:max-h-[92vh] sm:rounded-[30px]">
+      <div className="flex max-h-[96vh] w-full max-w-3xl flex-col overflow-hidden rounded-[24px] border border-[#e3dcce] bg-white shadow-[0_24px_80px_rgba(0,0,0,0.25)] dark:border-slate-800 dark:bg-slate-900 sm:max-h-[92vh] sm:rounded-[30px]">
         
         {/* Modal Header */}
-        <div className="flex flex-shrink-0 items-center justify-between gap-2 bg-[#102b4a] px-4 py-4 text-white sm:px-6 sm:py-5">
+        <div className="flex flex-shrink-0 items-center justify-between gap-2 bg-gradient-to-r from-[#102b4a] via-[#14375d] to-[#0d233c] px-4 py-4 text-white sm:px-6 sm:py-5">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-2xl border border-blue-200/20 bg-white/10 text-blue-200 sm:h-10 sm:w-10">
               <Calculator className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -221,25 +221,25 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
         </div>
 
         {/* Modal Scrollable Content */}
-        <div className="flex-1 space-y-5 overflow-y-auto px-3 py-4 text-slate-700 dark:text-slate-200 sm:space-y-6 sm:p-6">
+        <div className="flex-1 space-y-5 overflow-y-auto px-3 py-4 text-slate-800 dark:text-slate-200 sm:space-y-6 sm:p-6">
           
           {/* Quick Presets Banner */}
-          <div className="space-y-2 rounded-2xl border border-blue-100 bg-blue-50/60 p-3 dark:border-blue-900/60 dark:bg-blue-950/20 sm:p-4">
-            <div className="flex items-center gap-1.5 text-[13px] font-semibold text-slate-600 dark:text-slate-300">
-              <RefreshCw className="w-3.5 h-3.5 text-blue-500 flex-shrink-0" />
+          <div className="space-y-2 rounded-2xl border border-[#e3dcce] bg-[#faf8f3] p-3 dark:border-slate-800 dark:bg-slate-900/60 sm:p-4">
+            <div className="flex items-center gap-1.5 text-[13px] font-semibold text-[#635c4e] dark:text-slate-300">
+              <RefreshCw className="w-3.5 h-3.5 text-[#1b4d82] flex-shrink-0" />
               <span>載入官方釋例預設值</span>
             </div>
             {/* Preset buttons — always stacked vertically on mobile */}
             <div className="flex flex-col sm:flex-row gap-2">
               <button
                 onClick={() => loadPreset(1)}
-                className="w-full text-[13px] font-bold px-3 py-2.5 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/40 dark:hover:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-xl transition-all border border-blue-200/50 dark:border-blue-800/50 text-left"
+                className="w-full text-[13px] font-bold px-3 py-2.5 bg-[#edf3fb] hover:bg-[#dfeaf8] text-[#1b4d82] rounded-xl transition-all border border-[#c8d8ea] text-left dark:bg-blue-950/40 dark:hover:bg-blue-900/40 dark:text-blue-300 dark:border-blue-800/50"
               >
                 案例一：訓後就業 (3/15投保, 6/10滿期)
               </button>
               <button
                 onClick={() => loadPreset(2)}
-                className="w-full text-[13px] font-bold px-3 py-2.5 bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 rounded-xl transition-all border border-indigo-200/50 dark:border-indigo-800/50 text-left"
+                className="w-full text-[13px] font-bold px-3 py-2.5 bg-[#eeedfa] hover:bg-[#e2e0f8] text-[#5243aa] rounded-xl transition-all border border-[#d8d4f2] text-left dark:bg-indigo-950/40 dark:hover:bg-indigo-900/40 dark:text-indigo-300 dark:border-indigo-800/50"
               >
                 案例二：推介就業 (3/1投保, 5/10滿期)
               </button>
@@ -251,7 +251,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
             {/* Input Left: Type & Dates */}
             <div className="space-y-4">
               <div className="space-y-2">
-                <label className="block text-[13px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                <label className="block text-[13px] font-bold text-[#635c4e] dark:text-slate-400 uppercase tracking-wider">
                   穩定就業津貼項目
                 </label>
                 <div className="flex gap-2">
@@ -261,8 +261,8 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                       onClick={() => setAllowanceType(type)}
                       className={`flex-1 py-2 px-3 rounded-xl border text-[13px] font-bold text-center transition-all ${
                         allowanceType === type
-                          ? 'bg-blue-600 text-white border-transparent shadow-sm'
-                          : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100 dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-700 dark:hover:bg-slate-700/60'
+                          ? 'bg-[#1b4d82] text-white border-[#1b4d82] shadow-sm'
+                          : 'bg-[#faf8f3] text-slate-700 border-[#e3dcce] hover:bg-[#ede6d4] dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-700 dark:hover:bg-slate-700/60'
                       }`}
                     >
                       {type}
@@ -273,37 +273,37 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <label className="block text-[13px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  <label className="block text-[13px] font-bold text-[#635c4e] dark:text-slate-400 uppercase tracking-wider">
                     投保就業開始日
                   </label>
                   <input
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 text-slate-900 dark:bg-slate-800/60 dark:border-slate-700 dark:text-slate-100 rounded-xl text-[14px] font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-[#faf8f3] border border-[#e3dcce] text-slate-900 dark:bg-slate-800/60 dark:border-slate-700 dark:text-slate-100 rounded-xl text-[14px] font-bold focus:outline-none focus:ring-2 focus:ring-[#1b4d82]"
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="block text-[13px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                  <label className="block text-[13px] font-bold text-[#635c4e] dark:text-slate-400 uppercase tracking-wider">
                     輔導期限屆滿日
                   </label>
                   <input
                     type="date"
                     value={expiryDate}
                     onChange={(e) => setExpiryDate(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 text-slate-900 dark:bg-slate-800/60 dark:border-slate-700 dark:text-slate-100 rounded-xl text-[14px] font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 bg-[#faf8f3] border border-[#e3dcce] text-slate-900 dark:bg-slate-800/60 dark:border-slate-700 dark:text-slate-100 rounded-xl text-[14px] font-bold focus:outline-none focus:ring-2 focus:ring-[#1b4d82]"
                   />
                 </div>
               </div>
             </div>
 
             {/* Input Right: Info Box */}
-            <div className="p-3 sm:p-4 bg-slate-50 border border-slate-200 dark:bg-slate-800/30 dark:border-slate-700/50 rounded-2xl flex flex-col justify-center space-y-2">
+            <div className="p-3 sm:p-4 bg-[#faf8f3] border border-[#e3dcce] dark:bg-slate-800/30 dark:border-slate-700/50 rounded-2xl flex flex-col justify-center space-y-2">
               <h4 className="flex items-center gap-1.5 text-[14px] font-bold text-slate-800 dark:text-slate-200">
-                <BookOpen className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                <BookOpen className="w-4 h-4 text-[#1b4d82] flex-shrink-0" />
                 <span>比例計算說明</span>
               </h4>
-              <p className="text-[13px] leading-6 text-slate-600 dark:text-slate-300 break-words">
+              <p className="text-[13px] leading-6 text-[#635c4e] dark:text-slate-300 break-words">
                 第二類退除役官兵超過輔導期限不予發給，輔導期限內未足月之就業期間依日數按比率計算，四捨五入至 1 元。
               </p>
             </div>
@@ -313,7 +313,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
           <div className="space-y-2">
             {/* Header: label + reset button — allow wrap */}
             <div className="flex items-start justify-between gap-2 pl-1 flex-wrap">
-              <label className="block text-[13px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider leading-snug">
+              <label className="block text-[13px] font-bold text-[#635c4e] dark:text-slate-400 uppercase tracking-wider leading-snug">
                 選擇欲核發之就業月份
               </label>
               <button 
@@ -324,13 +324,13 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                   });
                   setSelectedMonths(allOn);
                 }}
-                className="text-[13px] font-bold text-blue-600 hover:text-blue-700 whitespace-nowrap"
+                className="text-[13px] font-bold text-[#1b4d82] hover:underline whitespace-nowrap"
               >
                 重設建議申辦月份
               </button>
             </div>
             
-            <div className="overflow-hidden rounded-2xl border border-slate-200 text-[14px] dark:border-slate-800">
+            <div className="overflow-hidden rounded-2xl border border-[#e3dcce] text-[14px] dark:border-slate-800">
               {blocks.map((b) => {
                 const isSelected = !!selectedMonths[b.monthIndex];
                 const isEligible = b.status !== '逾期';
@@ -340,9 +340,9 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                     key={b.monthIndex} 
                     className={`p-3 transition-colors ${
                       !isEligible 
-                        ? 'bg-slate-50/50 dark:bg-slate-900/10 opacity-50' 
+                        ? 'bg-[#f4efe4] opacity-50 dark:bg-slate-900/10' 
                         : isSelected 
-                          ? 'bg-blue-50/30 dark:bg-blue-950/20' 
+                          ? 'bg-[#eef4fb] dark:bg-blue-950/20' 
                           : 'bg-white dark:bg-slate-900'
                     }`}
                   >
@@ -354,12 +354,12 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                           checked={isSelected && isEligible}
                           disabled={!isEligible}
                           onChange={() => handleToggleMonth(b.monthIndex)}
-                          className="rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 w-4 h-4 flex-shrink-0"
+                          className="rounded text-[#1b4d82] focus:ring-[#1b4d82] disabled:opacity-50 w-4 h-4 flex-shrink-0"
                         />
                         <span className="font-bold text-slate-800 dark:text-slate-100 whitespace-nowrap">
                           第 {b.monthIndex} 個月
                         </span>
-                        <span className="text-xs text-slate-400 font-mono truncate">
+                        <span className="text-xs text-[#7d7768] font-mono truncate">
                           {b.startStr.slice(5)} ~ {b.endStr.slice(5)}
                         </span>
                       </div>
@@ -375,9 +375,9 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
                     <div className="mt-1.5 ml-6">
                       <span className={`inline-block rounded px-2 py-0.5 text-xs font-bold ${
                         b.status === '足月'
-                          ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300'
+                          ? 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300'
                           : b.status === '未足月'
-                            ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60'
+                            ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60'
                             : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-500 border border-slate-200/40 dark:border-slate-700/40'
                       }`}>
                         {b.status === '足月' ? '足月' : b.status === '未足月' ? `未足月 (${b.validDays}/${b.totalDays} 天)` : '已逾輔導期'}
@@ -390,7 +390,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
           </div>
 
           {/* Results Block */}
-          <div className="flex-shrink-0 space-y-3 rounded-[22px] bg-[#102b4a] p-4 text-white shadow-[0_14px_32px_rgba(16,43,74,0.2)] sm:space-y-4 sm:p-5">
+          <div className="flex-shrink-0 space-y-3 rounded-[22px] bg-gradient-to-br from-[#102b4a] via-[#14375d] to-[#0d233c] p-4 text-white shadow-[0_14px_32px_rgba(16,43,74,0.2)] sm:space-y-4 sm:p-5">
             {/* Header row */}
             <div className="flex items-center justify-between border-b border-indigo-950/80 pb-3 gap-2">
               <div className="flex items-center gap-2">
@@ -447,10 +447,10 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="flex flex-shrink-0 justify-end border-t border-slate-200 bg-slate-50 px-3 py-3 dark:border-slate-700 dark:bg-slate-800/80 sm:px-6 sm:py-4">
+        <div className="flex flex-shrink-0 justify-end border-t border-[#e3dcce] bg-[#faf8f3] px-3 py-3 dark:border-slate-700 dark:bg-slate-800/80 sm:px-6 sm:py-4">
           <button
             onClick={onClose}
-            className="rounded-xl bg-slate-200 px-4 py-2.5 text-[13px] font-semibold text-slate-700 transition-colors hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600"
+            className="rounded-xl bg-[#ede6d4] px-4 py-2.5 text-[13px] font-bold text-slate-800 transition-colors hover:bg-[#e0d6be] dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600"
           >
             關閉試算視窗
           </button>

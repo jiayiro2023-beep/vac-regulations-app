@@ -3,6 +3,7 @@ import type { FontFamily, FontScale, LineHeight } from './ReadingSettings';
 
 interface RawTextContentProps {
   content: string;
+  keyword?: string;
   fontScale: FontScale;
   lineHeight: LineHeight;
   fontFamily: FontFamily;
@@ -152,7 +153,7 @@ function normalizeDocument(content: string): TextBlock[] {
   return blocks;
 }
 
-const RawTextContentView: React.FC<RawTextContentProps> = ({ content, fontScale, lineHeight, fontFamily }) => {
+const RawTextContentView: React.FC<RawTextContentProps> = ({ content, keyword = '', fontScale, lineHeight, fontFamily }) => {
   const cleanLines = useMemo(() => getCleanLines(content), [content]);
   const tableLike = useMemo(() => isTableLike(cleanLines.filter(Boolean)), [cleanLines]);
   const blocks = useMemo(() => normalizeDocument(content), [content]);
@@ -161,6 +162,25 @@ const RawTextContentView: React.FC<RawTextContentProps> = ({ content, fontScale,
     md: 'text-[18px] sm:text-[17px]',
     lg: 'text-[20px] sm:text-[19px]',
   }[fontScale];
+
+  const renderTextWithHighlights = (text: string): React.ReactNode => {
+    if (!keyword || !keyword.trim()) return text;
+    const kw = keyword.trim();
+    const parts = text.split(new RegExp(`(${kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'));
+    return parts.map((part, i) =>
+      part.toLowerCase() === kw.toLowerCase() ? (
+        <mark
+          key={i}
+          data-search-match="true"
+          className="search-highlight bg-[#fbe396] dark:bg-amber-700/70 dark:text-amber-100 text-[#633e00] font-bold px-0.5 rounded"
+        >
+          {part}
+        </mark>
+      ) : (
+        part
+      )
+    );
+  };
 
   return (
     <div
@@ -179,7 +199,7 @@ const RawTextContentView: React.FC<RawTextContentProps> = ({ content, fontScale,
               key={`${index}-${block.text.slice(0, 12)}`}
               className={`raw-text-table-row ${block.kind === 'annotation' ? 'raw-text-table-row--annotation' : ''}`}
             >
-              {block.text}
+              {renderTextWithHighlights(block.text)}
             </div>
           ) : <div key={`gap-${index}`} className="h-2" aria-hidden="true" />)}
         </div>
@@ -189,7 +209,7 @@ const RawTextContentView: React.FC<RawTextContentProps> = ({ content, fontScale,
             if (block.kind === 'annotation') {
               return (
                 <p key={`${index}-${block.text.slice(0, 12)}`} className="raw-text-annotation">
-                  {block.text}
+                  {renderTextWithHighlights(block.text)}
                 </p>
               );
             }
@@ -197,7 +217,7 @@ const RawTextContentView: React.FC<RawTextContentProps> = ({ content, fontScale,
             if (block.kind === 'heading') {
               return (
                 <p key={`${index}-${block.text.slice(0, 12)}`} className="raw-text-heading">
-                  {block.text}
+                  {renderTextWithHighlights(block.text)}
                 </p>
               );
             }
@@ -205,7 +225,7 @@ const RawTextContentView: React.FC<RawTextContentProps> = ({ content, fontScale,
             if (block.kind === 'article') {
               return (
                 <div key={`${index}-${block.text}`} className="raw-text-article-row">
-                  <span className="raw-text-article-marker">{block.text}</span>
+                  <span className="raw-text-article-marker">{renderTextWithHighlights(block.text)}</span>
                 </div>
               );
             }
@@ -213,8 +233,8 @@ const RawTextContentView: React.FC<RawTextContentProps> = ({ content, fontScale,
             if (block.kind === 'list') {
               return (
                 <div key={`${index}-${block.marker}-${block.text.slice(0, 12)}`} className="raw-text-list-row">
-                  <span className="raw-text-list-marker">{block.marker}</span>
-                  <span className="min-w-0 flex-1">{block.text}</span>
+                  <span className="raw-text-list-marker">{renderTextWithHighlights(block.marker || '')}</span>
+                  <span className="min-w-0 flex-1">{renderTextWithHighlights(block.text)}</span>
                 </div>
               );
             }
@@ -222,14 +242,14 @@ const RawTextContentView: React.FC<RawTextContentProps> = ({ content, fontScale,
             if (block.kind === 'row') {
               return (
                 <div key={`${index}-${block.text.slice(0, 12)}`} className="raw-text-form-row">
-                  {block.text}
+                  {renderTextWithHighlights(block.text)}
                 </div>
               );
             }
 
             return (
               <p key={`${index}-${block.text.slice(0, 12)}`} className="raw-text-paragraph">
-                {block.text}
+                {renderTextWithHighlights(block.text)}
               </p>
             );
           })}

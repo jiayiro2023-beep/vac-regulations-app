@@ -69,13 +69,13 @@ export const ReferenceTables: React.FC<ReferenceTablesProps> = ({ regulation }) 
     ];
 
     return (
-      <div className="bg-warm-card dark:bg-slate-900 rounded-2xl p-4 sm:p-6 border border-warm dark:border-slate-800 shadow-sm space-y-4">
+      <div className="surface-card rounded-[24px] p-4 sm:p-6 border border-[#e3dcce] dark:border-slate-800 shadow-sm space-y-4">
         {/* Header */}
-        <div className="flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
-          <Award className="w-5 h-5 text-amber-500 flex-shrink-0" />
-          <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-snug">
+        <div className="flex items-center gap-2 border-b border-[#e3dcce]/80 dark:border-slate-800 pb-3">
+          <Award className="w-5 h-5 text-amber-600 flex-shrink-0" />
+          <h3 className="text-sm sm:text-base font-bold text-[#1c222b] dark:text-white leading-snug">
             就學補助生活津貼及獎勵核發金額表
-            <span className="block sm:inline sm:ml-1 text-xs font-normal text-slate-500 dark:text-slate-400">
+            <span className="block sm:inline sm:ml-1 text-xs font-normal text-[#7d7768] dark:text-slate-400">
               (115年7月1日最新生效標準)
             </span>
           </h3>
@@ -83,28 +83,28 @@ export const ReferenceTables: React.FC<ReferenceTablesProps> = ({ regulation }) 
 
         {/* Desktop: traditional table (sm+) */}
         <div className="hidden sm:block overflow-x-auto">
-          <table className="w-full text-left text-xs border-collapse border border-slate-200 dark:border-slate-700">
+          <table className="w-full text-left text-xs border-collapse border border-[#e3dcce] dark:border-slate-700">
             <thead>
-              <tr className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
-                <th className="p-3 border border-slate-200 dark:border-slate-700 font-bold">項目類別</th>
-                <th className="p-3 border border-slate-200 dark:border-slate-700 font-bold">適用對象與資格條件</th>
-                <th className="p-3 border border-slate-200 dark:border-slate-700 font-bold">核發標準 / 金額 (NT$)</th>
-                <th className="p-3 border border-slate-200 dark:border-slate-700 font-bold">備註說明</th>
+              <tr className="bg-[#faf8f3] dark:bg-slate-800 text-[#1c222b] dark:text-slate-200">
+                <th className="p-3 border border-[#e3dcce] dark:border-slate-700 font-bold">項目類別</th>
+                <th className="p-3 border border-[#e3dcce] dark:border-slate-700 font-bold">適用對象與資格條件</th>
+                <th className="p-3 border border-[#e3dcce] dark:border-slate-700 font-bold">核發標準 / 金額 (NT$)</th>
+                <th className="p-3 border border-[#e3dcce] dark:border-slate-700 font-bold">備註說明</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-200 dark:divide-slate-700 text-slate-600 dark:text-slate-300">
+            <tbody className="divide-y divide-[#e3dcce] dark:divide-slate-700 text-slate-700 dark:text-slate-300">
               {rows.map((row, i) => (
-                <tr key={i} className={row.highlight ? 'bg-amber-50/50 dark:bg-amber-950/20' : ''}>
-                  <td className={`p-3 border border-slate-200 dark:border-slate-700 font-semibold ${row.highlight ? 'text-amber-900 dark:text-amber-200 font-bold' : 'text-blue-900 dark:text-blue-200'}`}>
+                <tr key={i} className={row.highlight ? 'bg-[#fef8eb] dark:bg-amber-950/20' : 'bg-white dark:bg-slate-900'}>
+                  <td className={`p-3 border border-[#e3dcce] dark:border-slate-700 font-semibold ${row.highlight ? 'text-amber-900 dark:text-amber-200 font-bold' : 'text-[#1b4d82] dark:text-blue-200'}`}>
                     {row.category}
                   </td>
-                  <td className="p-3 border border-slate-200 dark:border-slate-700">
+                  <td className="p-3 border border-[#e3dcce] dark:border-slate-700">
                     {row.target}
                   </td>
-                  <td className="p-3 border border-slate-200 dark:border-slate-700 font-bold text-emerald-600 dark:text-emerald-400">
+                  <td className="p-3 border border-[#e3dcce] dark:border-slate-700 font-bold text-[#116d5b] dark:text-emerald-400">
                     {row.amount}
                   </td>
-                  <td className="p-3 border border-slate-200 dark:border-slate-700 text-[11px]">
+                  <td className="p-3 border border-[#e3dcce] dark:border-slate-700 text-[11px]">
                     {row.note}
                   </td>
                 </tr>
@@ -120,31 +120,31 @@ export const ReferenceTables: React.FC<ReferenceTablesProps> = ({ regulation }) 
               key={i}
               className={`rounded-xl border p-3.5 space-y-2.5 ${
                 row.highlight
-                  ? 'border-amber-200 dark:border-amber-800/60 bg-amber-50/60 dark:bg-amber-950/20'
-                  : 'border-slate-200 dark:border-slate-700/80 bg-slate-50/50 dark:bg-slate-800/20'
+                  ? 'border-amber-300 dark:border-amber-800/60 bg-[#fef8eb] dark:bg-amber-950/20'
+                  : 'border-[#e3dcce] dark:border-slate-700/80 bg-[#faf8f3] dark:bg-slate-800/20'
               }`}
             >
               {/* Category name as card title */}
-              <div className={`text-xs font-bold leading-snug ${row.highlight ? 'text-amber-800 dark:text-amber-300' : 'text-blue-800 dark:text-blue-300'}`}>
+              <div className={`text-xs font-bold leading-snug ${row.highlight ? 'text-amber-900 dark:text-amber-300' : 'text-[#1b4d82] dark:text-blue-300'}`}>
                 {row.category}
               </div>
 
               {/* Amount — prominent */}
-              <div className={`text-sm font-bold ${row.highlight ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
+              <div className={`text-sm font-bold ${row.highlight ? 'text-amber-700 dark:text-amber-400' : 'text-[#116d5b] dark:text-emerald-400'}`}>
                 {row.amount}
               </div>
 
               {/* Divider */}
-              <div className="border-t border-slate-200 dark:border-slate-700/60 pt-2 space-y-1.5">
+              <div className="border-t border-[#e3dcce] dark:border-slate-700/60 pt-2 space-y-1.5">
                 {/* Target label+value */}
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">適用對象</span>
-                  <span className="text-[13px] text-slate-600 dark:text-slate-300">{row.target}</span>
+                  <span className="text-[11px] font-bold text-[#7d7768] dark:text-slate-400 uppercase tracking-wide">適用對象</span>
+                  <span className="text-[13px] text-slate-800 dark:text-slate-300">{row.target}</span>
                 </div>
                 {/* Note label+value */}
                 <div className="flex flex-col gap-0.5">
-                  <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide">備註</span>
-                  <span className="text-[13px] text-slate-500 dark:text-slate-400">{row.note}</span>
+                  <span className="text-[11px] font-bold text-[#7d7768] dark:text-slate-400 uppercase tracking-wide">備註</span>
+                  <span className="text-[13px] text-[#635c4e] dark:text-slate-400">{row.note}</span>
                 </div>
               </div>
             </div>
