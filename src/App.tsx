@@ -10,6 +10,8 @@ import { ReferenceTables } from './components/ReferenceTables';
 import { HomeView } from './components/HomeView';
 import { ReadingPreferences, readReadingPreferences, saveReadingPreferences } from './components/ReadingSettings';
 import { ScrollToTopButton } from './components/ScrollToTopButton';
+import { onServiceWorkerUpdate, clearAppCacheAndReload } from './register-sw';
+import { Sparkles, RefreshCw, X } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
@@ -23,6 +25,8 @@ export const App: React.FC = () => {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState<boolean>(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState<boolean>(false);
   const [isOffline, setIsOffline] = useState<boolean>(() => typeof navigator !== 'undefined' && !navigator.onLine);
+  const [hasUpdate, setHasUpdate] = useState<boolean>(false);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const regulationScrollRef = useRef<HTMLDivElement>(null);
   const regulationViewerRef = useRef<RegulationViewerHandle>(null);
   const [searchMatchStats, setSearchMatchStats] = useState<{ current: number; total: number }>({ current: 0, total: 0 });
@@ -51,6 +55,14 @@ export const App: React.FC = () => {
     };
   }, []);
 
+  // Listen for Service Worker update notifications
+  useEffect(() => {
+    const unsubscribe = onServiceWorkerUpdate(() => {
+      setHasUpdate(true);
+    });
+    return unsubscribe;
+  }, []);
+
   useEffect(() => {
     const root = document.documentElement;
     root.dataset.fontScale = readingPreferences.fontScale;
@@ -75,16 +87,26 @@ export const App: React.FC = () => {
   const filteredRegulations = useMemo(() => {
     if (activeCategory === 'ALL') return searchedRegulations;
     return searchedRegulations.filter((reg) => reg.category === activeCategory);
-  }, [activeCategory, searchedRegulations]);
+  }, [searchedRegulations, activeCategory]);
 
-  const resultStats = useMemo(() => {
-    if (!keyword.trim()) return { regCount: filteredRegulations.length, matchCount: 0 };
+  const searchStats = useMemo(() => {
     const normalizedKeyword = keyword.toLowerCase().trim();
-    const matchCount = filteredRegulations.reduce((total, reg) => (
-      total + reg.articles.filter(
-        (article) => article.title.toLowerCase().includes(normalizedKeyword) || article.content.toLowerCase().includes(normalizedKeyword),
-      ).length
-    ), 0);
+    if (!normalizedKeyword) {
+      return { regCount: filteredRegulations.length, matchCount: 0 };
+    }
+
+    let matchCount = 0;
+    filteredRegulations.forEach((reg) => {
+      reg.articles.forEach((article) => {
+        if (
+          article.title.toLowerCase().includes(normalizedKeyword) ||
+          article.content.toLowerCase().includes(normalizedKeyword)
+        ) {
+          matchCount++;
+        }
+      });
+    });
+
     return { regCount: filteredRegulations.length, matchCount };
   }, [filteredRegulations, keyword]);
 
@@ -114,10 +136,12 @@ export const App: React.FC = () => {
     [selectedRegulationId],
   );
 
-  const handleSelectRegulation = (regulationId: string) => {
-    const selected = REGULATIONS_DATA.find((reg) => reg.id === regulationId);
-    setSelectedRegulationId(regulationId);
-    if (selected) setActiveCategory(selected.category as CategoryType);
+  const handleSelectRegulation = (id: string) => {
+    const target = REGULATIONS_DATA.find((item) => item.id === id);
+    if (target) {
+      setActiveCategory(target.category);
+    }
+    setSelectedRegulationId(id);
     setIsMobileSidebarOpen(false);
   };
 
@@ -126,7 +150,6 @@ export const App: React.FC = () => {
     setIsMobileSidebarOpen(false);
 
     if (category === 'ALL') {
-      setSelectedRegulationId(null);
       return;
     }
 
@@ -134,6 +157,11 @@ export const App: React.FC = () => {
       const selected = REGULATIONS_DATA.find((reg) => reg.id === currentId);
       return selected?.category === category ? currentId : null;
     });
+  };
+
+  const handleApplyUpdate = async () => {
+    setIsUpdating(true);
+    await clearAppCacheAndReload();
   };
 
   return (
@@ -148,6 +176,37 @@ export const App: React.FC = () => {
         isMobileSidebarOpen={isMobileSidebarOpen}
         setIsMobileSidebarOpen={setIsMobileSidebarOpen}
       />
+
+      {/* Auto-detected new version banner */}
+      {hasUpdate && (
+        <aside
+          aria-label="系統更新提示"
+          className="sticky top-[68px] z-40 flex items-center justify-between border-b border-blue-300 bg-gradient-to-r from-blue-900 via-[#1b4d82] to-blue-900 px-4 py-2.5 text-white shadow-md backdrop-blur-md sm:top-[76px] sm:px-6"
+        >
+          <div className="flex items-center gap-2 text-xs font-bold sm:text-sm">
+            <Sparkles className="h-4 w-4 text-amber-300 animate-pulse flex-shrink-0" />
+            <span>偵測到法規系統已有最新版本更新！</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleApplyUpdate}
+              disabled={isUpdating}
+              className="flex items-center gap-1.5 rounded-xl bg-white px-3 py-1 text-xs font-extrabold text-[#1b4d82] shadow-sm transition-transform hover:scale-105 active:scale-95 disabled:opacity-75"
+            >
+              <RefreshCw className={`h-3.5 w-3.5 ${isUpdating ? 'animate-spin' : ''}`} />
+              <span>{isUpdating ? '正在更新中…' : '立即載入最新版'}</span>
+            </button>
+            <button
+              onClick={() => setHasUpdate(false)}
+              className="rounded-lg p-1 text-blue-200 hover:bg-white/10 hover:text-white"
+              title="稍後提醒"
+              aria-label="關閉提醒"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        </aside>
+      )}
 
       <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col lg:flex-row">
         <Sidebar
@@ -164,7 +223,7 @@ export const App: React.FC = () => {
           <SearchBar
             keyword={keyword}
             onKeywordChange={setKeyword}
-            resultStats={resultStats}
+            resultStats={searchStats}
             activeCategory={activeCategory}
             readingPreferences={readingPreferences}
             onReadingPreferencesChange={setReadingPreferences}
@@ -181,10 +240,8 @@ export const App: React.FC = () => {
           />
 
           {currentRegulation && (
-            <div className="w-full px-3 pt-4 sm:px-6 lg:px-8">
-              <div className="mx-auto max-w-[860px]">
-                <ReferenceTables regulation={currentRegulation} />
-              </div>
+            <div className="no-print">
+              <ReferenceTables regulation={currentRegulation} />
             </div>
           )}
 

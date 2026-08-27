@@ -8,7 +8,10 @@ import {
   X,
   ShieldCheck,
   WifiOff,
+  RotateCw,
 } from 'lucide-react';
+import React, { useState } from 'react';
+import { clearAppCacheAndReload } from '../register-sw';
 
 interface HeaderProps {
   darkMode: boolean;
@@ -30,6 +33,13 @@ export const Header: React.FC<HeaderProps> = ({
   isMobileSidebarOpen,
   setIsMobileSidebarOpen,
 }) => {
+  const [isClearing, setIsClearing] = useState(false);
+
+  const handleClearCache = async () => {
+    setIsClearing(true);
+    await clearAppCacheAndReload();
+  };
+
   return (
     <header className="sticky top-0 z-30 w-full border-b border-[#e3dcce]/90 bg-[#f7f4ec]/92 shadow-[0_1px_0_rgba(255,255,255,0.6)] backdrop-blur-xl dark:border-slate-800/90 dark:bg-slate-950/95 no-print transition-colors">
       <div className="mx-auto flex h-[68px] w-full max-w-[1440px] items-center justify-between gap-3 px-3 sm:h-[76px] sm:px-6 lg:px-8">
@@ -78,6 +88,19 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="hidden sm:inline">離線可用</span>
             </span>
           )}
+
+          {/* Quick Clear Cache & Refresh Button */}
+          <button
+            onClick={handleClearCache}
+            disabled={isClearing}
+            className="flex h-10 items-center gap-1.5 rounded-xl border border-[#e3dcce] bg-white px-2.5 text-xs font-bold text-[#646a77] shadow-sm transition-all hover:border-blue-300 hover:bg-[#ede6d4] hover:text-[#1b4d82] active:scale-[0.97] disabled:opacity-60 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-blue-700 dark:hover:bg-blue-950/50 dark:hover:text-blue-300"
+            title="清除離線快取並強制檢查最新版本"
+            aria-label="清除離線快取並強制檢查最新版本"
+          >
+            <RotateCw className={`h-3.5 w-3.5 ${isClearing ? 'animate-spin text-[#1b4d82]' : ''}`} />
+            <span className="hidden xl:inline">檢查更新</span>
+          </button>
+
           <button
             onClick={onOpenCalculator}
             className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-[#1b4d82] px-3 text-xs font-bold text-white shadow-md shadow-blue-950/15 transition-all hover:bg-[#143d68] active:scale-[0.97] sm:h-11 sm:px-4 sm:text-sm"
