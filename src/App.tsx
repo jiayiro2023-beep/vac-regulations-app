@@ -64,10 +64,6 @@ export const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const root = document.documentElement;
-    root.dataset.fontScale = readingPreferences.fontScale;
-    root.dataset.lineHeight = readingPreferences.lineHeight;
-    root.dataset.fontFamily = readingPreferences.fontFamily;
     saveReadingPreferences(readingPreferences);
   }, [readingPreferences]);
 

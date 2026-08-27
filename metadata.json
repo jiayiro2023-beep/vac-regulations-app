@@ -1,6 +1,6 @@
 {
-  "name": "國軍退除役官兵輔導法規查詢與試算",
-  "description": "國軍退除役官兵輔導法規承辦人智慧查詢與津貼試算系統。",
+  "name": "就業站相關規定",
+  "description": "就業站相關規定承辦人智慧查詢與津貼試算系統。",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
