@@ -158,8 +158,8 @@ const RawTextContentView: React.FC<RawTextContentProps> = ({ content, fontScale,
   const blocks = useMemo(() => normalizeDocument(content), [content]);
   const scaleClass = {
     sm: 'text-[16px] sm:text-[16px]',
-    md: 'text-[17px] sm:text-[17px]',
-    lg: 'text-[19px] sm:text-[19px]',
+    md: 'text-[18px] sm:text-[17px]',
+    lg: 'text-[20px] sm:text-[19px]',
   }[fontScale];
 
   return (

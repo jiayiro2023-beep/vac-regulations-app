@@ -61,7 +61,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
 
   return (
     <div ref={scrollContainerRef} className="flex-1 overflow-y-auto bg-warm-page px-3 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
-      <div className="mx-auto w-full max-w-[860px] space-y-4 sm:space-y-6">
+      <div className="mx-auto w-full max-w-[860px] space-y-3 sm:space-y-6">
         <section className="surface-card rounded-[24px] p-4 sm:rounded-[28px] sm:p-6">
           <div className="flex items-start justify-between gap-3">
             <div className="flex min-w-0 items-center gap-2">
@@ -128,7 +128,7 @@ export const RegulationViewer: React.FC<RegulationViewerProps> = ({ regulation, 
         ) : activeTab === 'attachments' && regulation.attachments ? (
           <VisualFormViewer attachments={regulation.attachments} />
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {regulation.articles.map((article, index) => {
               const matchesKeyword = Boolean(keyword && (
                 article.title.toLowerCase().includes(keyword.toLowerCase()) || article.content.toLowerCase().includes(keyword.toLowerCase())
