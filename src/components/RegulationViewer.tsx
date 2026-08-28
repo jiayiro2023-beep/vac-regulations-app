@@ -237,9 +237,9 @@ export const RegulationViewer = forwardRef<RegulationViewerHandle, RegulationVie
   };
 
   const fontClass = {
-    sm: 'text-[16px] sm:text-[16px] leading-[1.95]',
-    md: 'text-[18px] sm:text-[17px] leading-[2.05]',
-    lg: 'text-[20px] sm:text-[19px] leading-[2.15]',
+    sm: 'text-[15px] sm:text-[15px] leading-[1.65]',
+    md: 'text-[17px] sm:text-[16.5px] leading-[1.75]',
+    lg: 'text-[19px] sm:text-[18px] leading-[1.85]',
   }[fontScale];
 
   const hasSearchMatches = Boolean(keyword.trim() && totalMatches > 0);

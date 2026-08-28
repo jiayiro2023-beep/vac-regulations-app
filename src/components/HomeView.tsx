@@ -26,7 +26,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
     {
       title: '穩定就業津貼作業說明',
       desc: '第一類與第二類退除役官兵穩定就業津貼核發標準',
-      id: '促進退除役官兵穩定就業津貼發給辦法作業說明_114.12.24修訂___1__pdf',
+      id: '促進退除役官兵穩定就業津貼發給辦法作業說明_114_12_24修_含附件___1__pdf',
       icon: Briefcase,
       tone: 'blue',
     },
@@ -129,25 +129,46 @@ export const HomeView: React.FC<HomeViewProps> = ({
           <span className="hidden text-xs font-medium text-[#7d7768] dark:text-slate-500 sm:inline">快速熟悉工作流程</span>
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
-          <div className="surface-card rounded-[22px] p-4 transition-all hover:-translate-y-0.5 sm:p-5">
+          <button
+            type="button"
+            onClick={() => {
+              const input = document.getElementById('main-search-input') as HTMLInputElement | null;
+              input?.focus();
+              input?.select();
+            }}
+            className="surface-card group rounded-[22px] p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[#1b4d82]/40 active:scale-[0.99] dark:hover:border-blue-700 sm:p-5"
+          >
             <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-[#eaf1fb] text-[#1b4d82] dark:bg-blue-950/70 dark:text-blue-300"><Search className="h-5 w-5" /></span>
-              <div>
+              <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-[#eaf1fb] text-[#1b4d82] dark:bg-blue-950/70 dark:text-blue-300">
+                <Search className="h-5 w-5" />
+              </span>
+              <div className="min-w-0 flex-1">
                 <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#1b4d82] dark:text-blue-300">01 · Search</span>
                 <h3 className="mt-1 text-sm font-extrabold text-[#1c222b] dark:text-slate-100">全文即時檢索</h3>
                 <p className="mt-1.5 text-sm leading-6 text-[#635c4e] dark:text-slate-400">從上方搜尋列輸入關鍵字，立即篩選法規與符合的條文。</p>
+                <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#1b4d82] dark:text-blue-300">
+                  開始搜尋 <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </span>
               </div>
             </div>
-          </div>
+          </button>
 
-          <button onClick={onOpenCalculator} className="surface-card group rounded-[22px] p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[#116d5b]/40 dark:hover:border-emerald-700 sm:p-5">
+          <button
+            type="button"
+            onClick={onOpenCalculator}
+            className="surface-card group rounded-[22px] p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[#116d5b]/40 active:scale-[0.99] dark:hover:border-emerald-700 sm:p-5"
+          >
             <div className="flex items-start gap-3">
-              <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-[#e6f4ef] text-[#116d5b] dark:bg-emerald-950/70 dark:text-emerald-300"><Calculator className="h-5 w-5" /></span>
+              <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-[#e6f4ef] text-[#116d5b] dark:bg-emerald-950/70 dark:text-emerald-300">
+                <Calculator className="h-5 w-5" />
+              </span>
               <div className="min-w-0 flex-1">
                 <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#116d5b] dark:text-emerald-300">02 · Calculate</span>
                 <h3 className="mt-1 text-sm font-extrabold text-[#1c222b] dark:text-slate-100">津貼金額試算</h3>
                 <p className="mt-1.5 text-sm leading-6 text-[#635c4e] dark:text-slate-400">依投保與輔導期限，試算第二類退除役官兵的核發金額。</p>
-                <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#116d5b] dark:text-emerald-300">開啟試算器 <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span>
+                <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#116d5b] dark:text-emerald-300">
+                  開啟試算器 <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </span>
               </div>
             </div>
           </button>

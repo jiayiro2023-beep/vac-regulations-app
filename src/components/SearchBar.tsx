@@ -152,6 +152,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         <div className="relative flex items-center">
           <Search className="pointer-events-none absolute left-3.5 h-[18px] w-[18px] text-[#1b4d82] dark:text-blue-300" />
           <input
+            id="main-search-input"
             ref={inputRef}
             type="search"
             value={keyword}

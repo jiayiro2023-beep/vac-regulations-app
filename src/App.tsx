@@ -141,6 +141,15 @@ export const App: React.FC = () => {
     setIsMobileSidebarOpen(false);
   };
 
+  const handleGoHome = () => {
+    setSelectedRegulationId(null);
+    setActiveCategory('ALL');
+    setKeyword('');
+    setIsMobileSidebarOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.scrollingElement?.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleSelectCategory = (category: CategoryType) => {
     setActiveCategory(category);
     setIsMobileSidebarOpen(false);
@@ -167,6 +176,7 @@ export const App: React.FC = () => {
         setDarkMode={setDarkMode}
         isOffline={isOffline}
         onOpenCalculator={() => setIsCalculatorOpen(true)}
+        onGoHome={handleGoHome}
         activeCategory={activeCategory}
         onSelectCategory={handleSelectCategory}
         isMobileSidebarOpen={isMobileSidebarOpen}

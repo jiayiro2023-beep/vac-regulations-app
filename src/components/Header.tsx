@@ -18,6 +18,7 @@ interface HeaderProps {
   isOffline: boolean;
   setDarkMode: (val: boolean | ((prev: boolean) => boolean)) => void;
   onOpenCalculator: () => void;
+  onGoHome: () => void;
   activeCategory: string;
   onSelectCategory: (cat: any) => void;
   isMobileSidebarOpen: boolean;
@@ -29,6 +30,7 @@ export const Header: React.FC<HeaderProps> = ({
   isOffline,
   setDarkMode,
   onOpenCalculator,
+  onGoHome,
   onSelectCategory,
   isMobileSidebarOpen,
   setIsMobileSidebarOpen,
@@ -54,9 +56,11 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <button
-            className="group flex min-w-0 items-center gap-2.5 text-left sm:gap-3"
-            onClick={() => onSelectCategory('ALL')}
-            aria-label="回到法規檢索首頁"
+            type="button"
+            className="group flex min-w-0 items-center gap-2.5 text-left cursor-pointer transition-all active:scale-[0.98] sm:gap-3"
+            onClick={onGoHome}
+            aria-label="回到就業站相關規定首頁"
+            title="回到就業站相關規定首頁"
           >
             <span className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[14px] bg-gradient-to-br from-[#1b4d82] via-[#153e6b] to-[#0e2744] text-white shadow-lg shadow-blue-950/20 ring-1 ring-white/20 transition-transform group-hover:-rotate-2 group-hover:scale-[1.03] sm:h-11 sm:w-11">
               <BookOpen className="h-5 w-5 sm:h-[22px] sm:w-[22px]" strokeWidth={1.8} />

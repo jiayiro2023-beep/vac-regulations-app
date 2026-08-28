@@ -172,7 +172,7 @@ const FormattedArticleContentView: React.FC<FormattedArticleContentProps> = ({
           return (
             <div
               key={idx}
-              className="flex items-start gap-2 py-1 pl-2 text-[16px] leading-7 text-slate-800 dark:text-slate-300 sm:pl-4 sm:text-[15px]"
+              className="flex items-start gap-2 py-0.5 pl-2 text-[15px] leading-relaxed text-slate-800 dark:text-slate-300 sm:pl-3.5 sm:text-[14.5px]"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-[#1b4d82] dark:bg-blue-400 flex-shrink-0 mt-2" />
               <div className="flex-1 leading-relaxed">
@@ -187,7 +187,7 @@ const FormattedArticleContentView: React.FC<FormattedArticleContentProps> = ({
           return (
             <div
               key={idx}
-              className="my-1 flex items-start gap-2 rounded-2xl border border-[#c8d8ea]/80 bg-[#edf3fb]/60 px-3 py-2.5 dark:border-slate-700 dark:bg-slate-800/50 sm:gap-2.5"
+              className="my-1 flex items-start gap-2 rounded-xl border border-[#c8d8ea]/80 bg-[#edf3fb]/60 px-2.5 py-1.5 dark:border-slate-700 dark:bg-slate-800/50 sm:gap-2.5"
             >
               <span className="mt-0.5 min-w-[1.75rem] flex-shrink-0 rounded-lg border border-[#c8d8ea] bg-[#e1ecfa] px-1 py-0.5 text-center text-xs font-extrabold text-[#1b4d82] dark:border-blue-800 dark:bg-blue-900/60 dark:text-blue-200 sm:min-w-[2rem] sm:px-1.5">
                 {num}
@@ -204,7 +204,7 @@ const FormattedArticleContentView: React.FC<FormattedArticleContentProps> = ({
           return (
             <div
               key={idx}
-              className="my-1 flex items-start gap-2 border-l-2 border-[#8172c7] py-1.5 pl-3 pr-2 text-slate-800 dark:border-indigo-600 dark:text-slate-300 sm:pl-6"
+              className="my-0.5 flex items-start gap-2 border-l-2 border-[#8172c7] py-1 pl-2.5 pr-2 text-slate-800 dark:border-indigo-600 dark:text-slate-300 sm:pl-5"
             >
               <span className="flex-shrink-0 font-bold text-[#5243aa] dark:text-indigo-400 text-xs mt-0.5">
                 {num}
@@ -221,7 +221,7 @@ const FormattedArticleContentView: React.FC<FormattedArticleContentProps> = ({
           return (
             <div
               key={idx}
-              className="my-1 flex items-start gap-2 py-1 pl-5 pr-2 text-sm text-[#5f594d] dark:text-slate-400 sm:pl-10 sm:text-[13px]"
+              className="my-0.5 flex items-start gap-2 py-0.5 pl-4 pr-2 text-sm text-[#5f594d] dark:text-slate-400 sm:pl-8 sm:text-[13px]"
             >
               <span className="flex-shrink-0 font-semibold text-[#7d7768] dark:text-slate-400">
                 {num}
@@ -235,7 +235,7 @@ const FormattedArticleContentView: React.FC<FormattedArticleContentProps> = ({
 
         // Normal paragraph
         return (
-          <p key={idx} className="break-words py-0.5 leading-8 text-slate-800 dark:text-slate-300">
+          <p key={idx} className="break-words py-0.5 leading-relaxed text-slate-800 dark:text-slate-300">
             {renderTextWithHighlights(line)}
           </p>
         );

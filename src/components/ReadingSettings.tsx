@@ -27,9 +27,9 @@ const FONT_SCALE_OPTIONS: { value: FontScale; label: string; description: string
 ];
 
 const LINE_HEIGHT_OPTIONS: { value: LineHeight; label: string; description: string }[] = [
-  { value: 'compact', label: '緊湊', description: '1.85' },
-  { value: 'comfortable', label: '舒適', description: '2.05' },
-  { value: 'spacious', label: '寬鬆', description: '2.30' },
+  { value: 'compact', label: '緊湊', description: '1.55' },
+  { value: 'comfortable', label: '舒適', description: '1.75' },
+  { value: 'spacious', label: '寬鬆', description: '2.05' },
 ];
 
 const FONT_FAMILY_OPTIONS: { value: FontFamily; label: string; sample: string }[] = [

@@ -433,7 +433,7 @@ export const CalculatorModal: React.FC<CalculatorModalProps> = ({
               </span>
               <button
                 onClick={() => {
-                  onSelectRegulation('促進退除役官兵穩定就業津貼發給辦法作業說明_114.12.24修訂___1__pdf');
+                  onSelectRegulation('促進退除役官兵穩定就業津貼發給辦法作業說明_114_12_24修_含附件___1__pdf');
                   onClose();
                 }}
                 className="flex items-center gap-1 text-blue-300 hover:text-white font-semibold transition-colors self-start sm:self-auto"
