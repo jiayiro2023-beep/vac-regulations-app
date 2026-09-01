@@ -15,6 +15,7 @@ import {
   ChevronDown,
   Search,
   BookOpen,
+  HelpCircle,
 } from 'lucide-react';
 
 export interface RegulationViewerHandle {
@@ -31,6 +32,7 @@ interface RegulationViewerProps {
   fontFamily: FontFamily;
   scrollContainerRef?: React.RefObject<HTMLDivElement>;
   onMatchStatsChange?: (stats: { current: number; total: number }) => void;
+  hideProgress?: boolean;
 }
 
 const renderTitleWithHighlights = (title: string, kw: string): React.ReactNode => {
@@ -60,6 +62,7 @@ export const RegulationViewer = forwardRef<RegulationViewerHandle, RegulationVie
   fontFamily,
   scrollContainerRef,
   onMatchStatsChange,
+  hideProgress = false,
 }, ref) => {
   const [copiedTitle, setCopiedTitle] = useState<string | null>(null);
   const [showRawText, setShowRawText] = useState(false);
@@ -242,79 +245,132 @@ export const RegulationViewer = forwardRef<RegulationViewerHandle, RegulationVie
     lg: 'text-[19px] sm:text-[18px] leading-[1.85]',
   }[fontScale];
 
+  const articleTitleClass = {
+    sm: 'text-[16px] sm:text-[17px] leading-snug',
+    md: 'text-[18.5px] sm:text-[19.5px] leading-snug',
+    lg: 'text-[21px] sm:text-[22.5px] leading-snug',
+  }[fontScale];
+
+  const renderArticleHeader = (title: string) => {
+    // Pattern 1: 【問題 1】or 【問題1】or 【問1】or 【Q1】
+    const mQuestion = title.match(/^【(問題\s*\d+|問\s*\d*|Q\d*)】\s*(.*)/s);
+    if (mQuestion) {
+      const [, qTag, qBody] = mQuestion;
+      return (
+        <div className="flex flex-col sm:flex-row sm:items-start gap-2.5 min-w-0 flex-1">
+          <span className="inline-flex items-center gap-1.5 self-start px-2.5 py-1 rounded-xl bg-[#1b4d82] text-white text-xs sm:text-sm font-black shadow-sm dark:bg-blue-600 flex-shrink-0 tracking-wide">
+            <HelpCircle className="w-4 h-4" />
+            {qTag}
+          </span>
+          <h2 className={`min-w-0 font-black text-[#102b4a] dark:text-slate-100 ${articleTitleClass}`}>
+            {renderTitleWithHighlights(qBody, keyword)}
+          </h2>
+        </div>
+      );
+    }
+
+    // Pattern 2: Generic banner like 【...】
+    const mBannerTitle = title.match(/^【([^】]+)】\s*(.*)/s);
+    if (mBannerTitle) {
+      const [, bannerTag, bannerBody] = mBannerTitle;
+      return (
+        <div className="flex flex-col sm:flex-row sm:items-start gap-2.5 min-w-0 flex-1">
+          <span className="inline-flex items-center gap-1.5 self-start px-2.5 py-1 rounded-xl bg-[#eaf1fb] text-[#1b4d82] text-xs sm:text-sm font-black border border-blue-200 dark:border-blue-800 dark:bg-blue-950/70 dark:text-blue-200 flex-shrink-0">
+            {bannerTag}
+          </span>
+          <h2 className={`min-w-0 font-extrabold text-[#102b4a] dark:text-slate-100 ${articleTitleClass}`}>
+            {renderTitleWithHighlights(bannerBody || bannerTag, keyword)}
+          </h2>
+        </div>
+      );
+    }
+
+    // Standard article header (第一條, 前言, 一、...)
+    return (
+      <h2 className={`flex min-w-0 items-start gap-2.5 font-extrabold text-[#1b4d82] dark:text-blue-200 flex-1 ${articleTitleClass}`}>
+        <span className="mt-2 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-[#1b4d82] ring-4 ring-[#eaf1fb] dark:bg-blue-400 dark:ring-blue-950/70" />
+        <span>{renderTitleWithHighlights(title, keyword)}</span>
+      </h2>
+    );
+  };
+
   const hasSearchMatches = Boolean(keyword.trim() && totalMatches > 0);
 
   return (
     <div ref={scrollContainerRef} className="flex-1 overflow-y-auto bg-warm-page px-3 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8 relative">
       {/* 1. Ambient Floating Top Progress Line (Fixed right under the top header, 0 extra vertical height) */}
-      <div
-        className="fixed top-[68px] sm:top-[76px] left-0 right-0 z-30 h-[3px] bg-[#e3dcce]/40 dark:bg-slate-800/60 pointer-events-none no-print transition-colors"
-        role="progressbar"
-        aria-valuenow={scrollProgress}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-label="法規閱讀進度"
-      >
+      {!hideProgress && (
         <div
-          className="h-full bg-gradient-to-r from-[#1b4d82] via-[#2563eb] to-[#0ea5e9] dark:from-blue-500 dark:via-blue-400 dark:to-cyan-300 transition-all duration-150 ease-out shadow-[0_0_8px_rgba(37,99,235,0.4)]"
-          style={{ width: `${scrollProgress}%` }}
-        />
-      </div>
+          className="fixed top-[68px] sm:top-[76px] left-0 right-0 z-30 h-[3px] bg-[#e3dcce]/40 dark:bg-slate-800/60 pointer-events-none no-print transition-colors"
+          role="progressbar"
+          aria-valuenow={scrollProgress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="法規閱讀進度"
+        >
+          <div
+            className="h-full bg-gradient-to-r from-[#1b4d82] via-[#2563eb] to-[#0ea5e9] dark:from-blue-500 dark:via-blue-400 dark:to-cyan-300 transition-all duration-150 ease-out shadow-[0_0_8px_rgba(37,99,235,0.4)]"
+            style={{ width: `${scrollProgress}%` }}
+          />
+        </div>
+      )}
 
       {/* 2. Compact Floating Reading Progress Badge (Bottom Left, balanced with ScrollToTop on bottom right) */}
-      <button
-        type="button"
-        onClick={() => {
-          const container = scrollContainerRef?.current;
-          if (container && container.scrollHeight > container.clientHeight + 4) {
-            container.scrollTo({ top: 0, behavior: 'smooth' });
-          } else {
-            document.scrollingElement?.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }}
-        title={`點擊回到頂端（目前閱讀進度 ${scrollProgress}%）`}
-        aria-label={`目前閱讀進度 ${scrollProgress}%，點擊回到頂端`}
-        className="fixed bottom-5 left-4 sm:bottom-7 sm:left-7 z-40 no-print flex items-center gap-2 rounded-full border border-[#e3dcce]/90 bg-white/95 px-3 py-1.5 shadow-[0_10px_24px_rgba(70,55,30,0.12)] backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-lg active:translate-y-0 dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 dark:shadow-[0_10px_24px_rgba(0,0,0,0.4)] group"
-      >
-        {/* Circular Progress SVG */}
-        <div className="relative flex h-5 w-5 items-center justify-center flex-shrink-0">
-          <svg className="h-5 w-5 -rotate-90 transform" viewBox="0 0 24 24">
-            <circle
-              cx="12"
-              cy="12"
-              r="8"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              fill="transparent"
-              className="text-[#e3dcce] dark:text-slate-700"
-            />
-            <circle
-              cx="12"
-              cy="12"
-              r="8"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              fill="transparent"
-              strokeDasharray={50.265}
-              strokeDashoffset={50.265 * (1 - scrollProgress / 100)}
-              className="text-[#1b4d82] dark:text-blue-400 transition-all duration-150"
-            />
-          </svg>
-          {scrollProgress === 100 ? (
-            <Check className="absolute h-2.5 w-2.5 text-[#1b4d82] dark:text-blue-300 stroke-[3]" />
-          ) : (
-            <BookOpen className="absolute h-2.5 w-2.5 text-[#1b4d82] dark:text-blue-300" />
-          )}
-        </div>
+      {!hideProgress && (
+        <button
+          type="button"
+          onClick={() => {
+            const container = scrollContainerRef?.current;
+            if (container && container.scrollHeight > container.clientHeight + 4) {
+              container.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              document.scrollingElement?.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }}
+          title={`點擊回到頂端（目前閱讀進度 ${scrollProgress}%）`}
+          aria-label={`目前閱讀進度 ${scrollProgress}%，點擊回到頂端`}
+          className="fixed bottom-5 left-4 sm:bottom-7 sm:left-7 z-40 no-print flex items-center gap-2 rounded-full border border-[#e3dcce]/90 bg-white/95 px-3 py-1.5 shadow-[0_10px_24px_rgba(70,55,30,0.12)] backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-lg active:translate-y-0 dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-100 dark:shadow-[0_10px_24px_rgba(0,0,0,0.4)] group"
+        >
+          {/* Circular Progress SVG */}
+          <div className="relative flex h-5 w-5 items-center justify-center flex-shrink-0">
+            <svg className="h-5 w-5 -rotate-90 transform" viewBox="0 0 24 24">
+              <circle
+                cx="12"
+                cy="12"
+                r="8"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                fill="transparent"
+                className="text-[#e3dcce] dark:text-slate-700"
+              />
+              <circle
+                cx="12"
+                cy="12"
+                r="8"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                fill="transparent"
+                strokeDasharray={50.265}
+                strokeDashoffset={50.265 * (1 - scrollProgress / 100)}
+                className="text-[#1b4d82] dark:text-blue-400 transition-all duration-150"
+              />
+            </svg>
+            {scrollProgress === 100 ? (
+              <Check className="absolute h-2.5 w-2.5 text-[#1b4d82] dark:text-blue-300 stroke-[3]" />
+            ) : (
+              <BookOpen className="absolute h-2.5 w-2.5 text-[#1b4d82] dark:text-blue-300" />
+            )}
+          </div>
 
-        <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 hidden xs:inline">
-          {scrollProgress === 100 ? '已讀完' : '進度'}
-        </span>
-        <span className="font-mono text-xs font-black text-[#1b4d82] dark:text-blue-300">
-          {scrollProgress}%
-        </span>
-      </button>
+          <span className="text-xs font-semibold text-slate-600 dark:text-slate-400 hidden xs:inline">
+            {scrollProgress === 100 ? '已讀完' : '進度'}
+          </span>
+          <span className="font-mono text-xs font-black text-[#1b4d82] dark:text-blue-300">
+            {scrollProgress}%
+          </span>
+        </button>
+      )}
 
       <div ref={contentContainerRef} className="mx-auto w-full max-w-[860px] space-y-3 sm:space-y-6">
         <section className="surface-card rounded-[24px] p-4 sm:rounded-[28px] sm:p-6">
@@ -401,10 +457,7 @@ export const RegulationViewer = forwardRef<RegulationViewerHandle, RegulationVie
                   className={`regulation-article rounded-[22px] border bg-white p-4 transition-all dark:bg-slate-900 sm:rounded-[26px] sm:p-6 ${matchesKeyword ? 'border-[#d49e35] shadow-[0_10px_28px_rgba(212,158,53,0.12)] ring-4 ring-[#d49e35]/15 dark:border-amber-700' : 'border-[#e3dcce] shadow-[0_4px_16px_rgba(60,45,20,0.035)] hover:border-blue-300 dark:border-slate-800 dark:hover:border-slate-700'}`}
                 >
                   <div className="mb-4 flex items-start justify-between gap-3 border-b border-[#e3dcce]/70 pb-3.5 dark:border-slate-800">
-                    <h2 className="flex min-w-0 items-start gap-2.5 text-[15px] font-extrabold leading-relaxed text-[#1b4d82] dark:text-blue-200 sm:text-base">
-                      <span className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-[#1b4d82] ring-4 ring-[#eaf1fb] dark:bg-blue-400 dark:ring-blue-950/70" />
-                      <span>{renderTitleWithHighlights(article.title, keyword)}</span>
-                    </h2>
+                    {renderArticleHeader(article.title)}
                     <button
                       onClick={() => handleCopyCitation(article.title, article.content)}
                       className={`flex h-9 flex-shrink-0 items-center gap-1.5 rounded-xl border px-2.5 text-[13px] font-bold transition-all ${copiedTitle === article.title ? 'border-[#116d5b] bg-[#116d5b] text-white' : 'border-[#e3dcce] bg-[#faf8f3] text-slate-700 hover:border-blue-300 hover:bg-[#ede6d4] hover:text-[#1b4d82] dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-blue-700 dark:hover:bg-blue-950/40'}`}

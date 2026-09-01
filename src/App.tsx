@@ -261,6 +261,7 @@ export const App: React.FC = () => {
                 fontFamily={readingPreferences.fontFamily}
                 scrollContainerRef={regulationScrollRef}
                 onMatchStatsChange={setSearchMatchStats}
+                hideProgress={isMobileSidebarOpen}
               />
           ) : (
             <HomeView
@@ -269,7 +270,10 @@ export const App: React.FC = () => {
               regulationCount={REGULATIONS_DATA.length}
             />
           )}
-          <ScrollToTopButton targetRef={currentRegulation ? regulationScrollRef : undefined} />
+          <ScrollToTopButton
+            targetRef={currentRegulation ? regulationScrollRef : undefined}
+            hidden={isMobileSidebarOpen}
+          />
         </main>
       </div>
 

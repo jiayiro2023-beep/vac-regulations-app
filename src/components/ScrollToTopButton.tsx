@@ -4,9 +4,10 @@ import { ArrowUp } from 'lucide-react';
 interface ScrollToTopButtonProps {
   targetRef?: React.RefObject<HTMLElement>;
   threshold?: number;
+  hidden?: boolean;
 }
 
-export const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ targetRef, threshold = 420 }) => {
+export const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ targetRef, threshold = 420, hidden = false }) => {
   const [isVisible, setIsVisible] = useState(false);
   const getWindowScrollTop = () => window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
@@ -33,7 +34,7 @@ export const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ targetRef,
     };
   }, [targetRef, threshold]);
 
-  if (!isVisible) return null;
+  if (hidden || !isVisible) return null;
 
   const handleScrollToTop = () => {
     const target = targetRef?.current;
